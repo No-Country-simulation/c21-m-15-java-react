@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Routes, Route } from 'react-router-dom';
+import CardSection from './Components/CardSection'
+import Cartilla from './Components/Cartilla';
+import VideoConsultas from './Components/VideoConsultas';
+import GestionOnline from './Components/GestionOnline';
+import  SobreNosotros from './Components/SobreNosotros';
+import NuestrasEspecialidades from './Components/NuestrasEspecialidades';
 
+function Inicio(){
+  return(
+    <>
+    <SobreNosotros />
+    <CardSection />
+    <NuestrasEspecialidades />
+    </>
+  )
+}
 function App() {
-  const [count, setCount] = useState(0)
+ 
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>frontend-c21-15-m-java-react</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+     <Routes>
+      <Route path="/" element={<Inicio /> } />
+      <Route path="/cartilla" element={<Cartilla />} />
+      <Route path="/video-consultas" element={<VideoConsultas />} />
+      <Route path="/gestion-online" element={<GestionOnline />} />
+    </Routes>
     </>
-  );
+  )
 }
 
 export default App
+
