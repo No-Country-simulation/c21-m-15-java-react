@@ -1,4 +1,4 @@
-import Navbar from "./components/navbar";
+import Navbar from "./Components/Navbar";
 import { Routes, Route } from 'react-router-dom';
 import CardSection from './Components/CardSection'
 import Cartilla from './Components/Cartilla';
