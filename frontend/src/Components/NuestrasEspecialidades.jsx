@@ -68,7 +68,6 @@ const NuestrasEspecialidades = () => {
             }}
           >
             <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px' }}>
-              {/* <Typography variant="h5">{especialidad.title}</Typography> */}
               <CardMedia
                 component='img'
                 height='100'
