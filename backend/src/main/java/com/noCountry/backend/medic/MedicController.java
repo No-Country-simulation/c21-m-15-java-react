@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/medic")
+@RequestMapping("/api/medics")
 public class MedicController {
 
     private final MedicService medicService;
