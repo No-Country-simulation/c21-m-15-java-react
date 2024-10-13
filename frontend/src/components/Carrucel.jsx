@@ -81,12 +81,7 @@ export default function Carrucel() {
                   component="img"
                   image={src}
                   sx={{
-                    height: {
-                      xs: "60vh",
-                      sm: "60vh",
-                      md: "70vh",
-                      lg: "100%",
-                    },
+                    height: "100%",
                     width: "100%",
                     objectFit: "cover",
                  }}

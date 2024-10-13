@@ -27,6 +27,7 @@ export default function Home() {
           <MenuIcon
             sx={{ color: "black", display: { xs: "block", md: "none" } }}
             onClick={handleMenuOpen}
+            autoFocus
           />
 
         
