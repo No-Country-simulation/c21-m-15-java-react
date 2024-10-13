@@ -14,4 +14,9 @@ public class MedicService {
     public List<Medic> getAllMedics() {
         return medicRepository.findAll();
     }
+
+    // Consultar medico por ID
+    public Medic getMedicById(Long id) {
+        return medicRepository.findById(id).orElseThrow(() -> new RuntimeException("Medico no encontrado"));
+    }
 }
