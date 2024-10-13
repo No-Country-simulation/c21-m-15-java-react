@@ -1,11 +1,12 @@
-import Carrucel from "./components/Carrucel";
+
 import Navbar from "./components/navbar";
+import Home from "./views/Home";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Carrucel/>
+      <Home />
     </>
   );
 }
