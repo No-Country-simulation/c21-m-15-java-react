@@ -2,7 +2,7 @@
 
 
 import Home from "./views/Home";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/Navbar.jsx";
 import { Routes, Route } from 'react-router-dom';
 import CardSection from './Components/CardSection'
 import Cartilla from './Components/Cartilla';
@@ -11,6 +11,7 @@ import GestionOnline from './Components/GestionOnline';
 import  SobreNosotros from './Components/SobreNosotros';
 import NuestrasEspecialidades from './Components/NuestrasEspecialidades';
 import './App.css'
+import Footer from "./views/Footer";
 
 
 function Inicio(){
@@ -21,6 +22,7 @@ function Inicio(){
     <SobreNosotros />
     <CardSection />
     <NuestrasEspecialidades />
+    <Footer/>
     </>
   )
 }
