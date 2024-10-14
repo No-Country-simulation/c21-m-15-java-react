@@ -63,7 +63,7 @@ export default function Carrucel() {
     }
   
     return (
-      <Box sx={{ width: "100%", height: "80vh", backgroundColor: "#F8F9FA" }}>
+      <Box sx={{ width: "100%", height: "60vh", backgroundColor: "#F8F9FA" }}>
         <Slider {...settings} sx={{ width: "100%"}}>
           {images.map((src, index) => (
             <Box key={index}>
@@ -84,6 +84,7 @@ export default function Carrucel() {
                     height: "100%",
                     width: "100%",
                     objectFit: "cover",
+                    objectPosition:"center",
                  }}
                   alt={`Imagen ${index + 1}`}
                 />
