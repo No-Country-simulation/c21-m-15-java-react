@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/medic/medical-record")
+@RequestMapping("/api/medic")
 public class MedicalRecordController {
     private final MedicalRecordService medicalRecordService;
     private final PatientService patientService;
 
     // Obtener registros medicos de un paciente
-    @GetMapping("/all/{id}")
+    @GetMapping("/patients/{id}/medical-records")
     public ResponseEntity<?> getMedicalRecordsByPatientId(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(medicalRecordService.getMedicalRecordsByPatient(patientService.getPatientById(id)));

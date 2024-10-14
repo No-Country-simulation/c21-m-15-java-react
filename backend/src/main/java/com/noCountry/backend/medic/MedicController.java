@@ -17,7 +17,7 @@ public class MedicController {
     private final MedicService medicService;
 
     // Obtener todos los medicos
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<?> getAllMedics() {
         try {
             List<Medic> medics = medicService.getAllMedics();
