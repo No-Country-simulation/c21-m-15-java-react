@@ -84,6 +84,7 @@ export default function Carrucel() {
                     height: "100%",
                     width: "100%",
                     objectFit: "cover",
+                    objectPosition:"center",
                  }}
                   alt={`Imagen ${index + 1}`}
                 />
