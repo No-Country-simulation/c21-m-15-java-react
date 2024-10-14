@@ -37,13 +37,13 @@ const NuestrasEspecialidades = () => {
   return (
     <Container>
       <Typography 
-        variant="h2"
+        variant="h3"
         sx={{
           textAlign: 'center',
           marginTop: '50px',
           marginBottom: '50px',
           fontFamily: 'roboto serif',
-          textShadow: '3px 3px 5px #134074',
+          textShadow: '1px 1px 2px #134074',
         }}
       >
         Nuestras Especialidades
