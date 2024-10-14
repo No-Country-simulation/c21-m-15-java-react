@@ -23,6 +23,11 @@
 hs_err_pid*
 replay_pid*
 
+ 
+
+node_modules/
+
+
 # Logs
 logs
 *.log
@@ -49,3 +54,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
