@@ -1,12 +1,12 @@
 import Home from "./views/Home";
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar";
 import { Routes, Route } from 'react-router-dom';
-import CardSection from './Components/CardSection'
-import Cartilla from './Components/Cartilla';
-import VideoConsultas from './Components/VideoConsultas';
-import GestionOnline from './Components/GestionOnline';
-import  SobreNosotros from './Components/SobreNosotros';
-import NuestrasEspecialidades from './Components/NuestrasEspecialidades';
+import CardSection from './components/CardSection'
+import Cartilla from './components/Cartilla';
+import VideoConsultas from './components/VideoConsultas';
+import GestionOnline from './components/GestionOnline';
+import  SobreNosotros from './components/SobreNosotros';
+import NuestrasEspecialidades from './components/NuestrasEspecialidades';
 import './App.css'
 import Footer from "./views/Footer";
 
