@@ -6,7 +6,7 @@ const cardsData = [
   {
     id: 1,
     title: 'Cartilla Medica',
-    image: '/assets/cartilla.jpeg',
+    image: '/imagenes/cartilla.jpeg',
     description: 'Contamos con una amplia cartilla medica con diversas especialidades.                                   ',
     buttonLabel: 'Más información',
     route: '/cartilla',
@@ -14,7 +14,7 @@ const cardsData = [
   {
     id: 2,
     title: 'Video Consultas',
-    image: '/assets/videoLlamada.jpeg',
+    image: '/imagenes/videoLlamada.jpeg',
     description: 'A través de videollamadas, los usuarios pueden recibir diagnósticos y tratamientos sin necesidad de desplazarse a una clínica o consultorio.',
     buttonLabel: 'Más Información',
     route: '/video-consultas',
@@ -22,7 +22,7 @@ const cardsData = [
   {
     id: 3,
     title: 'Gestión Online',
-    image: '/assets/citaMedica.jpeg',
+    image: '/imagenes/citaMedica.jpeg',
     description: 'Agendamiento de citas en línea y acceso a historiales médicos digitales',
     buttonLabel: 'Más Información',
     route: '/gestion-online',

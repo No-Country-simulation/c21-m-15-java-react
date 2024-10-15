@@ -1,5 +1,5 @@
 import Home from "./views/Home";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar.jsx";
 import { Routes, Route } from 'react-router-dom';
 import CardSection from './components/CardSection'
 import Cartilla from './components/Cartilla';
