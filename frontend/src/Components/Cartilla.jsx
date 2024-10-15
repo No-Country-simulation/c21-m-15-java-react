@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Box, Button, Card, CardMedia, Typography } from '@mui/material';
+import { Box, Button, Card, CardMedia, Typography, TextField } from '@mui/material';
 
 const Cartilla = () => {
   const [cartillas, setCartillas] = useState([]);
+  const [categoriaBuscada, setCategoriaBuscada] = useState('');
 
   const medicos = async () => {
     const URL = '/cartilla.json';  
@@ -25,21 +26,44 @@ const Cartilla = () => {
   }, []);
 
   if (!Array.isArray(cartillas) || cartillas.length === 0) {
-    return <Typography>No se encontraron datos de la cartilla.</Typography>; // Mostrar mensaje si no hay datos
+    return <Typography>No se encontraron datos de la cartilla.</Typography>; 
   }
+
+  const cartillasFiltradas = cartillas.filter(cartilla =>
+    cartilla.categoria.toLowerCase().includes(categoriaBuscada.toLowerCase())
+  );
 
   return (
     <Box>
       <Typography variant='h3'
       sx={{fontFamily: 'roboto serif',
-        margin: '2rem',
-        textAlign: 'center'
+        marginTop: '2rem',
+        marginBottom: '2rem',
+        textAlign: 'center',
+        textShadow: '1px 1px 2px #134074'
       }}
-      >Cartilla Médica</Typography>
+      >Cartilla Médica
+      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', width: '100%', padding: '0 2rem' }}>
+        <TextField
+          label="Buscar por categoría"
+          variant="outlined"
+          value={categoriaBuscada}
+          onChange={(e) => setCategoriaBuscada(e.target.value)}
+          sx={{ marginRight: '1rem', width: '300px', fontFamily:'roboto serif'}}  
+        />
+      </Box>
+
+
       <Box className="cartilla-list">
-        {cartillas.map((cartilla) => (
-          <Card key={cartilla.id} sx={{ display: 'flex', margin: '1rem', boxShadow: '1px 1px 3px #134074' }}>
-            <CardMedia
+        {cartillasFiltradas.map((cartilla) => (
+          <Card
+          key={cartilla.id}
+          sx={{
+           display: 'flex', margin: '1rem', boxShadow: '1px 1px 3px #134074'
+          }}
+          >
+          <CardMedia
               component='img'
               sx={{
                 maxWidth: '20%',
@@ -49,7 +73,12 @@ const Cartilla = () => {
               alt={cartilla.nombre}
             />
             <Box sx={{ padding: '1rem' }}>
-              <Typography variant='h6'>{cartilla.nombre}</Typography>
+              <Typography variant='h6'
+              sx={{fontFamily:'roboto serif',
+                color: '#13315c',
+                fontWeight: 'bold'
+              }}
+              >{cartilla.nombre}</Typography>
               <Typography>
                 <strong>Especialidad:</strong> {cartilla.categoria}
               </Typography>
