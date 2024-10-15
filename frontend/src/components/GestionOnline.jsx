@@ -1,9 +1,7 @@
 import React from 'react'
 
-const GestionOnline = () => {
+export default function GestionOnline() {
   return (
     <div>GestionOnline</div>
   )
 }
-
-export default GestionOnline
