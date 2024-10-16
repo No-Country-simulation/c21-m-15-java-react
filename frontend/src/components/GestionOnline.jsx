@@ -10,10 +10,10 @@ const GestionOnline = () => {
   return (
     <Container
       sx={{
-        display: { xs: "flex", sm: "block" },
+        display: "flex",
         flexDirection: { xs: "column", sm: "row" },
         width: "100%",
-        height: "100vh",
+          minHeight: "100vh"
       }}
     >
       <Box
@@ -29,7 +29,7 @@ const GestionOnline = () => {
           <Typography
             variant="h5"
             sx={{
-              lineHeight: 3,
+              lineHeight: 2,
               backgroundColor: "rgba(0, 123, 255, 0.1)",
               padding: 1,
               borderRadius: 1,
@@ -125,7 +125,7 @@ const GestionOnline = () => {
         <Typography
           variant="h5"
           sx={{
-            lineHeight: 3,
+            lineHeight: 2,
             backgroundColor: "rgba(0, 123, 255, 0.1)",
             padding: 1,
             borderRadius: 1,
