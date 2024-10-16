@@ -6,7 +6,6 @@ import {
   Typography,
   TextField,
   Button,
-  Link,
   CssBaseline,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
@@ -19,8 +18,9 @@ export default function LoginScreen() {
   const location = useLocation();
 
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
-  console.log("location:", location);
   const from = location.state?.from || "/";
+  const origin = location.state?.origin || "/";
+  console.log("location-------------:", location.state?.origin, from);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,9 +34,12 @@ export default function LoginScreen() {
     console.log("Redirigiendo a:", from);
     //navigate(from, { replace: true });
     //TODO: no está guardando bien, revisar.
-    sessionStorage.setItem(from, "true");
-
-    navigate(from, { replace: true, state: { user: username, rol: username } });
+    console.log("guardo: ", origin + from);
+    localStorage.setItem(origin + from, "true");
+    console.log("posguardado: ", localStorage.getItem(origin + from));
+    let userData = { user: username, rol: username };
+    console.log("userData: ", userData);
+    navigate(from, { replace: true, state: userData });
   };
 
   return (
