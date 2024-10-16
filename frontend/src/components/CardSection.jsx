@@ -83,7 +83,7 @@ const CardSection = () => {
                 color="text.secondary"
                 sx={{
                   fontFamily: 'roboto',
-                  fontSize: '18px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
                   textAlign: 'center',
                   color: 'black'
