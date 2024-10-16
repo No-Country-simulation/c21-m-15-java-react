@@ -25,7 +25,7 @@ export default function Home() {
        
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <MenuIcon
-            sx={{ color: "black", display: { xs: "block", md: "none" } }}
+            sx={{ color: "#13315c", display: { xs: "block", md: "none" } }}
             onClick={handleMenuOpen}
             autoFocus
           />

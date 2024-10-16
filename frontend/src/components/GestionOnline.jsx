@@ -8,7 +8,14 @@ const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
 
   return (
-    <Container sx={{ display: "flex", width: "100%", height: "100vh" }}>
+    <Container
+      sx={{
+        display: { xs: "flex", sm: "block" },
+        flexDirection: { xs: "column", sm: "row" },
+        width: "100%",
+        height: "100vh",
+      }}
+    >
       <Box
         sx={{
           flex: 2,
