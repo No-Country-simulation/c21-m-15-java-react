@@ -39,6 +39,20 @@ export default function Home({ children }) {
             >
               <Typography
                 component={Link}
+                to="/"
+                sx={{
+                  color: "#343A40",
+                  "&:hover": {
+                    color: "#007BFF",
+                    cursor: "pointer",
+                  },
+                }}
+                onClick={() => handleMenuItemClick("Inicio")}
+              >
+                Inicio
+              </Typography>
+              <Typography
+                component={Link}
                 to="/cartilla"
                 sx={{
                   color: "#343A40",

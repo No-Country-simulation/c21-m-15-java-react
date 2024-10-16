@@ -76,14 +76,14 @@ export default function LoginScreen() {
           >
             Iniciar sesión
           </Button>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+         {/*  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Link href="#" variant="body2">
               ¿Olvidaste tu contraseña?
             </Link>
             <Link href="#" variant="body2">
               {"¿No tienes una cuenta? Regístrate"}
             </Link>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Container>
