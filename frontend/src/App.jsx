@@ -1,41 +1,58 @@
+import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Navbar from "./components/Navbar.jsx";
-import { Routes, Route } from 'react-router-dom';
-import CardSection from './components/CardSection'
-import Cartilla from './components/Cartilla';
-import VideoConsultas from './components/VideoConsultas';
-import GestionOnline from './components/GestionOnline';
-import  SobreNosotros from './components/SobreNosotros';
-import NuestrasEspecialidades from './components/NuestrasEspecialidades';
-import './App.css'
+import CardSection from "./components/CardSection";
+import Cartilla from "./components/Cartilla";
+import VideoConsultas from "./components/VideoConsultas";
+import GestionOnline from "./components/GestionOnline";
+import SobreNosotros from "./components/SobreNosotros";
+import NuestrasEspecialidades from "./components/NuestrasEspecialidades";
+import LoginScreen from "./components/LoginScreen";
+import ProtectedRoute from "./components/ProtectedRoute";
+import "./App.css";
 import Footer from "./views/Footer";
+import Carrucel from "./components/Carrucel.jsx";
 
-
-function Inicio(){
-  return(
-    <>
-    <Navbar />
-     <Home />
-    <SobreNosotros />
-    <CardSection />
-    <NuestrasEspecialidades />
-    <Footer/>
-    </>
-  )
-}
 function App() {
   return (
     <>
-
-     <Routes>
-      <Route path="/" element={<Inicio /> } />
-      <Route path="/cartilla" element={<Cartilla />} />
-      <Route path="/video-consultas" element={<VideoConsultas />} />
-      <Route path="/gestion-online" element={<GestionOnline />} />
-    </Routes>
-
+      <Navbar />
+      <Home>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Carrucel />
+                <SobreNosotros />
+                <CardSection />
+                <NuestrasEspecialidades />
+              </>
+            }
+          />
+          <Route path="/cartilla" element={<Cartilla />} />
+          <Route path="/login" element={<LoginScreen />} />
+          <Route
+            path="/video-consultas"
+            element={
+              <ProtectedRoute>
+                <VideoConsultas />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/gestion-online"
+            element={
+              <ProtectedRoute>
+                <GestionOnline />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Footer />
+      </Home>
     </>
-  )
+  );
 }
 
 export default App;
