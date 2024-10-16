@@ -51,7 +51,7 @@ const SobreNosotros = () => {
           boxShadow: 3,
         }}
         alt="Sobre nosotros"
-        src="/assets/nosotros.jpeg"
+        src="/imagenes/nosotros.jpeg"
       />
     </Box>
   );

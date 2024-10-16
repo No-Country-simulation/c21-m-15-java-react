@@ -1,0 +1,159 @@
+[
+  {
+    "id": 1,
+    "nombre": "Dr Fernandez Gustavo",
+    "img": "/imagenes/clinico1.jpg",
+    "categoria": "Clinica médica",
+    "descripcion": "Mi enfoque es integral, lo que significa que no solo trato enfermedades individuales, sino que también ayudo a mis pacientes a mantener un bienestar general a través de la prevención. Trabajo junto a ellos para promover hábitos saludables, identificar factores de riesgo y diseñar planes de tratamiento personalizados.",
+    "horarios": {
+      "Lunes": "9:00 AM - 5:00 PM",
+      "Martes": "9:00 AM - 5:00 PM",
+      "Miércoles": "9:00 AM - 5:00 PM",
+      "Jueves": "9:00 AM - 5:00 PM",
+      "Viernes": "9:00 AM - 5:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+  },
+  {
+    "id": 2,
+    "nombre": "Dr Arias Francisco",
+    "img": "/imagenes/clinico2.jpg",
+    "categoria": "Clinica médica",
+    "descripcion": "Soy médico clínico y me dedico al diagnóstico, tratamiento y prevención de enfermedades comunes y crónicas, como hipertensión y diabetes. Proporciono atención integral, evaluando el estado de salud general de mis pacientes y ofreciendo soluciones personalizadas. Además, oriento en la adopción de hábitos saludables para prevenir futuras complicaciones. Mi objetivo es brindar un cuidado médico cercano y efectivo, centrado en el bienestar global de cada paciente.",
+    "horarios": {
+      "Lunes": "10:00 AM - 4:00 PM",
+      "Miércoles": "10:00 AM - 4:00 PM",
+      "Viernes": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Miércoles", "Viernes"]
+  },
+  {
+    "id": 3,
+    "nombre": "Dra Bejarano Gisela",
+    "img": "/imagenes/pediatra1.jpg",
+    "categoria": "Pediatria",
+    "descripcion": "Soy médico pediatra, especializado en el cuidado de bebés, niños y adolescentes. Mi trabajo consiste en asegurar que crezcan sanos, tanto física como emocionalmente. Realizo chequeos de rutina, administro vacunas y detecto posibles problemas de salud a tiempo. También acompaño a las familias brindando orientación sobre el desarrollo de sus hijos y tratando cualquier enfermedad o dificultad que pueda surgir en su crecimiento.",
+    "horarios": {
+      "Lunes": "10:00 AM - 4:00 PM",
+      "Miércoles": "10:00 AM - 4:00 PM",
+      "Viernes": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Miércoles", "Viernes"]
+  },
+  {
+    "id": 4,
+    "nombre": "Dra Pereyra Florencia",
+    "img": "/imagenes/pediatra2.jpg",
+    "categoria": "Pediatria",
+    "descripcion": "Me dedico a la pediatría porque creo en la importancia de cuidar la salud desde los primeros años de vida. Acompaño a los niños y sus familias en cada etapa del crecimiento, realizando controles preventivos, aplicando vacunas y ofreciendo tratamiento cuando es necesario. Mi enfoque va más allá de la medicina: escucho, oriento y trabajo para crear un entorno en el que los pequeños puedan desarrollarse de manera saludable y feliz.",
+    "horarios": {
+      "Martes": "10:00 AM - 4:00 PM",
+      "Jueves": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Martes", "Jueves"]
+  },
+  {
+    "id": 5,
+    "nombre": "Dr Fiore Samuel",
+    "img": "/imagenes/cardiologo1.jpg",
+    "categoria": "Cardiologia",
+    "descripcion": "Me dedico a tratar afecciones como la insuficiencia cardíaca, las arritmias, la enfermedad de las arterias coronarias, y los problemas valvulares.  Un aspecto fundamental de mi trabajo es la prevención de enfermedades cardíacas, ayudando a mis pacientes a controlar factores de riesgo como el colesterol alto, la hipertensión y el estilo",
+    "horarios": {
+      "Miércoles": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Miércoles"]
+  },
+  {
+    "id": 6,
+    "nombre": "Dr Oviedo Leandro",
+    "img": "/imagenes/cardiologo2.jpg",
+    "categoria": "Cardiologia",
+    "descripcion": "Soy cardiólogo, especializado en diagnosticar y tratar enfermedades del corazón. Realizo pruebas y procedimientos avanzados, como electrocardiogramas y colocación de marcapasos. También ayudo a prevenir problemas cardíacos promoviendo hábitos saludables. Mi enfoque es mejorar la salud y calidad de vida de mis pacientes.",
+    "horarios": {
+      "Lunes": "9:00 AM - 5:00 PM",
+      "Martes": "9:00 AM - 5:00 PM",
+      "Jueves": "9:00 AM - 5:00 PM",
+      "Viernes": "9:00 AM - 5:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+  },
+  {
+    "id": 7,
+    "nombre": "Dr Rusotti Mateo",
+    "img": "/imagenes/dermatologo1.jpg",
+    "categoria": "Dermatología",
+    "descripcion": "Soy dermatólogo, especializado en el diagnóstico y tratamiento de enfermedades de la piel, cabello y uñas. Trato afecciones como acné, psoriasis, eczema y cáncer de piel. También realizo procedimientos dermatológicos, como biopsias y crioterapia. Además, ofrezco orientación para el cuidado preventivo y mejorar la salud de la piel. Mi objetivo es brindar soluciones efectivas para mantener una piel sana.",
+    "horarios": {
+      "Lunes": "10:00 AM - 4:00 PM",
+      "Viernes": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Lunes",  "Viernes"]
+  },
+  {
+    "id": 8,
+    "nombre": "Dr Sanchez Laura",
+    "img": "/imagenes/dermatologo2.jpg",
+    "categoria": "Dermatología",
+    "descripcion": "Soy dermatóloga, especializada en la salud de la piel, el cabello y las uñas. Evaluo y trato diversas condiciones dermatológicas, desde problemas estéticos como el acné y las arrugas hasta enfermedades más serias como el melanoma. Realizo procedimientos como tratamientos láser y cirugía dermatológica. Además, asesoro a mis pacientes sobre el cuidado adecuado de la piel y la prevención de enfermedades. Mi misión es mejorar la salud y la confianza de mis pacientes a través de un enfoque personalizado",
+    "horarios": {
+      "Martes": "10:00 AM - 4:00 PM",
+      "Miércoles": "10:00 AM - 4:00 PM",
+      "Jueves": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Martes", "Miércoles", "Jueves"]
+  },
+  {
+    "id": 9,
+    "nombre": "Dra Ferrari Luciana",
+    "img": "/imagenes/nutricionista1.jpg",
+    "categoria": "Nutricionista",
+    "descripcion": "Soy nutricionista y me especializo en la evaluación y mejora de los hábitos alimenticios para promover un estilo de vida saludable. Desarrollo planes de alimentación personalizados basados en las necesidades y metas individuales, como control de peso o manejo de enfermedades crónicas. Además, educo a mis pacientes sobre la importancia de una nutrición equilibrada y cómo mejorar su salud a través de una alimentación adecuada.",
+    "horarios": {
+      "Lunes": "10:00 AM - 4:00 PM",
+      "Miércoles": "10:00 AM - 4:00 PM",
+      "Viernes": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Miércoles", "Viernes"]
+  },
+  {
+    "id": 10,
+    "nombre": "Dra Marin Alejandra",
+    "img": "/imagenes/nutricionista2.jpg",
+    "categoria": "Nutricionista",
+    "descripcion": "Soy nutricionista, especializado en fomentar hábitos alimenticios saludables. Evalúo el estado nutricional de mis pacientes y diseño planes de alimentación personalizados para alcanzar sus objetivos. También ofrezco educación sobre nutrición y elecciones alimenticias saludables. Mi objetivo es empoderar a las personas para mejorar su bienestar a través de una buena alimentación.",
+    "horarios": {
+      "Martes": "10:00 AM - 4:00 PM",
+      "Jueves": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Martes", "Jueves"]
+  },
+  {
+    "id": 11,
+    "nombre": "Dr Suarez Milena",
+    "img": "/imagenes/psicologo1.jpg",
+    "categoria": "Psicología",
+    "descripcion": "Soy psicóloga, especializada en la evaluación y tratamiento de problemas de salud mental como la ansiedad y la depresión. Utilizo técnicas terapéuticas para ayudar a mis pacientes a desarrollar habilidades de afrontamiento y mejorar su bienestar emocional. Mi objetivo es proporcionar un espacio seguro para que exploren sus pensamientos y emociones, promoviendo su crecimiento personal.",
+    "horarios": {
+      "Lunes": "10:00 AM - 4:00 PM",
+      "Miércoles": "10:00 AM - 4:00 PM",
+      "Viernes": "10:00 AM - 4:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Miércoles", "Viernes"]
+
+  },
+  {
+    "id": 12,
+    "nombre": "Dr Noga Matias",
+    "img": "/imagenes/psicologo3.jpg",
+    "categoria": "Psicología",
+    "descripcion": "Soy psicólogo, enfocado en ayudar a las personas a superar desafíos emocionales y mentales. Realizo evaluaciones y ofrezco terapia para abordar trastornos como la ansiedad y la depresión. Trabajo con mis pacientes para desarrollar estrategias efectivas de afrontamiento y mejorar su calidad de vida. Mi misión es crear un entorno de apoyo donde puedan explorar sus sentimientos y fomentar su bienestar.",
+    "horarios": {
+      "Lunes": "9:00 AM - 5:00 PM",
+      "Martes": "9:00 AM - 5:00 PM",
+      "Miércoles": "9:00 AM - 5:00 PM",
+      "Jueves": "9:00 AM - 5:00 PM",
+      "Viernes": "9:00 AM - 5:00 PM"
+    },
+    "diasDeAtencion": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+  }
+]

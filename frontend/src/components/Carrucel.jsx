@@ -98,7 +98,6 @@ export default function Carrucel() {
               alt={`Imagen ${index + 1}`}
             />
 
-            {/* Fondo oscuro y transparente */}
             <Box
               sx={{
                 position: "absolute",
@@ -169,3 +168,4 @@ export default function Carrucel() {
     </Box>
   );
 }
+

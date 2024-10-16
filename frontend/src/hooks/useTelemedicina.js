@@ -42,13 +42,11 @@ export default function useTelemedicina() {
       console.error("Error al agendar la cita:", error);
     }
   };
-
   const handleMenuItemClick = (item) => {
-    const route = menu[item]; // Obtiene la ruta correspondiente
-    if (route) {
-      navigate(route); // Redirige a la ruta si existe
-    }
+    const route = menu[item]; 
+      navigate(route); 
   };
+ 
   return {
     handleOpenLogin,
     handleCloseLogin,
@@ -58,8 +56,7 @@ export default function useTelemedicina() {
     handleMenuItemClick,
     anchorEl,
     handleSubmit,
-    setSelectedDate,
     selectedDate,
-    handleMenuItemClick,
+    setSelectedDate
   };
 }

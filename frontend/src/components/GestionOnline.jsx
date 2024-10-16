@@ -13,7 +13,7 @@ const GestionOnline = () => {
         display: "flex",
         flexDirection: { xs: "column", sm: "row" },
         width: "100%",
-          minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
       <Box

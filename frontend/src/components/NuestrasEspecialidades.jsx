@@ -4,32 +4,32 @@ const cardEspecialidades = [
   {
     id: 10,
     title: 'Clínica Medica',
-    imagen: '/assets/clinica-medica.jpg'
+    imagen: '/imagenes/clinica-medica.jpg'
   },
   {
     id: 11,
     title: 'Pediatría',
-    imagen: '/assets/pediatria.jpeg'
+    imagen: '/imagenes/pediatria.jpeg'
   },
   {
     id: 12,
     title: 'Cardiología',
-    imagen: '/assets/cardio2.jpg'
+    imagen: '/imagenes/cardio2.jpg'
   },
   {
     id: 13,
     title: 'Dermatología',
-    imagen: '/assets/dermato2.jpg'
+    imagen: '/imagenes/dermato2.jpg'
   },
   {
     id: 14,
     title: 'Nutrición',
-    imagen: '/assets/nutricion.jpg'
+    imagen: '/imagenes/nutricion.jpg'
   },
   {
     id: 15,
     title: 'Psicología',
-    imagen: '/assets/Psicologia.jpg'
+    imagen: '/imagenes/Psicologia.jpg'
   },
 ];
 
@@ -37,13 +37,13 @@ const NuestrasEspecialidades = () => {
   return (
     <Container>
       <Typography 
-        variant="h2"
+        variant="h3"
         sx={{
           textAlign: 'center',
           marginTop: '50px',
           marginBottom: '50px',
           fontFamily: 'roboto serif',
-          textShadow: '3px 3px 5px #134074',
+          textShadow: '1px 1px 2px #134074',
         }}
       >
         Nuestras Especialidades
