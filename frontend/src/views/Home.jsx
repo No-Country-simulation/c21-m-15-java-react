@@ -74,6 +74,18 @@ export default function Home() {
             >
               Telemedicina
             </Typography>
+            <Typography
+              sx={{
+                color: "#343A40",
+                "&:hover": {
+                  color: "#007BFF",
+                  cursor: "pointer",
+                },
+              }}
+              onClick={() => handleMenuItemClick("Citas")}
+            >
+              Citas Medicas
+            </Typography>
           </Box>
         </Box>
 
@@ -133,6 +145,16 @@ export default function Home() {
             }}
           >
             Telemedicina
+          </MenuItem>
+          <MenuItem
+            onClick={() => handleMenuItemClick("Citas")}
+            sx={{
+              "&:hover": {
+                backgroundColor: "#0056b3",
+              },
+            }}
+          >
+            Citas Medicas
           </MenuItem>
         </Menu>
       </Box>
