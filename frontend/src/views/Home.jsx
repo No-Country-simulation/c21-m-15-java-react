@@ -89,7 +89,7 @@ export default function Home({ children }) {
                     cursor: "pointer",
                   },
                 }}
-                onClick={() => handleMenuItemClick("Contacto")}
+                onClick={() => handleMenuItemClick("Gestión Online")}
               >
                 Turnos
               </Typography>

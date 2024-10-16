@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Container,
   Box,
@@ -16,6 +16,12 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const location = useLocation();
+
+  // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
+  console.log("location:", location);
+  const from = location.state?.from || "/";
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí iría la lógica de autenticación
@@ -23,7 +29,9 @@ export default function LoginScreen() {
     console.log("Contraseña:", password);
     // Simulamos una autenticación exitosa
     sessionStorage.setItem("isAuthenticated", "true");
-    navigate("/video-consultas");
+    // Redirigir al usuario a la página de la que vino
+    console.log("Redirigiendo a:", from);
+    navigate(from, { replace: true });
   };
 
   return (
@@ -76,7 +84,7 @@ export default function LoginScreen() {
           >
             Iniciar sesión
           </Button>
-         {/*  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          {/*  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Link href="#" variant="body2">
               ¿Olvidaste tu contraseña?
             </Link>
