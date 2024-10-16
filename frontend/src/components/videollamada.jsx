@@ -3,7 +3,10 @@ import { useParams } from "react-router-dom";
 import { SocketContext } from "./socket-provider.jsx";
 import { useVideoCall } from "../hooks/useVideoCall.jsx"; // Import the new hook
 import "../videollamada.css";
+import { useLocation } from "react-router-dom";
 export default function VideoLlamada() {
+  const location = useLocation();
+
   const { roomId } = useParams();
   const { socket, isConnected } = useContext(SocketContext);
   const {
@@ -70,7 +73,7 @@ export default function VideoLlamada() {
   }
 
   const { user, rol } = location.state || {}; // Accede al username del estado
-
+  console.log("user en videollamada: ", user, rol, location.state);
   return (
     <>
       <section>
