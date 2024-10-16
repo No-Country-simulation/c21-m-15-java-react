@@ -1,8 +1,10 @@
 import { useState } from "react";
+import axios from "axios";
 
 export default function useTelemedicina() {
   const [openLogin, setOpenLogin] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleOpenLogin = () => {
     setOpenLogin(true);
@@ -26,6 +28,18 @@ export default function useTelemedicina() {
     handleMenuClose();
   };
 
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post("/api/agendar-cita", {
+        fecha: selectedDate,
+        medico: "Dr. John Doe",
+      });
+      console.log("Cita agendada:", response.data);
+    } catch (error) {
+      console.error("Error al agendar la cita:", error);
+    }
+  };
+
   return {
     handleOpenLogin,
     handleCloseLogin,
@@ -33,7 +47,10 @@ export default function useTelemedicina() {
     handleMenuOpen,
     handleMenuClose,
     handleMenuItemClick,
-    anchorEl
+    anchorEl,
+    handleSubmit,
+    setSelectedDate,
+    selectedDate,
     
   };
 }
