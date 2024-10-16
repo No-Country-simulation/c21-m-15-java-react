@@ -29,9 +29,14 @@ export default function LoginScreen() {
     console.log("Contraseña:", password);
     // Simulamos una autenticación exitosa
     sessionStorage.setItem("isAuthenticated", "true");
+
     // Redirigir al usuario a la página de la que vino
     console.log("Redirigiendo a:", from);
-    navigate(from, { replace: true });
+    //navigate(from, { replace: true });
+    //TODO: no está guardando bien, revisar.
+    sessionStorage.setItem(from, "true");
+
+    navigate(from, { replace: true, state: { user: username, rol: username } });
   };
 
   return (

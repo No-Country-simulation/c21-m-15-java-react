@@ -12,6 +12,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 import Footer from "./views/Footer";
 import Carrucel from "./components/Carrucel.jsx";
+import { SocketProvider } from "./components/socket-provider.jsx";
+import VideoLlamada from "./components/videollamada.jsx";
+import ProtectedCall from "./components/ProtectedCall.jsx";
 
 function App() {
   return (
@@ -46,6 +49,16 @@ function App() {
               <ProtectedRoute>
                 <GestionOnline />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vl/:roomId"
+            element={
+              <ProtectedCall>
+                <SocketProvider>
+                  <VideoLlamada />
+                </SocketProvider>
+              </ProtectedCall>
             }
           />
         </Routes>
