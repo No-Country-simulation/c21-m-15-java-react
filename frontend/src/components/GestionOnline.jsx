@@ -12,13 +12,15 @@ const GestionOnline = () => {
   const [medico, setMedico] = useState({});
   const { id } = useParams();
 
+
+
   useEffect(() => {
-    
+
     const fetchMedicoData = async () => {
       try {
-        const response = await axios.get("/cartilla.json"); 
-        
-        const medicoEncontrado = data.find((doc) => doc.id === parseInt(id));
+        const response = await axios.get("/cartilla.json");
+
+        const medicoEncontrado = response.data.find((doc) => doc.id === parseInt(id));
         if (medicoEncontrado) {
           setMedico(medicoEncontrado);
         } else {
@@ -61,7 +63,7 @@ const GestionOnline = () => {
               boxShadow: 3,
             }}
           >
-            Médico
+            Especialista
           </Typography>
           <Typography
             variant="body1"
@@ -69,6 +71,8 @@ const GestionOnline = () => {
               lineHeight: 3,
               padding: 1,
               borderRadius: 1,
+              color: '#134074',
+              fontWeight: 'bold'
             }}
           >
             {medico.nombre || "Cargando..."}
@@ -89,7 +93,7 @@ const GestionOnline = () => {
         >
           <CardMedia
             component="img"
-            image={medico.img || "/ruta/a/la/imagen.jpg"} 
+            image={medico.img || "/ruta/a/la/imagen.jpg"}
             sx={{
               width: 150,
               height: 150,
@@ -107,7 +111,7 @@ const GestionOnline = () => {
           >
             <Typography variant="body1">{medico.categoria || "Cargando..."}</Typography>
             <Typography variant="body2"
-             
+
             >{medico.descripcion || "Cargando..."}</Typography>
           </Box>
         </Box>
@@ -127,7 +131,9 @@ const GestionOnline = () => {
               borderRadius: 1,
             }}
           >
-            Programar cita:
+            <strong>Dias de atención:</strong>  {medico.diasDeAtencion ? medico.diasDeAtencion.join(", ") : "Cargando..."}
+
+
           </Typography>
           <Typography
             variant="body2"
@@ -136,8 +142,25 @@ const GestionOnline = () => {
               borderRadius: 1,
             }}
           >
-            Siguiente disponibilidad:
+            <strong>Horarios:</strong>
+            {medico.horarios ? (
+              Object.keys(medico.horarios).length > 0 ? (
+                Object.keys(medico.horarios).map((dia) => (
+                  <Typography key={dia} variant="body2"
+                  sx={{color: '#134074'}}
+                  >
+                    {dia}: {medico.horarios[dia]}
+                  </Typography>
+                ))
+              ) : (
+                <Typography variant="body2">No hay horarios disponibles.</Typography>
+              )
+            ) : (
+              <Typography variant="body2">Cargando horarios...</Typography>
+            )}
+
           </Typography>
+
         </Box>
       </Box>
 
