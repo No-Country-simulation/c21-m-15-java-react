@@ -81,11 +81,11 @@ export default function VideoLlamada() {
         <a href="/">volver al inicio</a>
 
         {isAuthorized && (
-          <h1>
+          <h3>
             Usuario autenticado: {user} - Rol: {rol}
-          </h1>
+          </h3>
         )}
-        <h1>Sala: {roomId} </h1>
+        <h3>Sala: {roomId} </h3>
       </section>
 
       <div className="videos">
@@ -110,13 +110,15 @@ export default function VideoLlamada() {
         </span>
       </div>
       {!socketVideoId && (
-        <button onClick={handleCallButton}>Unirse a la llamada</button>
+        <button className="video" id="join-call" onClick={handleCallButton}>
+          Unirse a la llamada
+        </button>
       )}
       {socketVideoId && <button onClick={handleLeaveButton}>Colgar</button>}
       <h2>* * *</h2>
 
       <div>
-        <h2>Usuarios en la sala:</h2>
+        <h3>Usuarios en la sala:</h3>
         {usersInRoom.length === 0 && <li>No hay usuarios en la sala</li>}
         {usersInRoom.length > 0 && (
           <span>
@@ -125,7 +127,7 @@ export default function VideoLlamada() {
             ))}
           </span>
         )}
-        <h2>Usuarios conectados a la llamada:</h2>
+        <h3>Usuarios conectados a la llamada:</h3>
         {usersInCall.length === 0 && (
           <span>
             <p>No hay usuarios conectados a la llamada</p>

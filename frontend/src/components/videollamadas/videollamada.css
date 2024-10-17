@@ -13,13 +13,16 @@ input {
   font-family: inherit;
 }
 
+
+
 input {
   padding: 0.5rem;
   border-radius: 5px;
   border: 2px solid gray;
 }
 
-button {
+button .video,
+#join-call {
   cursor: pointer;
   padding: 1rem 1rem;
   font-weight: bold;
