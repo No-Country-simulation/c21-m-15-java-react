@@ -1,9 +1,19 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function useTelemedicina() {
   const [openLogin, setOpenLogin] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const navigate = useNavigate();
+
+  const menu = {
+    Cartilla: "/cartilla",
+    Contacto: "/contacto",
+    Telemedicina: "/telemedicina",
+    Citas:"/gestion-online"
+  };
 
   const handleOpenLogin = () => {
     setOpenLogin(true);
@@ -12,7 +22,6 @@ export default function useTelemedicina() {
   const handleCloseLogin = () => {
     setOpenLogin(false);
   };
- 
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);

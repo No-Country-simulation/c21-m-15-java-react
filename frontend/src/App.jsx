@@ -12,6 +12,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 import Footer from "./views/Footer";
 import Carrucel from "./components/Carrucel.jsx";
+import { SocketProvider } from "./components/videollamadas/socket-provider.jsx";
+import VideoLlamada from "./components/videollamadas/VideoLlamada.jsx";
+import VideoNoAuth from "./components/videollamadas/VideoNoAuth.jsx";
+import RoomList from "./components/videollamadas/RoomList.jsx";
 
 function App() {
   return (
@@ -45,6 +49,27 @@ function App() {
             element={
               <ProtectedRoute>
                 <GestionOnline />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/vl/:roomId"
+            element={
+              <ProtectedRoute>
+                <SocketProvider>
+                  <VideoLlamada />
+                </SocketProvider>
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/video-no-auth" element={<VideoNoAuth />} />
+          <Route
+            path="/rooms"
+            element={
+              <ProtectedRoute>
+                <SocketProvider>
+                  <RoomList />
+                </SocketProvider>
               </ProtectedRoute>
             }
           />
