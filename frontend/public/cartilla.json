@@ -32,7 +32,7 @@
     "nombre": "Dra. Bejarano Gisela",
     "img": "/imagenes/pediatra1.jpg",
     "categoria": "Pediatria",
-    "descripcion": "Soy médico pediatra, especializado en el cuidado de bebés, niños y adolescentes. Mi trabajo consiste en asegurar que crezcan sanos, tanto física como emocionalmente. Realizo chequeos de rutina, administro vacunas y detecto posibles problemas de salud a tiempo. También acompaño a las familias brindando orientación sobre el desarrollo de sus hijos y tratando cualquier enfermedad o dificultad que pueda surgir en su crecimiento.",
+    "descripcion": "Soy médica pediatra, especializada en el cuidado de bebés, niños y adolescentes. Mi trabajo consiste en asegurar que crezcan sanos, tanto física como emocionalmente. Realizo chequeos de rutina, administro vacunas y detecto posibles problemas de salud a tiempo. También acompaño a las familias brindando orientación sobre el desarrollo de sus hijos y tratando cualquier enfermedad o dificultad que pueda surgir en su crecimiento.",
     "horarios": {
       "Lunes": "10:00 AM - 4:00 PM",
       "Miércoles": "10:00 AM - 4:00 PM",
@@ -120,7 +120,7 @@
     "nombre": "Dra. Marin Alejandra",
     "img": "/imagenes/nutricionista2.jpg",
     "categoria": "Nutricionista",
-    "descripcion": "Soy nutricionista, especializado en fomentar hábitos alimenticios saludables. Evalúo el estado nutricional de mis pacientes y diseño planes de alimentación personalizados para alcanzar sus objetivos. También ofrezco educación sobre nutrición y elecciones alimenticias saludables. Mi objetivo es empoderar a las personas para mejorar su bienestar a través de una buena alimentación.",
+    "descripcion": "Soy nutricionista, especializada en fomentar hábitos alimenticios saludables. Evalúo el estado nutricional de mis pacientes y diseño planes de alimentación personalizados para alcanzar sus objetivos. También ofrezco educación sobre nutrición y elecciones alimenticias saludables. Mi objetivo es empoderar a las personas para mejorar su bienestar a través de una buena alimentación.",
     "horarios": {
       "Martes": "10:00 AM - 4:00 PM",
       "Jueves": "10:00 AM - 4:00 PM"
