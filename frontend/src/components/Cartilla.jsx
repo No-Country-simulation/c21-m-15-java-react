@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Button, Card, CardMedia, Typography, TextField } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Cartilla = () => {
   const [cartillas, setCartillas] = useState([]);
   const [categoriaBuscada, setCategoriaBuscada] = useState('');
+  const navigate = useNavigate();
 
   const medicos = async () => {
     const URL = '/cartilla.json';  
@@ -55,14 +57,15 @@ const Cartilla = () => {
       </Box>
 
 
-      <Box className="cartilla-list">
+      <Box className="cartilla-list"  
+      >
         {cartillasFiltradas.map((cartilla) => (
           <Card
           key={cartilla.id}
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' }, 
-            margin: '1rem',
+            margin: '2rem',
             boxShadow: '1px 1px 3px #134074'
           }}
         >
@@ -77,21 +80,35 @@ const Cartilla = () => {
           />
           <Box sx={{ padding: '1rem' }}>
             <Typography variant='h6'
-              sx={{ fontFamily: 'roboto serif', color: '#13315c', fontWeight: 'bold' }}
+              sx={{ fontFamily: 'roboto serif', color: '#13315c', fontWeight: 'bold',
+                fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.8rem', lg: '2rem', xl: '2.2rem' }
+               }}
             >
               {cartilla.nombre}
             </Typography>
-            <Typography>
+            <Typography
+            sx={{
+              fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' }, 
+            }}
+            >
               <strong>Especialidad:</strong> {cartilla.categoria}
             </Typography>
-            <Typography>{cartilla.descripcion}</Typography>
+            <Typography
+            sx={{
+              fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' } 
+            }}
+            >{cartilla.descripcion}</Typography>
+            <Link  to={`/gestion-online/${cartilla.id}`}>
             <Button
               variant="contained"
               color="primary"
               sx={{ marginTop: "10px", backgroundColor: "#134074" }}
+              onClick={() => navigate('/gestion-online')}
+              
             >
-              Pedir Turno
+              Solicitar Turno
             </Button>
+            </Link>
           </Box>
         </Card>
         
@@ -103,3 +120,4 @@ const Cartilla = () => {
 };
 
 export default Cartilla;
+

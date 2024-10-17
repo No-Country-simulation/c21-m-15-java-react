@@ -1,11 +1,53 @@
-import { Box, Typography, CardMedia, Button, Container } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box,Typography, CardMedia, Button, Container, Select, MenuItem, FormControl, InputLabel, List, ListItem,} from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import useTelemedicina from "../hooks/useTelemedicina";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
+  const [medicos, setMedicos] = useState([]); 
+  const [categoria, setCategoria] = useState(""); 
+  const [medicoSeleccionado, setMedicoSeleccionado] = useState({}); 
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchMedicoData = async () => {
+      try {
+        const response = await axios.get("/cartilla.json");
+        setMedicos(response.data); 
+       
+        if (id) {
+          const medicoEncontrado = response.data.find((doc) => doc.id === parseInt(id));
+          if (medicoEncontrado) {
+            setMedicoSeleccionado(medicoEncontrado);
+            setCategoria(medicoEncontrado.categoria); 
+          } else {
+            console.error("Médico no encontrado");
+          }
+        }
+      } catch (error) {
+        console.error("Error al cargar los datos del médico:", error);
+      }
+    };
+
+    fetchMedicoData();
+  }, [id]);
+
+  
+  const medicosFiltrados = medicos.filter((doc) => doc.categoria === categoria);
+
+ 
+  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.categoria))];
+
+  useEffect(() => {
+    if (medicosFiltrados.length > 0) {
+      setMedicoSeleccionado(medicosFiltrados[0]); 
+    }
+  }, [categoria, medicos]);
 
   return (
     <Container
@@ -25,94 +67,116 @@ const GestionOnline = () => {
           boxShadow: 3,
         }}
       >
-        <Box>
-          <Typography
-            variant="h5"
-            sx={{
-              lineHeight: 2,
-              backgroundColor: "rgba(0, 123, 255, 0.1)",
-              padding: 1,
-              borderRadius: 1,
-              BoxShadow: 3,
+        <FormControl fullWidth>
+          <InputLabel id="categoria-label">Filtrar por Categoría</InputLabel>
+          <Select
+            labelId="categoria-label"
+            id="categoria-select"
+            value={categoria}
+            label="Filtrar por Categoría"
+            onChange={(e) => {
+              setCategoria(e.target.value);
+              setMedicoSeleccionado({}); 
             }}
           >
-            Medico
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              lineHeight: 3,
-              padding: 1,
-              borderRadius: 1,
-            }}
-          >
-            Dr. John Doe
-          </Typography>
-        </Box>
+            <MenuItem value="">
+              <em>Mostrar todos</em>
+            </MenuItem>
+            {categoriasDisponibles.map((cat) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "flex-start",
-            gap: 2,
-            height: "200px",
-            boxShadow: 3,
-            padding: 1,
-            borderRadius: 2,
-          }}
-        >
-          <CardMedia
-            component="img"
-            image="/ruta/a/la/imagen.jpg"
-            sx={{
-              width: 150,
-              height: 150,
-              borderRadius: "50%",
-              border: "4px solid rgba(128, 128, 128, 0.5)",
-            }}
-          />
-          <Box
-            sx={{
-              padding: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-            }}
-          >
-            <Typography variant="body1">Especialidad</Typography>
-            <Typography variant="body2">
-              Médico especialista en cardiología con 10 años de experiencia.
+        <List sx={{ marginTop: "20px" }}>
+          {medicosFiltrados.map((doc) => (
+            <ListItem
+              key={doc.id}
+              onClick={() => setMedicoSeleccionado(doc)}
+              sx={{
+                cursor: "pointer",
+                backgroundColor: medicoSeleccionado.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent",
+              }}
+            >
+              <Typography variant="body1">{doc.nombre}</Typography>
+            </ListItem>
+          ))}
+        </List>
+
+        {medicoSeleccionado && (
+          <Box sx={{ marginTop: "20px" }}>
+
+            <Typography variant="body1" sx={{ color: "#134074", fontWeight: "bold" }}>
+              {medicoSeleccionado.nombre || "Cargando..."}
             </Typography>
-          </Box>
-        </Box>
 
-        <Box
-          sx={{
-            boxShadow: 3,
-            padding: 2,
-            borderRadius: 1,
-            marginTop: "30px",
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              padding: 1,
-              borderRadius: 1,
-            }}
-          >
-            Programar cita:
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              padding: 1,
-              borderRadius: 1,
-            }}
-          >
-            Siguiente disponibilidad:
-          </Typography>
-        </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: 2,
+                height: "auto",
+                boxShadow: 3,
+                padding: 1,
+                borderRadius: 2,
+              }}
+            >
+              <CardMedia
+                component="img"
+                image={medicoSeleccionado.img || "/ruta/a/la/imagen.jpg"}
+                sx={{
+                  width: 150,
+                  height: 150,
+                  borderRadius: "50%",
+                  border: "4px solid rgba(128, 128, 128, 0.5)",
+                }}
+              />
+              <Box
+                sx={{
+                  padding: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                }}
+              >
+                <Typography variant="body1">{medicoSeleccionado.categoria || "Cargando..."}</Typography>
+                <Typography variant="body2">{medicoSeleccionado.descripcion || "Cargando..."}</Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{
+                boxShadow: 3,
+                padding: 2,
+                borderRadius: 1,
+                marginTop: "30px",
+              }}
+            >
+              <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
+                <strong>Dias de atención:</strong>{" "}
+                {medicoSeleccionado.diasDeAtencion ? medicoSeleccionado.diasDeAtencion.join(", ") : "Cargando..."}
+              </Typography>
+              <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
+                <strong>Horarios:</strong>
+                {medicoSeleccionado.horarios ? (
+                  Object.keys(medicoSeleccionado.horarios).length > 0 ? (
+                    Object.keys(medicoSeleccionado.horarios).map((dia) => (
+                      <Typography key={dia} variant="body2" sx={{ color: "#134074" }}>
+                        {dia}: {medicoSeleccionado.horarios[dia]}
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body2">No hay horarios disponibles.</Typography>
+                  )
+                ) : (
+                  <Typography variant="body2">Cargando horarios...</Typography>
+                )}
+              </Typography>
+            </Box>
+          </Box>
+        )}
       </Box>
 
       <Box
@@ -130,16 +194,13 @@ const GestionOnline = () => {
             padding: 1,
             borderRadius: 1,
             marginBottom: "15px",
-            BoxShadow: 3,
+            boxShadow: 3,
           }}
         >
           Seleccione la hora y fecha
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Aquí puede seleccionar la fecha y hora de su consulta con el
-          especialista. Utilice el calendario para elegir el día y la hora que
-          mejor se ajuste a su disponibilidad para agendar su cita médica en
-          línea.
+          Aquí puede seleccionar la fecha y hora de su consulta con el especialista. Utilice el calendario para elegir el día y la hora que mejor se ajuste a su disponibilidad para agendar su cita médica en línea.
         </Typography>
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -185,3 +246,14 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
+
+
+
+
+
+
+
+
+
+
+

@@ -34,20 +34,20 @@ const cardsData = [
 const CardSection = () => {
   return (
     <Container>
-      <Stack direction={{ xs: 'column', sm: 'column', md: 'row'}} spacing={4} justifyContent="center" alignItems="center">
+      <Stack direction={{ xs: 'column', sm: 'column', md: 'row'}} spacing={4} justifyContent="space-around" alignItems="center">
         {cardsData.map((card) => (
           <Card key={card.id}
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
+              justifyContent: 'space-around',
               borderRadius: '10px',
               border: '1px solid grey',
               width: { xs: '90%', sm: '300px' },
               height: 500,
               flexWrap:'wrap',
               maxWidth: 330,
-              boxShadow: 2
+              boxShadow: 2,
             }}>
             <Typography
               gutterBottom
