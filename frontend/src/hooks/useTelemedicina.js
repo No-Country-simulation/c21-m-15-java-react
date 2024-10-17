@@ -9,9 +9,10 @@ export default function useTelemedicina() {
   const navigate = useNavigate();
 
   const menu = {
+    Inicio:"/",
     Cartilla: "/cartilla",
     Contacto: "/contacto",
-    Telemedicina: "/telemedicina",
+    Telemedicina: "/video-no-auth",
     Citas:"/gestion-online"
   };
 
