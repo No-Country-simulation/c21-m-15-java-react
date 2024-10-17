@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { SocketContext } from "./socket-provider.jsx";
-import { useVideoCall } from "../hooks/useVideoCall.jsx"; // Import the new hook
-import "../videollamada.css";
+import { useVideoCall } from "../../hooks/useVideoCall.jsx"; // Import the new hook
+import "./videollamada.css";
 
 export default function VideoLlamada() {
   const { roomId } = useParams();

@@ -1,6 +1,8 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
-import { socketServerURL } from "./endpoints";
+
+export const socketServerURL = "https://prueba-videollamada-back.onrender.com";
+
 export const SocketContext = createContext();
 
 // eslint-disable-next-line react/prop-types

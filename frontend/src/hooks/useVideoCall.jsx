@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
-import { socketServerURL } from "../components/endpoints";
+import { socketServerURL } from "../components/videollamadas/socket-provider.jsx";
 
 const servers = {
   iceServers: [

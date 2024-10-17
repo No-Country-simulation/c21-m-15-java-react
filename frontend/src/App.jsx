@@ -12,9 +12,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 import Footer from "./views/Footer";
 import Carrucel from "./components/Carrucel.jsx";
-import { SocketProvider } from "./components/socket-provider.jsx";
-import VideoLlamada from "./components/VideoLlamada.jsx";
-import VideoNoAuth from "./components/VideoNoAuth.jsx";
+import { SocketProvider } from "./components/videollamadas/socket-provider.jsx";
+import VideoLlamada from "./components/videollamadas/VideoLlamada.jsx";
+import VideoNoAuth from "./components/videollamadas/VideoNoAuth.jsx";
 
 function App() {
   return (
