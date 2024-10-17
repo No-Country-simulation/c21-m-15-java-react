@@ -6,7 +6,6 @@ import {
   Typography,
   TextField,
   Button,
-  Link,
   CssBaseline,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
@@ -19,7 +18,6 @@ export default function LoginScreen() {
   const location = useLocation();
 
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
-  console.log("location:", location);
   const from = location.state?.from || "/";
 
   const handleSubmit = (event) => {
@@ -27,10 +25,12 @@ export default function LoginScreen() {
     // Aquí iría la lógica de autenticación
     console.log("Usuario:", username);
     console.log("Contraseña:", password);
+
     // Simulamos una autenticación exitosa
     sessionStorage.setItem("isAuthenticated", "true");
-    // Redirigir al usuario a la página de la que vino
-    console.log("Redirigiendo a:", from);
+    sessionStorage.setItem("user", username);
+    sessionStorage.setItem("rol", username); //TODO: cambiar por el rol real
+
     navigate(from, { replace: true });
   };
 
