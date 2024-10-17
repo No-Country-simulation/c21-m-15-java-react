@@ -35,7 +35,9 @@ const SobreNosotros = () => {
         >
           Sobre Nosotros
         </Typography>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" gutterBottom
+        sx={{fontSize: '22px'}}
+        >
           Nuestra app de telemedicina está diseñada para revolucionar la forma en que accedes a la atención médica. Ofrecemos una plataforma segura y fácil de usar que conecta a pacientes con profesionales de la salud desde la comodidad de sus hogares.
         </Typography>
       </Box>
