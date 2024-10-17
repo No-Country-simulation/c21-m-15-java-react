@@ -91,7 +91,7 @@
   },
   {
     "id": 8,
-    "nombre": "Dr Sanchez Laura",
+    "nombre": "Dra Sanchez Laura",
     "img": "/imagenes/dermatologo2.jpg",
     "categoria": "Dermatología",
     "descripcion": "Soy dermatóloga, especializada en la salud de la piel, el cabello y las uñas. Evaluo y trato diversas condiciones dermatológicas, desde problemas estéticos como el acné y las arrugas hasta enfermedades más serias como el melanoma. Realizo procedimientos como tratamientos láser y cirugía dermatológica. Además, asesoro a mis pacientes sobre el cuidado adecuado de la piel y la prevención de enfermedades. Mi misión es mejorar la salud y la confianza de mis pacientes a través de un enfoque personalizado",
@@ -129,7 +129,7 @@
   },
   {
     "id": 11,
-    "nombre": "Dr Suarez Milena",
+    "nombre": "Dra Suarez Milena",
     "img": "/imagenes/psicologo1.jpg",
     "categoria": "Psicología",
     "descripcion": "Soy psicóloga, especializada en la evaluación y tratamiento de problemas de salud mental como la ansiedad y la depresión. Utilizo técnicas terapéuticas para ayudar a mis pacientes a desarrollar habilidades de afrontamiento y mejorar su bienestar emocional. Mi objetivo es proporcionar un espacio seguro para que exploren sus pensamientos y emociones, promoviendo su crecimiento personal.",

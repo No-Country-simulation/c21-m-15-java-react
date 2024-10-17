@@ -34,7 +34,7 @@ const cardsData = [
 const CardSection = () => {
   return (
     <Container>
-      <Stack direction={{ xs: 'column', sm: 'column', md: 'row'}} spacing={4} justifyContent="center" alignItems="center">
+      <Stack direction={{ xs: 'column', sm: 'column', md: 'row'}} spacing={4} justifyContent="space-around" alignItems="center">
         {cardsData.map((card) => (
           <Card key={card.id}
             sx={{

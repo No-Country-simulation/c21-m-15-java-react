@@ -21,7 +21,7 @@ const SobreNosotros = () => {
           paddingRight: { md: '2rem' }, 
           marginBottom: { xs: '2rem', md: 0 }, 
           boxShadow: '1px 1px 5px black',
-          margin: '25px',
+          margin: '15px',
           padding: 2,
         }}
       >
@@ -35,7 +35,11 @@ const SobreNosotros = () => {
         >
           Sobre Nosotros
         </Typography>
-        <Typography variant="body1" gutterBottom>
+        <Typography variant="body1" gutterBottom
+         sx={{
+          fontSize: { xs: '16px', sm: '18px', md: '20px', lg: '22px' } 
+        }}
+        >
           Nuestra app de telemedicina está diseñada para revolucionar la forma en que accedes a la atención médica. Ofrecemos una plataforma segura y fácil de usar que conecta a pacientes con profesionales de la salud desde la comodidad de sus hogares.
         </Typography>
       </Box>

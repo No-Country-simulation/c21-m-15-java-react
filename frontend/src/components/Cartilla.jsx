@@ -60,38 +60,42 @@ const Cartilla = () => {
           <Card
           key={cartilla.id}
           sx={{
-           display: 'flex', margin: '1rem', boxShadow: '1px 1px 3px #134074'
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' }, 
+            margin: '1rem',
+            boxShadow: '1px 1px 3px #134074'
           }}
-          >
+        >
           <CardMedia
-              component='img'
-              sx={{
-                maxWidth: '20%',
-                objectFit: 'contain',
-              }}
-              image={cartilla.img}
-              alt={cartilla.nombre}
-            />
-            <Box sx={{ padding: '1rem' }}>
-              <Typography variant='h6'
-              sx={{fontFamily:'roboto serif',
-                color: '#13315c',
-                fontWeight: 'bold'
-              }}
-              >{cartilla.nombre}</Typography>
-              <Typography>
-                <strong>Especialidad:</strong> {cartilla.categoria}
-              </Typography>
-              <Typography>{cartilla.descripcion}</Typography>
-              <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ marginTop: "10px", backgroundColor: "#134074" }}>
-              Contactar
+            component='img'
+            sx={{
+              maxWidth: { xs: '100%', md: '20%' }, 
+              objectFit: 'contain',
+            }}
+            image={cartilla.img}
+            alt={cartilla.nombre}
+          />
+          <Box sx={{ padding: '1rem' }}>
+            <Typography variant='h6'
+              sx={{ fontFamily: 'roboto serif', color: '#13315c', fontWeight: 'bold' }}
+            >
+              {cartilla.nombre}
+            </Typography>
+            <Typography>
+              <strong>Especialidad:</strong> {cartilla.categoria}
+            </Typography>
+            <Typography>{cartilla.descripcion}</Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ marginTop: "10px", backgroundColor: "#134074" }}
+            >
+              Pedir Turno
             </Button>
-            </Box>
-            
-          </Card>
+          </Box>
+        </Card>
+        
+         
         ))}
       </Box>
     </Box>
@@ -99,3 +103,4 @@ const Cartilla = () => {
 };
 
 export default Cartilla;
+

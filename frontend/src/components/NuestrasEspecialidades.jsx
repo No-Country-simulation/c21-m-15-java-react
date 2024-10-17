@@ -67,7 +67,7 @@ const NuestrasEspecialidades = () => {
               backgroundColor:'#8DA9C4'
             }}
           >
-            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px' }}>
+            <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',justifyContent: "space-around", padding: '10px' }}>
               <CardMedia
                 component='img'
                 height='100'
