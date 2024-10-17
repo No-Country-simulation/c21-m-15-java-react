@@ -19,27 +19,19 @@ export default function LoginScreen() {
 
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
   const from = location.state?.from || "/";
-  const origin = location.state?.origin || "/";
-  console.log("location-------------:", location.state?.origin, from);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí iría la lógica de autenticación
     console.log("Usuario:", username);
     console.log("Contraseña:", password);
+
     // Simulamos una autenticación exitosa
     sessionStorage.setItem("isAuthenticated", "true");
+    sessionStorage.setItem("user", username);
+    sessionStorage.setItem("rol", username); //TODO: cambiar por el rol real
 
-    // Redirigir al usuario a la página de la que vino
-    console.log("Redirigiendo a:", from);
-    //navigate(from, { replace: true });
-    //TODO: no está guardando bien, revisar.
-    console.log("guardo: ", origin + from);
-    localStorage.setItem(origin + from, "true");
-    console.log("posguardado: ", localStorage.getItem(origin + from));
-    let userData = { user: username, rol: username };
-    console.log("userData: ", userData);
-    navigate(from, { replace: true, state: userData });
+    navigate(from, { replace: true });
   };
 
   return (

@@ -13,8 +13,8 @@ import "./App.css";
 import Footer from "./views/Footer";
 import Carrucel from "./components/Carrucel.jsx";
 import { SocketProvider } from "./components/socket-provider.jsx";
-import VideoLlamada from "./components/videollamada.jsx";
-import ProtectedCall from "./components/ProtectedCall.jsx";
+import VideoLlamada from "./components/VideoLlamada.jsx";
+import VideoNoAuth from "./components/VideoNoAuth.jsx";
 
 function App() {
   return (
@@ -54,13 +54,14 @@ function App() {
           <Route
             path="/vl/:roomId"
             element={
-              <ProtectedCall>
+              <ProtectedRoute>
                 <SocketProvider>
                   <VideoLlamada />
                 </SocketProvider>
-              </ProtectedCall>
+              </ProtectedRoute>
             }
           />
+          <Route path="/video-no-auth" element={<VideoNoAuth />} />
         </Routes>
         <Footer />
       </Home>
