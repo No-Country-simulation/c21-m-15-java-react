@@ -8,7 +8,7 @@ const SobreNosotros = () => {
         flexDirection: { xs: 'column', md: 'row' }, 
         padding: '2rem',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         boxShadow: '1px 1px 5px black',
         margin: 5,
         borderRadius: '10px'
@@ -37,7 +37,9 @@ const SobreNosotros = () => {
         </Typography>
         <Typography variant="body1" gutterBottom
          sx={{
-          fontSize: { xs: '16px', sm: '18px', md: '20px', lg: '22px' } 
+          fontSize: { xs: '16px', sm: '18px', md: '20px', lg: '22px' },
+          textAlign: 'center',
+          marginTop: '1rem'
         }}
         >
           Nuestra app de telemedicina está diseñada para revolucionar la forma en que accedes a la atención médica. Ofrecemos una plataforma segura y fácil de usar que conecta a pacientes con profesionales de la salud desde la comodidad de sus hogares.

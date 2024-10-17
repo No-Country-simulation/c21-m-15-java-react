@@ -40,14 +40,14 @@ const CardSection = () => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'space-between',
+              justifyContent: 'space-around',
               borderRadius: '10px',
               border: '1px solid grey',
               width: { xs: '90%', sm: '300px' },
               height: 500,
               flexWrap:'wrap',
               maxWidth: 330,
-              boxShadow: 2
+              boxShadow: 2,
             }}>
             <Typography
               gutterBottom
