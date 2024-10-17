@@ -41,7 +41,7 @@ function App() {
             }
           />
           <Route
-            path="/gestion-online"
+            path="/gestion-online/:id"
             element={
               <ProtectedRoute>
                 <GestionOnline />

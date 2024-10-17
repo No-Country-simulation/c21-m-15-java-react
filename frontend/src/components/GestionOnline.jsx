@@ -1,11 +1,36 @@
+import React, { useEffect, useState } from "react";
 import { Box, Typography, CardMedia, Button, Container } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import useTelemedicina from "../hooks/useTelemedicina";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
+  const [medico, setMedico] = useState({});
+  const { id } = useParams();
+
+  useEffect(() => {
+    
+    const fetchMedicoData = async () => {
+      try {
+        const response = await axios.get("/cartilla.json"); 
+        
+        const medicoEncontrado = data.find((doc) => doc.id === parseInt(id));
+        if (medicoEncontrado) {
+          setMedico(medicoEncontrado);
+        } else {
+          console.error("Médico no encontrado");
+        }
+      } catch (error) {
+        console.error("Error al cargar los datos del médico:", error);
+      }
+    };
+
+    fetchMedicoData();
+  }, [id]);
 
   return (
     <Container
@@ -33,10 +58,10 @@ const GestionOnline = () => {
               backgroundColor: "rgba(0, 123, 255, 0.1)",
               padding: 1,
               borderRadius: 1,
-              BoxShadow: 3,
+              boxShadow: 3,
             }}
           >
-            Medico
+            Médico
           </Typography>
           <Typography
             variant="body1"
@@ -46,7 +71,7 @@ const GestionOnline = () => {
               borderRadius: 1,
             }}
           >
-            Dr. John Doe
+            {medico.nombre || "Cargando..."}
           </Typography>
         </Box>
 
@@ -59,11 +84,12 @@ const GestionOnline = () => {
             boxShadow: 3,
             padding: 1,
             borderRadius: 2,
+            height: 'auto'
           }}
         >
           <CardMedia
             component="img"
-            image="/ruta/a/la/imagen.jpg"
+            image={medico.img || "/ruta/a/la/imagen.jpg"} 
             sx={{
               width: 150,
               height: 150,
@@ -79,10 +105,10 @@ const GestionOnline = () => {
               justifyContent: "flex-start",
             }}
           >
-            <Typography variant="body1">Especialidad</Typography>
-            <Typography variant="body2">
-              Médico especialista en cardiología con 10 años de experiencia.
-            </Typography>
+            <Typography variant="body1">{medico.categoria || "Cargando..."}</Typography>
+            <Typography variant="body2"
+             
+            >{medico.descripcion || "Cargando..."}</Typography>
           </Box>
         </Box>
 
@@ -130,16 +156,13 @@ const GestionOnline = () => {
             padding: 1,
             borderRadius: 1,
             marginBottom: "15px",
-            BoxShadow: 3,
+            boxShadow: 3,
           }}
         >
           Seleccione la hora y fecha
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Aquí puede seleccionar la fecha y hora de su consulta con el
-          especialista. Utilice el calendario para elegir el día y la hora que
-          mejor se ajuste a su disponibilidad para agendar su cita médica en
-          línea.
+          Aquí puede seleccionar la fecha y hora de su consulta con el especialista. Utilice el calendario para elegir el día y la hora que mejor se ajuste a su disponibilidad para agendar su cita médica en línea.
         </Typography>
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -185,3 +208,6 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
+
+
+

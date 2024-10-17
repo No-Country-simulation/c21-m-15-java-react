@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Button, Card, CardMedia, Typography, TextField } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Cartilla = () => {
   const [cartillas, setCartillas] = useState([]);
@@ -98,14 +98,17 @@ const Cartilla = () => {
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' } 
             }}
             >{cartilla.descripcion}</Typography>
+            <Link  to={`/gestion-online/${cartilla.id}`}>
             <Button
               variant="contained"
               color="primary"
               sx={{ marginTop: "10px", backgroundColor: "#134074" }}
               onClick={() => navigate('/gestion-online')}
+              
             >
               Solicitar Turno
             </Button>
+            </Link>
           </Box>
         </Card>
         
