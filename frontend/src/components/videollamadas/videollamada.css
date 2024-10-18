@@ -33,11 +33,19 @@ section#video-consultas {
     border-radius: 10px;
     max-width: 600px;
 
-    p,a {
+    p,
+    a {
       font-size: large;
       font-weight: bold;
     }
   }
+}
+
+section#videollamada {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
 }
 
 input {
@@ -70,20 +78,55 @@ button:hover.video {
 }
 
 video {
-  width: 40vw;
-  height: 30vw;
-  margin: 2rem;
+  /* width: 40vw;
+  height: 30vw; */
+  margin: 1rem;
   background: #2c3e50;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 2px solid rgb(19, 19, 19);
   box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
+#webcamVideo {
+  width: 200px;
+  height: 150px;
+}
+
+#remoteVideo {
+  width: 600px;
+  height: 400px;
+}
+
+
+
 .videos {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   padding: 1rem;
+  border: 1px solid rgba(21, 101, 192, 0.5);
+  border-radius: 5px;
+  margin: 1rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .videos {
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    margin: 0.5rem;
+  }
+
+  #webcamVideo {
+    max-width: 80vw;
+    max-height: 60vw;
+  }
+
+  #remoteVideo {
+    width: 80vw;
+    height: 60vw;
+  }
+
 }
 
 .column-list {
