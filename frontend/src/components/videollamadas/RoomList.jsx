@@ -34,7 +34,7 @@ export default function RoomList() {
   /* <button onClick={() => navigate("/vl/" + salaId)}>Atender</button> */
 
   return (
-    <section className="column-list">
+    <section id="room-list" className="column-list">
       <h1>Pacientes esperando</h1>
       {Object.keys(socketRooms).length === 0 && (
         <p>No hay pacientes esperando.</p>

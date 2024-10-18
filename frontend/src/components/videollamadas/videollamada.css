@@ -48,6 +48,12 @@ section#videollamada {
   align-items: center;
 }
 
+section#room-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 input {
   padding: 0.5rem;
   border-radius: 5px;

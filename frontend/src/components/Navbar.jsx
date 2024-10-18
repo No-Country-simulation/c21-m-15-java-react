@@ -56,23 +56,19 @@ export default function PrimarySearchAppBar() {
           <Typography
             sx={{ fontSize: "0.7rem", color: "white", margin: "0 0.5rem" }}
           ></Typography>
-          {!user && (
-            <Button
-              sx={{
-                fontSize: "0.7rem",
-                padding: "0.2rem 0.2rem",
-                backgroundColor: "white",
-              }}
-            >
-              Iniciar Sesión
-            </Button>
-          )}
+
           {user && (
             <Button
               sx={{
                 fontSize: "0.7rem",
                 padding: "0.2rem 0.2rem",
                 backgroundColor: "white",
+              }}
+              onClick={() => {
+                setUser("");
+                setUserRol("");
+                sessionStorage.clear();
+                navigate("/");
               }}
             >
               Cerrar Sesión

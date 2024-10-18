@@ -43,7 +43,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{ display: "flex", flexGrow: "1", flexDirection: "column" }}
+    >
       <CssBaseline />
       <Box
         sx={{
