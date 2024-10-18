@@ -6,7 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 const Cartilla = () => {
   const [cartillas, setCartillas] = useState([]);
   const [categoriaBuscada, setCategoriaBuscada] = useState('');
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  
 
   const medicos = async () => {
     const URL = '/cartilla.json';  
@@ -15,17 +16,24 @@ const Cartilla = () => {
       console.log(response.data);
       if (Array.isArray(response.data)) {
         setCartillas(response.data); 
+        
       } else {
         console.error("Los datos no son un array", response.data);
       }
     } catch (error) {
       console.error("Error al obtener los datos de la cartilla:", error);
+    }finally {
+      setLoading(false);  
     }
   };
 
   useEffect(() => {
     medicos();
   }, []);
+
+  if (loading) {
+    return <Typography>Cargando...</Typography>;
+  }
 
   if (!Array.isArray(cartillas) || cartillas.length === 0) {
     return <Typography>No se encontraron datos de la cartilla.</Typography>; 
@@ -103,8 +111,7 @@ const Cartilla = () => {
               variant="contained"
               color="primary"
               sx={{ marginTop: "10px", backgroundColor: "#134074" }}
-               onClick={() => navigate('/gestion-online')}
-              
+                      
             >
               Solicitar Turno
             </Button>
