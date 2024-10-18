@@ -2,19 +2,11 @@ import { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { socketServerURL } from "../components/videollamadas/socket-provider.jsx";
 
-const servers = {
-  iceServers: [
-    {
-      urls: ["stun:stun1.l.google.com:19302", "stun:stun2.l.google.com:19302"],
-    },
-  ],
-  iceCandidatePoolSize: 10,
-};
-
 export function useVideoCall(roomId) {
   const [hasVideo, setHasVideo] = useState(false);
   const [hasAudio, setHasAudio] = useState(false);
   const [socketVideoId, setSocketVideoId] = useState(null);
+  const [servers, setServers] = useState(null);
 
   const socketRefVideo = useRef(null);
   const $peer = useRef(null);
@@ -24,6 +16,29 @@ export function useVideoCall(roomId) {
 
   useEffect(() => {
     if (!roomId) return;
+
+    const fetchIceServers = async () => {
+      try {
+        const response = await fetch(
+          "https://videollamada.metered.live/api/v1/turn/credentials?apiKey=2ba6a53ce52e3166d91e5d167647fdff0f7c"
+        );
+        const iceServers = await response.json();
+        setServers({
+          iceServers: iceServers,
+          iceCandidatePoolSize: 10,
+        });
+      } catch (error) {
+        console.error("Failed to fetch ICE servers:", error);
+      }
+    };
+
+    fetchIceServers();
+  }, [roomId]);
+
+  useEffect(() => {
+    if (!roomId || !servers) return;
+
+    console.log("servers: ", servers);
 
     socketRefVideo.current = io(`${socketServerURL}/${roomId}`, {
       autoConnect: false,
@@ -216,7 +231,7 @@ export function useVideoCall(roomId) {
     return () => {
       socketRefVideo.current.close();
     };
-  }, [roomId]);
+  }, [roomId, servers]);
 
   async function createSilentVideoTrack() {
     const canvas = document.createElement("canvas");

@@ -73,79 +73,82 @@ export default function VideoLlamada() {
   let user = sessionStorage.getItem("user");
   let rol = sessionStorage.getItem("rol");
   let userFromRoomId = roomId.split("-")[0];
-  let isAuthorized = user === userFromRoomId || rol === "admin";
+  let isAuthorized =
+    user === userFromRoomId || rol === "admin" || rol === "doc";
   return (
     <>
       {!isAuthorized && <h1>Usuario no autenticado</h1>}
       <section>
-        <a href="/">volver al inicio</a>
-
         {isAuthorized && (
           <h3>
             Usuario autenticado: {user} - Rol: {rol}
           </h3>
         )}
         <h3>Sala: {roomId} </h3>
+
+        <div className="videos">
+          <span>
+            <h3>Local Stream</h3>
+            <video
+              ref={webcamVideoRef}
+              id="webcamVideo"
+              autoPlay
+              muted
+              playsInline
+            ></video>
+          </span>
+          <span>
+            <h3>Remote Stream</h3>
+            <video
+              ref={remoteVideoRef}
+              id="remoteVideo"
+              autoPlay
+              playsInline
+            ></video>
+          </span>
+        </div>
+        {!socketVideoId && (
+          <button className="video" id="join-call" onClick={handleCallButton}>
+            Unirse a la llamada
+          </button>
+        )}
+        {socketVideoId && (
+          <button className="video" id="leave-call" onClick={handleLeaveButton}>
+            Colgar
+          </button>
+        )}
+        <h2>* * *</h2>
+
+        <div>
+          <h3>Usuarios en la sala:</h3>
+          {usersInRoom.length === 0 && <li>No hay usuarios en la sala</li>}
+          {usersInRoom.length > 0 && (
+            <span>
+              {usersInRoom.map((user) => (
+                <p key={user}>{user}</p>
+              ))}
+            </span>
+          )}
+          <h3>Usuarios conectados a la llamada:</h3>
+          {usersInCall.length === 0 && (
+            <span>
+              <p>No hay usuarios conectados a la llamada</p>
+            </span>
+          )}
+          {usersInCall.length > 0 && (
+            <span>
+              {usersInCall.map((user) => (
+                <p key={user}>{user}</p>
+              ))}
+            </span>
+          )}
+          <h3>Socket ID: {socket && socket.id}</h3>
+          <p>
+            Estado: {hasVideo ? "Video disponible" : "Video no disponible"},{" "}
+            {hasAudio ? "Audio disponible" : "Audio no disponible"}
+          </p>
+        </div>
       </section>
-
-      <div className="videos">
-        <span>
-          <h3>Local Stream</h3>
-          <video
-            ref={webcamVideoRef}
-            id="webcamVideo"
-            autoPlay
-            muted
-            playsInline
-          ></video>
-        </span>
-        <span>
-          <h3>Remote Stream</h3>
-          <video
-            ref={remoteVideoRef}
-            id="remoteVideo"
-            autoPlay
-            playsInline
-          ></video>
-        </span>
-      </div>
-      {!socketVideoId && (
-        <button className="video" id="join-call" onClick={handleCallButton}>
-          Unirse a la llamada
-        </button>
-      )}
-      {socketVideoId && <button onClick={handleLeaveButton}>Colgar</button>}
-      <h2>* * *</h2>
-
-      <div>
-        <h3>Usuarios en la sala:</h3>
-        {usersInRoom.length === 0 && <li>No hay usuarios en la sala</li>}
-        {usersInRoom.length > 0 && (
-          <span>
-            {usersInRoom.map((user) => (
-              <p key={user}>{user}</p>
-            ))}
-          </span>
-        )}
-        <h3>Usuarios conectados a la llamada:</h3>
-        {usersInCall.length === 0 && (
-          <span>
-            <p>No hay usuarios conectados a la llamada</p>
-          </span>
-        )}
-        {usersInCall.length > 0 && (
-          <span>
-            {usersInCall.map((user) => (
-              <p key={user}>{user}</p>
-            ))}
-          </span>
-        )}
-        <h3>Socket ID: {socket && socket.id}</h3>
-        <p>
-          Estado: {hasVideo ? "Video disponible" : "Video no disponible"},{" "}
-          {hasAudio ? "Audio disponible" : "Audio no disponible"}
-        </p>
-      </div>
     </>
   );
 }

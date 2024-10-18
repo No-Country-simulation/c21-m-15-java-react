@@ -22,6 +22,10 @@ export default function LoginScreen() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!username || !password) {
+      alert("Por favor, complete los campos de usuario y contraseña.");
+      return;
+    }
     // Aquí iría la lógica de autenticación
     console.log("Usuario:", username);
     console.log("Contraseña:", password);

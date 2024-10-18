@@ -6,6 +6,9 @@ const VideoConsultas = () => {
   let user = sessionStorage.getItem("user");
   let rol = sessionStorage.getItem("rol");
 
+  console.log("user: ", user);
+  console.log("rol: ", rol);
+
   const [userId, setUserId] = useState(user);
   const [roomUrl, setRoomUrl] = useState("");
   const [roomId, setRoomId] = useState("");
@@ -31,24 +34,18 @@ const VideoConsultas = () => {
   }
 
   return (
-    <div>
-      {userId && (
-        <h3>
-          Usuario: {userId} - Rol: {rol}
-        </h3>
-      )}
-
+    <section id="video-consultas">
       {roomUrl && (
-        <div>
-          <h3>
+        <div className="content">
+          <p>
             Para realizar una video consulta ingrese al siguiente enlace y
             aguarde a ser atendido/a:
-          </h3>
+          </p>
 
           <a href={`/vl/${roomId}`}>{userId !== "" ? roomUrl : ""}</a>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
