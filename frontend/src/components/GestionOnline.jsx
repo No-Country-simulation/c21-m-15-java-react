@@ -37,9 +37,9 @@ const GestionOnline = () => {
     fetchMedicoData();
   }, [id]);
 
-  
-  const medicosFiltrados = medicos.filter((doc) => doc.categoria === categoria);
+ 
 
+  const medicosFiltrados = medicos.filter((doc) => doc.categoria === categoria);
  
   const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.categoria))];
 
