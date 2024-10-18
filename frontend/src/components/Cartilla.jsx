@@ -32,7 +32,7 @@ const Cartilla = () => {
   }
 
   const cartillasFiltradas = cartillas.filter(cartilla =>
-    cartilla.categoria.toLowerCase().includes(categoriaBuscada.toLowerCase())
+    cartilla.Speciality.toLowerCase().includes(categoriaBuscada.toLowerCase())
   );
 
   return (
@@ -61,7 +61,7 @@ const Cartilla = () => {
       >
         {cartillasFiltradas.map((cartilla) => (
           <Card
-          key={cartilla.id}
+          key={cartilla.Id}
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' }, 
@@ -75,8 +75,8 @@ const Cartilla = () => {
               maxWidth: { xs: '100%', md: '20%' }, 
               objectFit: 'contain',
             }}
-            image={cartilla.img}
-            alt={cartilla.nombre}
+            image={cartilla.Picture}
+            alt={cartilla.Name}
           />
           <Box sx={{ padding: '1rem' }}>
             <Typography variant='h6'
@@ -84,26 +84,26 @@ const Cartilla = () => {
                 fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.8rem', lg: '2rem', xl: '2.2rem' }
                }}
             >
-              {cartilla.nombre}
+              {cartilla.Name}
             </Typography>
             <Typography
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' }, 
             }}
             >
-              <strong>Especialidad:</strong> {cartilla.categoria}
+              <strong>Especialidad:</strong> {cartilla.Speciality}
             </Typography>
             <Typography
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' } 
             }}
-            >{cartilla.descripcion}</Typography>
-            <Link  to={`/gestion-online/${cartilla.id}`}>
+            >{cartilla.Description}</Typography>
+            <Link  to={`/gestion-online/${cartilla.Id}`}>
             <Button
               variant="contained"
               color="primary"
               sx={{ marginTop: "10px", backgroundColor: "#134074" }}
-              onClick={() => navigate('/gestion-online')}
+               onClick={() => navigate('/gestion-online')}
               
             >
               Solicitar Turno
