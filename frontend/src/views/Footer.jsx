@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Box, Typography, Link as MuiLink } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom"; 
 import useTelemedicina from "../hooks/useTelemedicina";
 
@@ -18,79 +18,65 @@ export default function Footer() {
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
-       
-
         <Link
           to="/"
           onClick={() => handleMenuItemClick('Inicio')}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          <MuiLink
-            underline="hover"
+          <Typography
             sx={{
-              color: "white",
               "&:hover": {
                 color: "#0b2545",
               },
             }}
           >
             Inicio
-          </MuiLink>
+          </Typography>
         </Link>
         <Link
           to="/Cartilla"
           onClick={() => handleMenuItemClick('Cartilla')}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          <MuiLink
-            underline="hover"
+          <Typography
             sx={{
-              color: "white",
               "&:hover": {
                 color: "#0b2545",
               },
             }}
           >
             Cartilla
-          </MuiLink>
+          </Typography>
         </Link>
-
-       
         <Link
           to="/video-consultas"
           onClick={() => handleMenuItemClick('Telemedicina')}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          <MuiLink
-            underline="hover"
+          <Typography
             sx={{
-              color: "white",
               "&:hover": {
                 color: "#0b2545",
               },
             }}
           >
             Telemedicina
-          </MuiLink>
+          </Typography>
         </Link>
-
- 
         <Link
           to="/Contacto"
           onClick={() => handleMenuItemClick('Contacto')}
-          style={{ textDecoration: "none" }}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          <MuiLink
-            underline="hover"
+          <Typography
             sx={{
-              color: "white",
               "&:hover": {
                 color: "#0b2545",
               },
             }}
           >
             Contacto
-          </MuiLink>
+          </Typography>
         </Link>
       </Box>
 
@@ -102,7 +88,6 @@ export default function Footer() {
           gap: "20px",
         }}
       >
-       
         <Typography
           sx={{
             color: "white",
@@ -114,8 +99,6 @@ export default function Footer() {
         >
           Términos y Condiciones
         </Typography>
-
-       
         <Typography
           sx={{
             color: "white",
