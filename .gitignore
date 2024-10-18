@@ -23,3 +23,10 @@
 hs_err_pid*
 replay_pid*
 .idea
+
+**/node_modules/
+frontend/node_modules/
+node_modules
+dist
+dist-ssr
+*.local
