@@ -3,23 +3,21 @@ package com.noCountry.backend.appointment;
 import com.noCountry.backend.medic.Medic;
 import com.noCountry.backend.patient.Patient;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Appointment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private Date appointmentDate;
+    @GeneratedValue
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id")
@@ -29,5 +27,8 @@ public class Appointment {
     @JoinColumn(name = "medic_id", referencedColumnName = "id")
     private Medic medic;
 
+    private LocalTime startTime;
+    private DayOfWeek dayOfWeek;
+    private boolean isBooked = false;
     private String notes;
 }
