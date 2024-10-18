@@ -73,24 +73,33 @@ export default function VideoLlamada() {
   let user = sessionStorage.getItem("user");
   let rol = sessionStorage.getItem("rol");
   let userFromRoomId = roomId.split("-")[0];
-  let isAuthorized = user === userFromRoomId || rol === "admin";
-  return (
-    <>
-      {!isAuthorized && <h1>Usuario no autenticado</h1>}
-      <section>
-        <a href="/">volver al inicio</a>
+  let isAuthorized =
+    user === userFromRoomId || rol === "admin" || rol === "doc";
 
-        {isAuthorized && (
-          <h3>
-            Usuario autenticado: {user} - Rol: {rol}
-          </h3>
-        )}
-        <h3>Sala: {roomId} </h3>
-      </section>
+  let localName = "";
+  let remoteName = "";
+  if (rol !== "admin" && rol !== "doc") {
+    localName = user;
+    remoteName = "HealthPro";
+  }
+  if (rol === "admin" || rol === "doc") {
+    localName = "HealthPro";
+    remoteName = "Paciente: " + userFromRoomId;
+  }
+
+  return (
+    <section id="videollamada">
+      {!isAuthorized && <h1>Usuario no autenticado</h1>}
+      {isAuthorized && (
+        <h3>
+          Usuario autenticado: {user} - Rol: {rol}
+        </h3>
+      )}
+      <h3>Sala: {roomId} </h3>
 
       <div className="videos">
-        <span>
-          <h3>Local Stream</h3>
+        <div id="localstream">
+          <h3>{localName}</h3>
           <video
             ref={webcamVideoRef}
             id="webcamVideo"
@@ -98,23 +107,27 @@ export default function VideoLlamada() {
             muted
             playsInline
           ></video>
-        </span>
-        <span>
-          <h3>Remote Stream</h3>
+        </div>
+        <div id="remotestream">
+          <h3>{remoteName}</h3>
           <video
             ref={remoteVideoRef}
             id="remoteVideo"
             autoPlay
             playsInline
           ></video>
-        </span>
+        </div>
       </div>
       {!socketVideoId && (
         <button className="video" id="join-call" onClick={handleCallButton}>
           Unirse a la llamada
         </button>
       )}
-      {socketVideoId && <button onClick={handleLeaveButton}>Colgar</button>}
+      {socketVideoId && (
+        <button className="video" id="leave-call" onClick={handleLeaveButton}>
+          Colgar
+        </button>
+      )}
       <h2>* * *</h2>
 
       <div>
@@ -146,6 +159,6 @@ export default function VideoLlamada() {
           {hasAudio ? "Audio disponible" : "Audio no disponible"}
         </p>
       </div>
-    </>
+    </section>
   );
 }
