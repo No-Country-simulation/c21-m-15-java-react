@@ -9,8 +9,11 @@ import {
   CssBaseline,
 } from "@mui/material";
 import { LockOutlined as LockOutlinedIcon } from "@mui/icons-material";
+import { useContext } from "react";
+import { userContext } from "./userProvider";
 
 export default function LoginScreen() {
+  const { user, setUser, userRol, setUserRol } = useContext(userContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -26,6 +29,7 @@ export default function LoginScreen() {
       alert("Por favor, complete los campos de usuario y contraseña.");
       return;
     }
+    setUser(username);
     // Aquí iría la lógica de autenticación
     console.log("Usuario:", username);
     console.log("Contraseña:", password);

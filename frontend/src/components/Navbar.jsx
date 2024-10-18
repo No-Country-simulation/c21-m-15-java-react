@@ -1,65 +1,121 @@
-
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import logo from "../assets/Logo.png";
-import user from '../assets/user.png'; 
-import { Typography, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from '@mui/material';
-import useTelemedicina from '../hooks/useTelemedicina';
+import user from "../assets/user.png";
+import {
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
+} from "@mui/material";
+import useTelemedicina from "../hooks/useTelemedicina";
+import { userContext } from "./userProvider";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function PrimarySearchAppBar() {
-  const {openLogin,handleOpenLogin ,handleCloseLogin } = useTelemedicina();
-
-   return (
+  const { openLogin, handleOpenLogin, handleCloseLogin } = useTelemedicina();
+  const { user, setUser, userRol, setUserRol } = useContext(userContext);
+  const navigate = useNavigate();
+  return (
     <Box>
       <AppBar position="static" sx={{ backgroundColor: "#007BFF" }}>
         <Toolbar>
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-start',
-              maxWidth: '150px',
-              minWidth: '150px',
-              height: '80px',
-              overflow: 'hidden',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              maxWidth: "150px",
+              minWidth: "150px",
+              height: "80px",
+              overflow: "hidden",
             }}
           >
             <img
               src={logo}
               alt="Logo"
               style={{
-                height: '100%',
-                width: '90%',
-                objectFit: 'cover',
+                height: "100%",
+                width: "90%",
+                objectFit: "cover",
               }}
             />
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography sx={{ fontSize: "1rem", color: "white" }}>
+            {user ? "Usuario: " + user : ""}
+          </Typography>
+          <Typography
+            sx={{ fontSize: "0.7rem", color: "white", margin: "0 0.5rem" }}
+          ></Typography>
+          {!user && (
+            <Button
+              sx={{
+                fontSize: "0.7rem",
+                padding: "0.2rem 0.2rem",
+                backgroundColor: "white",
+              }}
+            >
+              Iniciar Sesión
+            </Button>
+          )}
+          {user && (
+            <Button
+              sx={{
+                fontSize: "0.7rem",
+                padding: "0.2rem 0.2rem",
+                backgroundColor: "white",
+              }}
+            >
+              Cerrar Sesión
+            </Button>
+          )}
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <IconButton
-              sx={{ fontSize: '2rem' }}
+              sx={{ fontSize: "2rem" }}
               edge="end"
               aria-label="account of current user"
               aria-haspopup="true"
               color="inherit"
-              onClick={handleOpenLogin} 
+              onClick={() => navigate("/login")}
               autoFocus
             >
-              <AccountCircle sx={{ fontSize: 'inherit' }} />
+              <AccountCircle sx={{ fontSize: "inherit" }} />
             </IconButton>
-            <Typography sx={{ fontSize: '0.7rem', color: 'white' }}>Mi cuenta</Typography>
           </Box>
         </Toolbar>
       </AppBar>
 
       {/* Diálogo para el login */}
-      <Dialog open={openLogin} onClose={handleCloseLogin} fullWidth maxWidth="xs">
+      <Dialog
+        open={openLogin}
+        onClose={handleCloseLogin}
+        fullWidth
+        maxWidth="xs"
+      >
         <DialogTitle>Iniciar Sesión</DialogTitle>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Box
             component="img"
             src={user}
@@ -67,8 +123,8 @@ export default function PrimarySearchAppBar() {
             sx={{
               height: 100,
               width: 100,
-              borderRadius: '50%',
-              marginBottom: '20px',
+              borderRadius: "50%",
+              marginBottom: "20px",
             }}
           />
           <TextField
@@ -101,5 +157,3 @@ export default function PrimarySearchAppBar() {
     </Box>
   );
 }
-
-

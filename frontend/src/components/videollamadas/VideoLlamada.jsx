@@ -75,6 +75,18 @@ export default function VideoLlamada() {
   let userFromRoomId = roomId.split("-")[0];
   let isAuthorized =
     user === userFromRoomId || rol === "admin" || rol === "doc";
+
+  let localName = "";
+  let remoteName = "";
+  if (rol !== "admin" && rol !== "doc") {
+    localName = user;
+    remoteName = "HealthPro";
+  }
+  if (rol === "admin" || rol === "doc") {
+    localName = "HealthPro";
+    remoteName = "Paciente: " + userFromRoomId;
+  }
+
   return (
     <section id="videollamada">
       {!isAuthorized && <h1>Usuario no autenticado</h1>}
@@ -87,7 +99,7 @@ export default function VideoLlamada() {
 
       <div className="videos">
         <div id="localstream">
-          <h3>Local Stream</h3>
+          <h3>{localName}</h3>
           <video
             ref={webcamVideoRef}
             id="webcamVideo"
@@ -97,7 +109,7 @@ export default function VideoLlamada() {
           ></video>
         </div>
         <div id="remotestream">
-          <h3>Remote Stream</h3>
+          <h3>{remoteName}</h3>
           <video
             ref={remoteVideoRef}
             id="remoteVideo"
