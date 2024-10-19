@@ -39,7 +39,10 @@ public class AppointmentService {
 
         return appointmentRepository.findByMedicAndIsBooked(medic, isBooked)
                 .stream()
-                .map(mapper::toAppointmentResponse)
+                .map(appointment -> {
+                    if(isBooked)
+                        return mapper.toAppointmentResponse(appointment);
+                    return mapper.toNonBookedAppointmentResponse(appointment);})
                 .toList();
     }
 

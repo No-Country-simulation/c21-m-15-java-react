@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -16,8 +17,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AppointmentAlreadyBookedException.class)
-    public ResponseEntity<String> handleAppointmentAlreadyBookedException(AppointmentAlreadyBookedException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> handleAppointmentAlreadyBookedException(AppointmentAlreadyBookedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMsg());
     }
-
 }

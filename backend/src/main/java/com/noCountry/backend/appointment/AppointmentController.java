@@ -1,9 +1,8 @@
 package com.noCountry.backend.appointment;
 
-import com.noCountry.backend.medic.MedicService;
-import com.noCountry.backend.patient.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +14,7 @@ public class AppointmentController {
 
     // Obtener las citas reservados o no reservadas de un medico
     @GetMapping("/medics/{id}/appointments")
+    @PreAuthorize("#isBooked == false or #id == authentication.principal.id")
     public ResponseEntity<?> getAppointmentsByMedicId(@RequestParam(required= false, defaultValue = "false") boolean isBooked,
                                                       @PathVariable Long id) {
         return ResponseEntity.ok(appointmentService.getAppointmentsByMedicAndIsBooked(id, isBooked));
@@ -22,12 +22,13 @@ public class AppointmentController {
 
     // Obtener todas las citas de un paciente
     @GetMapping("/patients/{id}/appointments")
+    @PreAuthorize("hasRole('MEDIC') or #id == authentication.principal.id")
     public ResponseEntity<?> getAppointmentsByPatientId(@PathVariable Long id) {
         return ResponseEntity.ok(appointmentService.getBookedAppointmentsByPatient(id));
     }
 
     // Reservar una cita
-    @PutMapping("/medics/{id}/appointments")
+    @PutMapping("/appointments")
     public ResponseEntity<?> bookAppointment(@RequestBody AppointmentRequest appointment){
         return ResponseEntity.ok(appointmentService.updateAppointment(appointment));
     }

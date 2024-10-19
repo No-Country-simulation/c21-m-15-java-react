@@ -38,4 +38,16 @@ public class AppointmentMapper {
                 appointment.getNotes()
         );
     }
+
+    public AppointmentResponse toNonBookedAppointmentResponse(Appointment appointment) {
+        return new AppointmentResponse(
+                appointment.getId(),
+                0,
+                appointment.getMedic().getId(),
+                appointment.getStartTime(),
+                appointment.getDayOfWeek(),
+                appointment.isBooked(),
+                ""
+        );
+    }
 }
