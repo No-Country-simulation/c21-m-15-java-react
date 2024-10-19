@@ -4,12 +4,17 @@ import com.noCountry.backend.jwt.JwtService;
 import com.noCountry.backend.user.Role;
 import com.noCountry.backend.user.User;
 import com.noCountry.backend.user.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -44,7 +49,7 @@ public class AuthService {
                 )
         );
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow();
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
         return AuthResponse.builder()
                 .token(jwtService.generateToken(user))
                 .build();
