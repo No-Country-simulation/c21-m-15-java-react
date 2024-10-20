@@ -25,9 +25,9 @@ Con la base de datos inicializada, podrás conectarte a la API al correrla desde
 
 ---
 
-## Añadir Datos a la Base de Datos
+## Añadir Datos a la Base de Datos por Primera Vez
 
-Mientras la base de datos está corriendo, los pasos para añadir los datos son: 
+Mientras la aplicación está corriendo, los pasos para añadir los datos son: 
 
 1. Dirigirse a la raíz de la carpeta backend.
     ```sh
@@ -35,6 +35,6 @@ Mientras la base de datos está corriendo, los pasos para añadir los datos son:
 2. Copia data.sql en el contenedor de la base de datos
     ```sh
     docker cp data.sql postgres_container:/data.sql
-2. Ejecuta data.sql en la base de datos
+3. Ejecuta data.sql en la base de datos
     ```sh
     docker exec -i postgres_container psql -U postgres -d backend -f /data.sql
