@@ -32,4 +32,12 @@ public class AppointmentController {
     public ResponseEntity<?> bookAppointment(@RequestBody AppointmentRequest appointment){
         return ResponseEntity.ok(appointmentService.updateAppointment(appointment));
     }
+
+    // Generar citas manualmente
+    @GetMapping("/appointments/generate")
+    @PreAuthorize("hasRole('MEDIC')")
+    public ResponseEntity<?> generateAppointment() {
+        appointmentService.generateAppointments();
+        return ResponseEntity.ok("Citas generadas exitosamente");
+    }
 }

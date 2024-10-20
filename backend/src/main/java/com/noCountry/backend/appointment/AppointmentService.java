@@ -9,6 +9,7 @@ import com.noCountry.backend.patient.Patient;
 import com.noCountry.backend.patient.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -96,12 +97,15 @@ public class AppointmentService {
                 if(currentDate.getDayOfWeek() == openingHour.getDayOfWeek()) {
                     LocalTime currentTime = openingHour.getStartTime();
                     while (currentTime.isBefore(openingHour.getEndTime())) {
-                        Appointment appointment = Appointment.builder()
-                                .medic(openingHour.getMedic())
-                                .startDateTime(LocalDateTime.of(currentDate, currentTime))
-                                .build();
-
-                        appointmentRepository.save(appointment);
+                        try {
+                            Appointment appointment = Appointment.builder()
+                                    .medic(openingHour.getMedic())
+                                    .startDateTime(LocalDateTime.of(currentDate, currentTime))
+                                    .build();
+                            appointmentRepository.save(appointment);
+                        } catch (DataIntegrityViolationException ex) {
+                            System.out.println("Appointment already exists: " + ex.getMessage());
+                        }
                         currentTime = currentTime.plusHours(1);
                     }
                     currentDate = currentDate.plusWeeks(1);
