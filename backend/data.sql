@@ -35,9 +35,9 @@ INSERT INTO patient (Id, User_Id, First_Name, Last_Name, Email, Telephone) VALUE
 (5, 5, 'Bob', 'Davis', 'bob.davis@example.com', '567-890-1234'),
 (6, 6, 'Charlie', 'Miller', 'charlie.miller@example.com', '678-901-2345');
 
-INSERT INTO appointment (Id, Medic_Id, Start_Time, Day_Of_Week, is_Booked, Patient_Id, Notes) VALUES
-(1, 1, '12:00:00', 1, true, 4, 'Routine check-up'),
-(2, 1, '13:00:00', 1, false, NULL, NULL),
-(3, 2, '14:00:00', 2, true, 5, 'Follow-up visit'),
-(4, 3, '15:00:00', 3, false, NULL, NULL);
+--INSERT INTO appointment (Id, Medic_Id, Start_Time, Day_Of_Week, is_Booked, Patient_Id, Notes) VALUES
+--(1, 1, '12:00:00', 1, true, 4, 'Routine check-up'),
+--(2, 1, '13:00:00', 1, false, NULL, NULL),
+--(3, 2, '14:00:00', 2, true, 5, 'Follow-up visit'),
+--(4, 3, '15:00:00', 3, false, NULL, NULL);
 

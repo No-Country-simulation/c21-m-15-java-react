@@ -3,12 +3,18 @@ package com.noCountry.backend.appointment;
 import com.noCountry.backend.exception.AppointmentAlreadyBookedException;
 import com.noCountry.backend.medic.Medic;
 import com.noCountry.backend.medic.MedicRepository;
+import com.noCountry.backend.openingHour.OpeningHour;
+import com.noCountry.backend.openingHour.OpeningHourRepository;
 import com.noCountry.backend.patient.Patient;
 import com.noCountry.backend.patient.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -17,6 +23,7 @@ public class AppointmentService {
     private final AppointmentRepository appointmentRepository;
     private final PatientRepository patientRepository;
     private final MedicRepository medicRepository;
+    private final OpeningHourRepository openingHourRepository;
     private final AppointmentMapper mapper;
 
 //    public List<AppointmentResponse> getAppointmentsByMedic(Medic medicById) {
@@ -73,5 +80,35 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
 
         return mapper.toAppointmentResponse(appointment);
+    }
+
+    @Scheduled(cron = "0 0 1 * * *")
+    public void generateAppointments() {
+        LocalDate starDate = LocalDate.now();
+        LocalDate endDate = starDate.plusWeeks(2);
+
+        List<OpeningHour> openingHours = openingHourRepository.findAll();
+
+        for(OpeningHour openingHour : openingHours) {
+            LocalDate currentDate = starDate;
+
+            while (currentDate.isBefore(endDate)) {
+                if(currentDate.getDayOfWeek() == openingHour.getDayOfWeek()) {
+                    LocalTime currentTime = openingHour.getStartTime();
+                    while (currentTime.isBefore(openingHour.getEndTime())) {
+                        Appointment appointment = Appointment.builder()
+                                .medic(openingHour.getMedic())
+                                .startDateTime(LocalDateTime.of(currentDate, currentTime))
+                                .build();
+
+                        appointmentRepository.save(appointment);
+                        currentTime = currentTime.plusHours(1);
+                    }
+                    currentDate = currentDate.plusWeeks(1);
+                }
+                else
+                    currentDate = currentDate.plusDays(1);
+            }
+        }
     }
 }

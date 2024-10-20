@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -13,6 +15,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Entity
 @Builder
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"medic_id", "startDateTime"}))
 public class Appointment {
 
     @Id
@@ -27,8 +30,7 @@ public class Appointment {
     @JoinColumn(name = "medic_id", referencedColumnName = "id")
     private Medic medic;
 
-    private LocalTime startTime;
-    private DayOfWeek dayOfWeek;
+    private LocalDateTime startDateTime;
     private boolean isBooked = false;
     private String notes;
 }

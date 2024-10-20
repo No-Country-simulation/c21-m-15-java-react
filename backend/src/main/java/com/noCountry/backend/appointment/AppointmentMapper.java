@@ -32,8 +32,7 @@ public class AppointmentMapper {
                 appointment.getId(),
                 appointment.getPatient().getId(),
                 appointment.getMedic().getId(),
-                appointment.getStartTime(),
-                appointment.getDayOfWeek(),
+                appointment.getStartDateTime(),
                 appointment.isBooked(),
                 appointment.getNotes()
         );
@@ -44,8 +43,7 @@ public class AppointmentMapper {
                 appointment.getId(),
                 0,
                 appointment.getMedic().getId(),
-                appointment.getStartTime(),
-                appointment.getDayOfWeek(),
+                appointment.getStartDateTime(),
                 appointment.isBooked(),
                 ""
         );

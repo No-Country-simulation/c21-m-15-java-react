@@ -1,4 +1,6 @@
 package com.noCountry.backend.openingHour;
 
-public class OpeningHourRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OpeningHourRepository extends JpaRepository<OpeningHour, Long> {
 }
