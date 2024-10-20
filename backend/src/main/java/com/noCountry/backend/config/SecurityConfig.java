@@ -41,6 +41,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("api/auth/**")
                         .permitAll()
+                        .requestMatchers("api/medics")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
                 .sessionManagement(sessionManager -> sessionManager
