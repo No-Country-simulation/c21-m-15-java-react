@@ -10,7 +10,8 @@ const Cartilla = () => {
   
 
   const medicos = async () => {
-    const URL = '/cartilla.json';  
+    const URL = 'http://localhost:8080/api/medics'; 
+    console.log(URL); 
     try {
       const response = await axios.get(URL);
       console.log(response.data);
@@ -18,7 +19,7 @@ const Cartilla = () => {
         setCartillas(response.data); 
         
       } else {
-        console.error("Los datos no son un array", response.data);
+        console.error("Los datos no son un t", response.data);
       }
     } catch (error) {
       console.error("Error al obtener los datos de la cartilla:", error);
@@ -40,7 +41,7 @@ const Cartilla = () => {
   }
 
   const cartillasFiltradas = cartillas.filter(cartilla =>
-    cartilla.Speciality.toLowerCase().includes(categoriaBuscada.toLowerCase())
+    cartilla.speciality.toLowerCase().includes(categoriaBuscada.toLowerCase())
   );
 
   return (
@@ -69,7 +70,7 @@ const Cartilla = () => {
       >
         {cartillasFiltradas.map((cartilla) => (
           <Card
-          key={cartilla.Id}
+          key={cartilla.id}
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' }, 
@@ -83,8 +84,8 @@ const Cartilla = () => {
               maxWidth: { xs: '100%', md: '20%' }, 
               objectFit: 'contain',
             }}
-            image={cartilla.Picture}
-            alt={cartilla.Name}
+            image={cartilla.picture}
+            alt={cartilla.name}
           />
           <Box sx={{ padding: '1rem' }}>
             <Typography variant='h6'
@@ -92,21 +93,21 @@ const Cartilla = () => {
                 fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.8rem', lg: '2rem', xl: '2.2rem' }
                }}
             >
-              {cartilla.Name}
+              {cartilla.name}
             </Typography>
             <Typography
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' }, 
             }}
             >
-              <strong>Especialidad:</strong> {cartilla.Speciality}
+              <strong>Especialidad:</strong> {cartilla.speciality}
             </Typography>
             <Typography
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' } 
             }}
-            >{cartilla.Description}</Typography>
-            <Link  to={`/gestion-online/${cartilla.Id}`}>
+            >{cartilla.description}</Typography>
+            <Link  to={`/gestion-online/${cartilla.id}`}>
             <Button
               variant="contained"
               color="primary"
