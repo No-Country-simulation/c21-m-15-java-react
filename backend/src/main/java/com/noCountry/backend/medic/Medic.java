@@ -16,17 +16,19 @@ import java.util.List;
 public class Medic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    private String firstName;
-    private String lastName;
-    private String specialty;
-    private String email;
-    private String telephone;
+    private String name;
+    private String picture;
+    private String speciality;
+
+    @Column(length = 1024)
+    private String description;
     @OneToMany(mappedBy = "medic")
     private List<OpeningHour> openingHours;
+
 }
