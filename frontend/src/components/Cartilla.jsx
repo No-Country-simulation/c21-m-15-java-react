@@ -11,11 +11,7 @@ const Cartilla = () => {
 
   const medicos = async () => {
     const URL = 'http://localhost:8080/api/medics'; 
-<<<<<<< HEAD
-    console.log(URL) 
-=======
     console.log(URL); 
->>>>>>> 42037c7dd6e7979bb4ca4b2a080673c929f00e3c
     try {
       const response = await axios.get(URL);
       console.log(response.data);
