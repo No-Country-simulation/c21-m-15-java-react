@@ -31,7 +31,7 @@
     "Id": 3,
     "Name": "Dra. Bejarano Gisela",
     "Picture": "/imagenes/pediatra1.jpg",
-    "Speciality": "Pediatria",
+    "Speciality": "Pediatría",
     "Description": "Soy médica pediatra, especializada en el cuidado de bebés, niños y adolescentes. Mi trabajo consiste en asegurar que crezcan sanos, tanto física como emocionalmente. Realizo chequeos de rutina, administro vacunas y detecto posibles problemas de salud a tiempo. También acompaño a las familias brindando orientación sobre el desarrollo de sus hijos y tratando cualquier enfermedad o dificultad que pueda surgir en su crecimiento.",
     "OpeningHours": {
       "Lunes": "10:00 AM - 4:00 PM",
@@ -44,7 +44,7 @@
     "Id": 4,
     "Name": "Dra. Pereyra Florencia",
     "Picture": "/imagenes/pediatra2.jpg",
-    "Speciality": "Pediatria",
+    "Speciality": "Pediatría",
     "Description": "Me dedico a la pediatría porque creo en la importancia de cuidar la salud desde los primeros años de vida. Acompaño a los niños y sus familias en cada etapa del crecimiento, realizando controles preventivos, aplicando vacunas y ofreciendo tratamiento cuando es necesario. Mi enfoque va más allá de la medicina: escucho, oriento y trabajo para crear un entorno en el que los pequeños puedan desarrollarse de manera saludable y feliz.",
     "OpeningHours": {
       "Martes": "10:00 AM - 4:00 PM",
@@ -56,7 +56,7 @@
     "Id": 5,
     "Name": "Dr. Fiore Samuel",
     "Picture": "/imagenes/cardiologo1.jpg",
-    "Speciality": "Cardiologia",
+    "Speciality": "Cardiología",
     "Description": "Me dedico a tratar afecciones como la insuficiencia cardíaca, las arritmias, la enfermedad de las arterias coronarias, y los problemas valvulares.  Un aspecto fundamental de mi trabajo es la prevención de enfermedades cardíacas, ayudando a mis pacientes a controlar factores de riesgo como el colesterol alto, la hipertensión y el estilo",
     "OpeningHours": {
       "Miércoles": "10:00 AM - 4:00 PM"
@@ -67,7 +67,7 @@
     "Id": 6,
     "Name": "Dr. Oviedo Leandro",
     "Picture": "/imagenes/cardiologo2.jpg",
-    "Speciality": "Cardiologia",
+    "Speciality": "Cardiología",
     "Description": "Soy cardiólogo, especializado en diagnosticar y tratar enfermedades del corazón. Realizo pruebas y procedimientos avanzados, como electrocardiogramas y colocación de marcapasos. También ayudo a prevenir problemas cardíacos promoviendo hábitos saludables. Mi enfoque es mejorar la salud y calidad de vida de mis pacientes.",
     "OpeningHours": {
       "Lunes": "9:00 AM - 5:00 PM",

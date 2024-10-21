@@ -139,7 +139,9 @@ const GestionOnline = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Typography variant="body1">{medicoSeleccionado.Speciality || "Cargando..."}</Typography>
+                <Typography variant="body1"
+                 sx={{fontWeight: 'bold'}}
+                >{medicoSeleccionado.Speciality || "Cargando..."}</Typography>
                 <Typography variant="body2">{medicoSeleccionado.Description || "Cargando..."}</Typography>
               </Box>
             </Box>
