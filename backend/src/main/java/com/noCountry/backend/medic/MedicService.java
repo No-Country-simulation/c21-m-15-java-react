@@ -11,9 +11,16 @@ public class MedicService {
     private final MedicRepository medicRepository;
     private final MedicMapper mapper;
 
-    // Consultar todos los medicos
-    public List<MedicResponse> getAllMedics() {
-        return medicRepository.findAll()
+    // Consultar todos los medicos por especialidad o no
+    public List<MedicResponse> getMedics(String speciality) {
+        List<Medic> medics;
+
+        if (speciality == null)
+            medics = medicRepository.findAll();
+        else
+            medics = medicRepository.findAllBySpeciality(speciality);
+
+        return medics
                 .stream()
                 .map(mapper::toMedicResponse)
                 .toList();
