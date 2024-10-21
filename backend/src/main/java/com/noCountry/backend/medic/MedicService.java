@@ -9,10 +9,14 @@ import java.util.List;
 @AllArgsConstructor
 public class MedicService {
     private final MedicRepository medicRepository;
+    private final MedicMapper mapper;
 
     // Consultar todos los medicos
-    public List<Medic> getAllMedics() {
-        return medicRepository.findAll();
+    public List<MedicResponse> getAllMedics() {
+        return medicRepository.findAll()
+                .stream()
+                .map(mapper::toMedicResponse)
+                .toList();
     }
 
     // Consultar medico por ID

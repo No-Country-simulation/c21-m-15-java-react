@@ -1,12 +1,11 @@
 package com.noCountry.backend.openingHour;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 public record OpeningHourResponse (
-        long medicId,
         DayOfWeek dayOfWeek,
-        LocalDate startTime,
-        LocalDate endTime
+        LocalTime startTime,
+        LocalTime endTime
 ) {
 }

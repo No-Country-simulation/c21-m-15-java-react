@@ -20,7 +20,7 @@ public class MedicController {
     @GetMapping
     public ResponseEntity<?> getAllMedics() {
         try {
-            List<Medic> medics = medicService.getAllMedics();
+            List<MedicResponse> medics = medicService.getAllMedics();
             return ResponseEntity.ok(medics);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al obtener los medicos");
