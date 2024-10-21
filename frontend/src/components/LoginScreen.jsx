@@ -23,7 +23,7 @@ export default function LoginScreen() {
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
   const from = location.state?.from || "/";
 
-  const handleSubmit = (event) => {
+  const  handleSubmit = (event) => {
     event.preventDefault();
     if (!username || !password) {
       alert("Por favor, complete los campos de usuario y contraseña.");
@@ -104,6 +104,37 @@ export default function LoginScreen() {
               {"¿No tienes una cuenta? Regístrate"}
             </Link>
           </Box> */}
+          <button onClick={
+          async (e) => {
+            e.preventDefault();
+            let response = await fetch('http://localhost:8080/api/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                username: username,
+                password: password,
+              }),
+            });
+
+            if (response.ok) {
+              let data = await response.json();
+              console.log(data);
+              sessionStorage.setItem("isAuthenticated", "true");
+              sessionStorage.setItem("user", username);
+              sessionStorage.setItem("rol", data.role); //TODO: traer el rol de otro endpoint
+              setUser(username);
+              setUserRol(data.role);
+              navigate(from, { replace: true });
+            } else {
+              alert("Usuario o contraseña incorrectos.");
+            }
+           
+            
+          }
+          }>Login backend</button>
+
         </Box>
       </Box>
     </Container>
