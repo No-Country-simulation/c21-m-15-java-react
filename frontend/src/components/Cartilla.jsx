@@ -10,7 +10,8 @@ const Cartilla = () => {
   
 
   const medicos = async () => {
-    const URL = '/cartilla.json';  
+    const URL = 'http://localhost:8080/api/medics'; 
+    console.log(URL) 
     try {
       const response = await axios.get(URL);
       console.log(response.data);
@@ -18,7 +19,7 @@ const Cartilla = () => {
         setCartillas(response.data); 
         
       } else {
-        console.error("Los datos no son un array", response.data);
+        console.error("Los datos no son un t", response.data);
       }
     } catch (error) {
       console.error("Error al obtener los datos de la cartilla:", error);
