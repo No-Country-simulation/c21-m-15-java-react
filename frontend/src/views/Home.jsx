@@ -136,6 +136,16 @@ export default function Home({ children }) {
             }}
           >
             <MenuItem
+              onClick={() => handleMenuItemClick("Inicio")}
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#0056b3",
+                },
+              }}
+            >
+              Inicio
+            </MenuItem>
+            <MenuItem
               onClick={() => handleMenuItemClick("Cartilla")}
               sx={{
                 "&:hover": {

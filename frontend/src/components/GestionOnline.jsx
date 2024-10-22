@@ -17,14 +17,14 @@ const GestionOnline = () => {
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
-        const response = await axios.get("/cartilla.json");
+        const response = await axios.get('http://localhost:8080/api/medics');
         setMedicos(response.data); 
        
         if (id) {
           const medicoEncontrado = response.data.find((doc) => doc.id === parseInt(id));
           if (medicoEncontrado) {
             setMedicoSeleccionado(medicoEncontrado);
-            setCategoria(medicoEncontrado.categoria); 
+            setCategoria(medicoEncontrado.speciality); 
           } else {
             console.error("Médico no encontrado");
           }
@@ -39,9 +39,9 @@ const GestionOnline = () => {
 
  
 
-  const medicosFiltrados = medicos.filter((doc) => doc.categoria === categoria);
+  const medicosFiltrados = medicos.filter((doc) => doc.speciality === categoria);
  
-  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.categoria))];
+  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.speciality))];
 
   useEffect(() => {
     if (medicosFiltrados.length > 0) {
@@ -100,7 +100,7 @@ const GestionOnline = () => {
                 backgroundColor: medicoSeleccionado.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent",
               }}
             >
-              <Typography variant="body1">{doc.nombre}</Typography>
+              <Typography variant="body1">{doc.name}</Typography>
             </ListItem>
           ))}
         </List>
@@ -109,12 +109,13 @@ const GestionOnline = () => {
           <Box sx={{ marginTop: "20px" }}>
 
             <Typography variant="body1" sx={{ color: "#134074", fontWeight: "bold" }}>
-              {medicoSeleccionado.nombre || "Cargando..."}
+              {medicoSeleccionado.name || "Cargando..."}
             </Typography>
 
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", md: "row" },
                 alignItems: "flex-start",
                 gap: 2,
                 height: "auto",
@@ -125,9 +126,9 @@ const GestionOnline = () => {
             >
               <CardMedia
                 component="img"
-                image={medicoSeleccionado.img || "/ruta/a/la/imagen.jpg"}
+                image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
                 sx={{
-                  width: 150,
+                  width:  { xs: "100%", md: 150 },
                   height: 150,
                   borderRadius: "50%",
                   border: "4px solid rgba(128, 128, 128, 0.5)",
@@ -141,8 +142,8 @@ const GestionOnline = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Typography variant="body1">{medicoSeleccionado.categoria || "Cargando..."}</Typography>
-                <Typography variant="body2">{medicoSeleccionado.descripcion || "Cargando..."}</Typography>
+                <Typography variant="body1">{medicoSeleccionado.speciality || "Cargando..."}</Typography>
+                <Typography variant="body2">{medicoSeleccionado.description || "Cargando..."}</Typography>
               </Box>
             </Box>
 
@@ -156,15 +157,15 @@ const GestionOnline = () => {
             >
               <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Dias de atención:</strong>{" "}
-                {medicoSeleccionado.diasDeAtencion ? medicoSeleccionado.diasDeAtencion.join(", ") : "Cargando..."}
+                {medicoSeleccionado.daysOfAttention ? medicoSeleccionado.daysOfAttention.join(", ") : "Cargando..."}
               </Typography>
               <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Horarios:</strong>
-                {medicoSeleccionado.horarios ? (
-                  Object.keys(medicoSeleccionado.horarios).length > 0 ? (
-                    Object.keys(medicoSeleccionado.horarios).map((dia) => (
+                {medicoSeleccionado.openingHours ? (
+                  Object.keys(medicoSeleccionado.openingHours).length > 0 ? (
+                    Object.keys(medicoSeleccionado.openingHours).map((dia) => (
                       <Typography key={dia} variant="body2" sx={{ color: "#134074" }}>
-                        {dia}: {medicoSeleccionado.horarios[dia]}
+                        {dia}: {medicoSeleccionado.openingHours[dia]}
                       </Typography>
                     ))
                   ) : (

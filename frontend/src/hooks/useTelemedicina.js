@@ -9,10 +9,11 @@ export default function useTelemedicina() {
   const navigate = useNavigate();
 
   const menu = {
+    Inicio: "/",
     Cartilla: "/cartilla",
     Contacto: "/contacto",
-    Telemedicina: "/telemedicina",
-    Citas:"/gestion-online"
+    Telemedicina: "/video-consultas",
+    Citas: "/gestion-online",
   };
 
   const handleOpenLogin = () => {
@@ -43,10 +44,10 @@ export default function useTelemedicina() {
     }
   };
   const handleMenuItemClick = (item) => {
-    const route = menu[item]; 
-      navigate(route); 
+    const route = menu[item];
+    navigate(route);
   };
- 
+
   return {
     handleOpenLogin,
     handleCloseLogin,
@@ -57,6 +58,6 @@ export default function useTelemedicina() {
     anchorEl,
     handleSubmit,
     selectedDate,
-    setSelectedDate
+    setSelectedDate,
   };
 }

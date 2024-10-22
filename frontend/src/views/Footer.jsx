@@ -1,84 +1,116 @@
+
 import React from "react";
-import { Box, Typography, Link } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom"; 
+import useTelemedicina from "../hooks/useTelemedicina";
 
 export default function Footer() {
+  const { handleMenuItemClick } = useTelemedicina();
+
   return (
     <Box
       sx={{
-        backgroundColor: "#007BFF", 
-        color: "white", 
+        backgroundColor: "#007BFF",
+        color: "white",
         padding: "20px",
         textAlign: "center",
-        marginTop: "40px", 
+        marginTop: "40px",
       }}
     >
-    
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
-        {/* Enlace a Cartilla */}
         <Link
-          href="#"
-          underline="hover"
-          sx={{
-            color: "white",
-            "&:hover": {
-              color: "#0b2545", 
-            },
-          }}
+          to="/"
+          onClick={() => handleMenuItemClick('Inicio')}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          Cartilla
+          <Typography
+            sx={{
+              "&:hover": {
+                color: "#0b2545",
+              },
+            }}
+          >
+            Inicio
+          </Typography>
         </Link>
-
-        {/* Enlace a Telemedicina */}
         <Link
-          href="#"
-          underline="hover"
-          sx={{
-            color: "white",
-            "&:hover": {
-              color: "#0b2545",
-            },
-          }}
+          to="/Cartilla"
+          onClick={() => handleMenuItemClick('Cartilla')}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          Telemedicina
+          <Typography
+            sx={{
+              "&:hover": {
+                color: "#0b2545",
+              },
+            }}
+          >
+            Cartilla
+          </Typography>
         </Link>
-
-        {/* Enlace a Contacto */}
         <Link
-          href="#"
-          underline="hover"
-          sx={{
-            color: "white",
-            "&:hover": {
-              color: "#0b2545",
-            },
-          }}
+          to="/video-consultas"
+          onClick={() => handleMenuItemClick('Telemedicina')}
+          style={{ textDecoration: "none", color: "white" }}
         >
-          Contacto
+          <Typography
+            sx={{
+              "&:hover": {
+                color: "#0b2545",
+              },
+            }}
+          >
+            Telemedicina
+          </Typography>
+        </Link>
+        <Link
+          to="/Contacto"
+          onClick={() => handleMenuItemClick('Contacto')}
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          <Typography
+            sx={{
+              "&:hover": {
+                color: "#0b2545",
+              },
+            }}
+          >
+            Contacto
+          </Typography>
         </Link>
       </Box>
-      <Box sx={{ marginTop: "20px", display: "flex", justifyContent: "center", gap: "20px" }}>
-  <Box
-    href="#"
-    underline="hover"
-    sx={{
-      color: "white",
- 
-    }}
-  >
-    Términos y Condiciones
-  </Box>
-  <Box
-    href="#"
-    underline="hover"
-    sx={{
-      color: "white",
-    
-    }}
-  >
-    Política de Privacidad
-  </Box>
-</Box>
 
+      <Box
+        sx={{
+          marginTop: "20px",
+          display: "flex",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
+        <Typography
+          sx={{
+            color: "white",
+            cursor: "pointer",
+            "&:hover": {
+              color: "#0b2545",
+            },
+          }}
+        >
+          Términos y Condiciones
+        </Typography>
+        <Typography
+          sx={{
+            color: "white",
+            cursor: "pointer",
+            "&:hover": {
+              color: "#0b2545",
+            },
+          }}
+        >
+          Política de Privacidad
+        </Typography>
+      </Box>
 
       <Typography variant="body2" sx={{ marginTop: "10px" }}>
         © {new Date().getFullYear()} Tu Plataforma de Telemedicina. Todos los derechos reservados.
