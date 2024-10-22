@@ -12,27 +12,27 @@ const GestionOnline = () => {
   const [medicos, setMedicos] = useState([]);
   const [categoria, setCategoria] = useState("");
   const [medicoSeleccionado, setMedicoSeleccionado] = useState({});
-  const { Id } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
-        const response = await axios.get("/cartilla.json");
+        const response = await axios.get("http://localhost:8080/api/medics");
         const medicosData = response.data;
         setMedicos(medicosData);
 
-        // Si hay un médico seleccionado por ID, seleccionarlo, sino, seleccionar el primero
-        if (Id) {
-          const medicoEncontrado = medicosData.find((doc) => doc.Id === parseInt(Id));
+        // Si hay un médico seleccionado por id, seleccionarlo, sino, seleccionar el primero
+        if (id) {
+          const medicoEncontrado = medicosData.find((doc) => doc.id === parseInt(id));
           if (medicoEncontrado) {
             setMedicoSeleccionado(medicoEncontrado);
-            setCategoria(medicoEncontrado.Speciality);
+            setCategoria(medicoEncontrado.speciality);
           } else {
             console.error("Médico no encontrado");
           }
         } else if (medicosData.length > 0) {
           setMedicoSeleccionado(medicosData[0]);
-          setCategoria(medicosData[0].Speciality);
+          setCategoria(medicosData[0].speciality);
         }
       } catch (error) {
         console.error("Error al cargar los datos del médico:", error);
@@ -40,13 +40,13 @@ const GestionOnline = () => {
     };
 
     fetchMedicoData();
-  }, [Id]);
+  }, [id]);
 
   const medicosFiltrados = categoria
-    ? medicos.filter((doc) => doc.Speciality === categoria)
+    ? medicos.filter((doc) => doc.speciality === categoria)
     : medicos; 
 
-  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.Speciality))];
+  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.speciality))];
 
   return (
     <Container
@@ -69,7 +69,7 @@ const GestionOnline = () => {
         <FormControl fullWidth>
           <InputLabel id="categoria-label">Filtrar por Categoría</InputLabel>
           <Select
-            labelId="categoria-label"
+            labelid="categoria-label"
             id="categoria-select"
             value={categoria}
             label="Filtrar por Categoría"
@@ -92,22 +92,22 @@ const GestionOnline = () => {
         <List sx={{ marginTop: "20px" }}>
           {medicosFiltrados.map((doc) => (
             <ListItem
-              key={doc.Id}
+              key={doc.id}
               onClick={() => setMedicoSeleccionado(doc)}
               sx={{
                 cursor: "pointer",
-                backgroundColor: medicoSeleccionado.Id === doc.Id ? "rgba(0, 123, 255, 0.1)" : "transparent",
+                backgroundColor: medicoSeleccionado.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent",
               }}
             >
-              <Typography variant="body1">{doc.Name}</Typography>
+              <Typography variant="body1">{doc.name}</Typography>
             </ListItem>
           ))}
         </List>
 
-        {medicoSeleccionado && medicoSeleccionado.Id && (
+        {medicoSeleccionado && medicoSeleccionado.id && (
           <Box sx={{ marginTop: "20px" }}>
             <Typography variant="body1" sx={{ color: "#134074", fontWeight: "bold" }}>
-              {medicoSeleccionado.Name || "Cargando..."}
+              {medicoSeleccionado.name || "Cargando..."}
             </Typography>
 
             <Box
@@ -123,7 +123,7 @@ const GestionOnline = () => {
             >
               <CardMedia
                 component="img"
-                image={medicoSeleccionado.Picture || "/ruta/a/la/imagen.jpg"}
+                image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
                 sx={{
                   width: 150,
                   height: 150,
@@ -141,8 +141,8 @@ const GestionOnline = () => {
               >
                 <Typography variant="body1"
                  sx={{fontWeight: 'bold'}}
-                >{medicoSeleccionado.Speciality || "Cargando..."}</Typography>
-                <Typography variant="body2">{medicoSeleccionado.Description || "Cargando..."}</Typography>
+                >{medicoSeleccionado.speciality || "Cargando..."}</Typography>
+                <Typography variant="body2">{medicoSeleccionado.description || "Cargando..."}</Typography>
               </Box>
             </Box>
 
@@ -154,17 +154,17 @@ const GestionOnline = () => {
                 marginTop: "30px",
               }}
             >
-              <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
+              {/* <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Dias de atención:</strong>{" "}
                 {medicoSeleccionado.DaysOfAttention ? medicoSeleccionado.DaysOfAttention.join(", ") : "Cargando..."}
-              </Typography>
+              </Typography> */}
               <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Horarios:</strong>
-                {medicoSeleccionado.OpeningHours ? (
-                  Object.keys(medicoSeleccionado.OpeningHours).length > 0 ? (
-                    Object.keys(medicoSeleccionado.OpeningHours).map((dia) => (
+                {medicoSeleccionado.openingHours ? (
+                  Object.keys(medicoSeleccionado.openingHours).length > 0 ? (
+                    Object.keys(medicoSeleccionado.openingHours).map((dia) => (
                       <Typography key={dia} variant="body2" sx={{ color: "#134074" }}>
-                        {dia}: {medicoSeleccionado.OpeningHours[dia]}
+                        {dia}: {medicoSeleccionado.openingHours[dia]}
                       </Typography>
                     ))
                   ) : (
