@@ -27,10 +27,8 @@ export default function PrimarySearchAppBar() {
   function handleCloseSession() {
  
  
-   setUser("");
-    sessionStorage.setItem("isAuthenticated", "false");
-   sessionStorage.setItem("user", "");
-   alert("Sesión cerrada.");
+   setUser(null);
+ 
   navigate("/"); 
  }; 
 

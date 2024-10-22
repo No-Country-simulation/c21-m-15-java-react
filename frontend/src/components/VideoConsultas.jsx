@@ -1,19 +1,15 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "./userProvider";
 
 const VideoConsultas = () => {
-    let userData = (sessionStorage.getItem("user"));
-    if (userData !== "" && userData !== null) {
-       userData = JSON.parse(userData);
-    }
+  const { user, setUser } = useContext(userContext);
+  const navigate = useNavigate();
+  console.log("user: ", user.username);
+  console.log("rol: ", user.role);
 
-  let user = userData.username;
-  let rol = userData.role;
-
-  console.log("user: ", user);
-  console.log("rol: ", rol);
-
-  const [userId, setUserId] = useState(user);
+  const [userId, setUserId] = useState(user.username);
   const [roomUrl, setRoomUrl] = useState("");
   const [roomId, setRoomId] = useState("");
 
@@ -24,7 +20,9 @@ const VideoConsultas = () => {
     setRoomUrl(`${window.location.origin}/vl/${tempRoomId}`);
   }, [userId]);
 
-  if (rol === "admin" || rol === "doc") {
+  //TODO: ADAPTAR A LA BASE DE DATOS
+
+  if (user.role === "admin" || user.role === "doc") {
     return (
       <Navigate
         to="/rooms"
@@ -41,11 +39,16 @@ const VideoConsultas = () => {
     <section id="video-consultas">
       {roomUrl && (
         <div className="content">
-          <p>
-            Para realizar una video consulta ingrese al siguiente enlace y
-            aguarde a ser atendido/a:
-          </p>
+          <p>Para realizar una video consulta haga click aquí:</p>
 
+          <button onClick={() => navigate(`/vl/${roomId}`)}>
+            Ingresar a la llamada
+          </button>
+
+          <p>
+            Si necesita ingresar desde otro dispositivo puede hacerlo mediante
+            el siguiente enlace:{" "}
+          </p>
           <a href={`/vl/${roomId}`}>{userId !== "" ? roomUrl : ""}</a>
         </div>
       )}

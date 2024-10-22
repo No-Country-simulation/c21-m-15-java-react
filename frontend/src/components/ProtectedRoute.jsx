@@ -1,27 +1,21 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { userContext } from "./userProvider";
 
 export default function ProtectedRoute({ children }) {
-
   const { user, setUser } = useContext(userContext);
 
-  let userData = (sessionStorage.getItem("user"));
-  if (userData !== "" && userData !== null) {
-     userData = JSON.parse(userData);
-  }
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated") === "true";
- 
+  const isAuthenticated = user ? true : false;
 
   // redireccionamiento a la página de inicio de sesión si el usuario no está autenticado
-   if (!isAuthenticated || !userData) {
+  if (!isAuthenticated) {
     return (
       <Navigate
         to="/login"
         state={{
           from: location.pathname,
-/*           user: user.username,
+          /*           user: user.username,
           rol: user.role, */
         }}
         replace
@@ -44,10 +38,9 @@ export default function ProtectedRoute({ children }) {
       }
     }
   }
-  let authRoom =
-    userData.username === userInRoomId || userData.role === "admin";
+  let authRoom = user.username === userInRoomId || user.role === "admin";
 
-   if (isRoomPath && !authRoom) {
+  if (isRoomPath && !authRoom) {
     return (
       <Navigate
         to="/video-no-auth"

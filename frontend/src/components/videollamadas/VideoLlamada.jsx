@@ -2,9 +2,11 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { SocketContext } from "./socket-provider.jsx";
 import { useVideoCall } from "../../hooks/useVideoCall.jsx"; // Import the new hook
+import { userContext } from "../userProvider.jsx";
 import "./videollamada.css";
 
 export default function VideoLlamada() {
+  const { user, setUser } = useContext(userContext);
   const { roomId } = useParams();
   const { socket, isConnected } = useContext(SocketContext);
   const {
@@ -70,20 +72,19 @@ export default function VideoLlamada() {
     leaveCall();
   }
 
-    let userData = JSON.parse(sessionStorage.getItem("user"));
-  let user = userData.username;
-  let rol = userData.role;
   let userFromRoomId = roomId.split("-")[0];
   let isAuthorized =
-    user === userFromRoomId || rol === "admin" || rol === "doc";
+    user.username === userFromRoomId ||
+    user.role === "admin" ||
+    user.role === "doc";
 
   let localName = "";
   let remoteName = "";
-  if (rol !== "admin" && rol !== "doc") {
-    localName = user;
+  if (user.role !== "admin" && user.role !== "doc") {
+    localName = user.username;
     remoteName = "HealthPro";
   }
-  if (rol === "admin" || rol === "doc") {
+  if (user.role === "admin" || user.role === "doc") {
     localName = "HealthPro";
     remoteName = "Paciente: " + userFromRoomId;
   }
@@ -93,7 +94,7 @@ export default function VideoLlamada() {
       {!isAuthorized && <h1>Usuario no autenticado</h1>}
       {isAuthorized && (
         <h3>
-          Usuario autenticado: {user} - Rol: {rol}
+          Usuario autenticado: {user.username} - Rol: {user.rol}
         </h3>
       )}
       <h3>Sala: {roomId} </h3>

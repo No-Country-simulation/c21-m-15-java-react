@@ -53,8 +53,7 @@ export default function LoginScreen() {
       }
       if (userResponse.ok) {
         let userData = await userResponse.json();
-        sessionStorage.setItem("isAuthenticated", "true");
-        sessionStorage.setItem("user", JSON.stringify(userData));
+ 
         setUser(userData); //id role username
       }
 
