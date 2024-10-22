@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { userContext } from "./userProvider";
 
 export default function LoginScreen() {
-  const { user, setUser  } = useContext(userContext);
+  const { user, setUser } = useContext(userContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -22,13 +22,13 @@ export default function LoginScreen() {
 
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
   const from = location.state?.from || "/";
- 
-   async function handleSubmitBackend (e) {
+
+  async function handleSubmitBackend(e) {
     e.preventDefault();
-    let response = await fetch('http://localhost:8080/api/auth/login', {
-      method: 'POST',
+    let response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         username: username,
@@ -39,21 +39,19 @@ export default function LoginScreen() {
     if (response.ok) {
       let data = await response.json();
 
-      let userResponse = await fetch("http://localhost:8080/api/user",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${data.token}`,
-          },
-        }
-      );
+      let userResponse = await fetch("http://localhost:8080/api/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
       if (!userResponse.ok) {
         alert("Error al obtener el usuario");
         return;
       }
       if (userResponse.ok) {
         let userData = await userResponse.json();
- 
+
         setUser(userData); //id role username
       }
 
@@ -61,8 +59,6 @@ export default function LoginScreen() {
     } else {
       alert("Usuario o contraseña incorrectos.");
     }
-           
-            
   }
 
   return (
@@ -86,7 +82,12 @@ export default function LoginScreen() {
         <Typography component="h1" variant="h5">
           Iniciar sesión
         </Typography>
-        <Box component="form" onSubmit={handleSubmitBackend} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmitBackend}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin="normal"
             required
@@ -119,15 +120,6 @@ export default function LoginScreen() {
           >
             Iniciar sesión
           </Button>
-          {/*  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Link href="#" variant="body2">
-              ¿Olvidaste tu contraseña?
-            </Link>
-            <Link href="#" variant="body2">
-              {"¿No tienes una cuenta? Regístrate"}
-            </Link>
-          </Box> */}
-          <button onClick={(e) => handleSubmitBackend(e)}>Login backend</button>
         </Box>
       </Box>
     </Container>
