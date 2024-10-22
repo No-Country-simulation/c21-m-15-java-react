@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { userContext } from "./userProvider";
 
 export default function LoginScreen() {
-  const { user, setUser, userRol, setUserRol } = useContext(userContext);
+  const { user, setUser  } = useContext(userContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -22,25 +22,49 @@ export default function LoginScreen() {
 
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
   const from = location.state?.from || "/";
+ 
+   async function handleSubmitBackend (e) {
+    e.preventDefault();
+    let response = await fetch('http://localhost:8080/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
 
-  const  handleSubmit = (event) => {
-    event.preventDefault();
-    if (!username || !password) {
-      alert("Por favor, complete los campos de usuario y contraseña.");
-      return;
+    if (response.ok) {
+      let data = await response.json();
+
+      let userResponse = await fetch("http://localhost:8080/api/user",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        }
+      );
+      if (!userResponse.ok) {
+        alert("Error al obtener el usuario");
+        return;
+      }
+      if (userResponse.ok) {
+        let userData = await userResponse.json();
+        sessionStorage.setItem("isAuthenticated", "true");
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        setUser(userData); //id role username
+      }
+
+      navigate(from, { replace: true });
+    } else {
+      alert("Usuario o contraseña incorrectos.");
     }
-    setUser(username);
-    // Aquí iría la lógica de autenticación
-    console.log("Usuario:", username);
-    console.log("Contraseña:", password);
-
-    // Simulamos una autenticación exitosa
-    sessionStorage.setItem("isAuthenticated", "true");
-    sessionStorage.setItem("user", username);
-    sessionStorage.setItem("rol", username); //TODO: cambiar por el rol real
-
-    navigate(from, { replace: true });
-  };
+           
+            
+  }
 
   return (
     <Container
@@ -63,7 +87,7 @@ export default function LoginScreen() {
         <Typography component="h1" variant="h5">
           Iniciar sesión
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box component="form" onSubmit={handleSubmitBackend} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
             required
@@ -104,55 +128,7 @@ export default function LoginScreen() {
               {"¿No tienes una cuenta? Regístrate"}
             </Link>
           </Box> */}
-          <button onClick={
-          async (e) => {
-            e.preventDefault();
-            let response = await fetch('http://localhost:8080/api/auth/login', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                username: username,
-                password: password,
-              }),
-            });
-
-            if (response.ok) {
-              let data = await response.json();
-              console.log("data:", data);
-              sessionStorage.setItem("isAuthenticated", "true");
-              sessionStorage.setItem("user", username);
-              sessionStorage.setItem("rol", data.role); //TODO: traer el rol de otro endpoint
-
-              let userResponse = await fetch("http://localhost:8080/api/user",
-                {
-                  method: "GET",
-                  headers: {
-                    Authorization: `Bearer ${data.token}`,
-                  },
-                }
-              );
-              if (!userResponse.ok) {
-                alert("Error al obtener el usuario");
-                return;
-              }
-              if (userResponse.ok) {
-                let userData = await userResponse.json();
-                console.log("userData:", userData);
-              }
-
-              setUser(username);
-              setUserRol(data.role);
-              navigate(from, { replace: true });
-            } else {
-              alert("Usuario o contraseña incorrectos.");
-            }
-           
-            
-          }
-          }>Login backend</button>
-
+          <button onClick={(e) => handleSubmitBackend(e)}>Login backend</button>
         </Box>
       </Box>
     </Container>

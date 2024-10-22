@@ -70,8 +70,9 @@ export default function VideoLlamada() {
     leaveCall();
   }
 
-  let user = sessionStorage.getItem("user");
-  let rol = sessionStorage.getItem("rol");
+    let userData = JSON.parse(sessionStorage.getItem("user"));
+  let user = userData.username;
+  let rol = userData.role;
   let userFromRoomId = roomId.split("-")[0];
   let isAuthorized =
     user === userFromRoomId || rol === "admin" || rol === "doc";

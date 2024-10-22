@@ -6,11 +6,26 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import useTelemedicina from "../hooks/useTelemedicina";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { userContext } from "../components/userProvider";
 
 export default function Home({ children }) {
   const { handleMenuOpen, handleMenuClose, handleMenuItemClick, anchorEl } =
     useTelemedicina();
 
+  const {user, setUser} = useContext(userContext);
+    useEffect(() => {
+    let userData = sessionStorage.getItem("user");
+    if (userData !== "" && userData !== null) {
+      userData = JSON.parse(userData);
+      setUser(userData);
+    }
+    if (userData === "" || userData === null) {
+      setUser(null);
+      sessionStorage.setItem("isAuthenticated", "false");}
+
+    });
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>

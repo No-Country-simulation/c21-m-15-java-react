@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 const VideoConsultas = () => {
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated") === "true";
-  let user = sessionStorage.getItem("user");
-  let rol = sessionStorage.getItem("rol");
+    let userData = (sessionStorage.getItem("user"));
+    if (userData !== "" && userData !== null) {
+       userData = JSON.parse(userData);
+    }
+
+  let user = userData.username;
+  let rol = userData.role;
 
   console.log("user: ", user);
   console.log("rol: ", rol);
