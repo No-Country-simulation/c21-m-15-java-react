@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, CardMedia, Button, Container, Select, MenuItem, FormControl, InputLabel, List, ListItem, } from "@mui/material";
+import { Box,Typography, CardMedia, Button, Container, Select, MenuItem, FormControl, InputLabel, List, ListItem,} from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
@@ -9,31 +9,25 @@ import axios from "axios";
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
-  const [medicos, setMedicos] = useState([]);
-  const [categoria, setCategoria] = useState("");
-  const [medicoSeleccionado, setMedicoSeleccionado] = useState({});
+  const [medicos, setMedicos] = useState([]); 
+  const [categoria, setCategoria] = useState(""); 
+  const [medicoSeleccionado, setMedicoSeleccionado] = useState({}); 
   const { id } = useParams();
 
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
-        const response = await axios.get('/cartilla.json');
-        // "http://localhost:8080/api/medics"
-        const medicosData = response.data;
-        setMedicos(medicosData);
-
-        // Si hay un médico seleccionado por id, seleccionarlo, sino, seleccionar el primero
+        const response = await axios.get('http://localhost:8080/api/medics');
+        setMedicos(response.data); 
+       
         if (id) {
-          const medicoEncontrado = medicosData.find((doc) => doc.id === parseInt(id));
+          const medicoEncontrado = response.data.find((doc) => doc.id === parseInt(id));
           if (medicoEncontrado) {
             setMedicoSeleccionado(medicoEncontrado);
-            setCategoria(medicoEncontrado.speciality);
+            setCategoria(medicoEncontrado.categoria); 
           } else {
             console.error("Médico no encontrado");
           }
-        } else if (medicosData.length > 0) {
-          setMedicoSeleccionado(medicosData[0]);
-          setCategoria(medicosData[0].speciality);
         }
       } catch (error) {
         console.error("Error al cargar los datos del médico:", error);
@@ -43,11 +37,17 @@ const GestionOnline = () => {
     fetchMedicoData();
   }, [id]);
 
-  const medicosFiltrados = categoria
-    ? medicos.filter((doc) => doc.speciality === categoria)
-    : medicos; 
+ 
 
-  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.speciality))];
+  const medicosFiltrados = medicos.filter((doc) => doc.categoria === categoria);
+ 
+  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.categoria))];
+
+  useEffect(() => {
+    if (medicosFiltrados.length > 0) {
+      setMedicoSeleccionado(medicosFiltrados[0]); 
+    }
+  }, [categoria, medicos]);
 
   return (
     <Container
@@ -70,7 +70,7 @@ const GestionOnline = () => {
         <FormControl fullWidth>
           <InputLabel id="categoria-label">Filtrar por Categoría</InputLabel>
           <Select
-            labelid="categoria-label"
+            labelId="categoria-label"
             id="categoria-select"
             value={categoria}
             label="Filtrar por Categoría"
@@ -100,15 +100,16 @@ const GestionOnline = () => {
                 backgroundColor: medicoSeleccionado.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent",
               }}
             >
-              <Typography variant="body1">{doc.name}</Typography>
+              <Typography variant="body1">{doc.nombre}</Typography>
             </ListItem>
           ))}
         </List>
 
-        {medicoSeleccionado && medicoSeleccionado.id && (
+        {medicoSeleccionado && (
           <Box sx={{ marginTop: "20px" }}>
+
             <Typography variant="body1" sx={{ color: "#134074", fontWeight: "bold" }}>
-              {medicoSeleccionado.name || "Cargando..."}
+              {medicoSeleccionado.nombre || "Cargando..."}
             </Typography>
 
             <Box
@@ -125,10 +126,10 @@ const GestionOnline = () => {
             >
               <CardMedia
                 component="img"
-                image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
+                image={medicoSeleccionado.img || "/ruta/a/la/imagen.jpg"}
                 sx={{
-                  width: { xs: "100%", md: '150px' },
-                  height: 'auto',
+                  width:  { xs: "100%", md: 150 },
+                  height: 150,
                   borderRadius: "50%",
                   border: "4px solid rgba(128, 128, 128, 0.5)",
                 }}
@@ -141,10 +142,8 @@ const GestionOnline = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Typography variant="body1"
-                 sx={{fontWeight: 'bold'}}
-                >{medicoSeleccionado.speciality || "Cargando..."}</Typography>
-                <Typography variant="body2">{medicoSeleccionado.description || "Cargando..."}</Typography>
+                <Typography variant="body1">{medicoSeleccionado.categoria || "Cargando..."}</Typography>
+                <Typography variant="body2">{medicoSeleccionado.descripcion || "Cargando..."}</Typography>
               </Box>
             </Box>
 
@@ -156,17 +155,17 @@ const GestionOnline = () => {
                 marginTop: "30px",
               }}
             >
-              {/* <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
+              <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Dias de atención:</strong>{" "}
-                {medicoSeleccionado.DaysOfAttention ? medicoSeleccionado.DaysOfAttention.join(", ") : "Cargando..."}
-              </Typography> */}
+                {medicoSeleccionado.diasDeAtencion ? medicoSeleccionado.diasDeAtencion.join(", ") : "Cargando..."}
+              </Typography>
               <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Horarios:</strong>
-                {medicoSeleccionado.openingHours ? (
-                  Object.keys(medicoSeleccionado.openingHours).length > 0 ? (
-                    Object.keys(medicoSeleccionado.openingHours).map((dia) => (
+                {medicoSeleccionado.horarios ? (
+                  Object.keys(medicoSeleccionado.horarios).length > 0 ? (
+                    Object.keys(medicoSeleccionado.horarios).map((dia) => (
                       <Typography key={dia} variant="body2" sx={{ color: "#134074" }}>
-                        {dia}: {medicoSeleccionado.openingHours[dia]}
+                        {dia}: {medicoSeleccionado.horarios[dia]}
                       </Typography>
                     ))
                   ) : (
@@ -248,6 +247,14 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
+
+
+
+
+
+
+
+
 
 
 
