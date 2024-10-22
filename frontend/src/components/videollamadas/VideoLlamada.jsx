@@ -78,6 +78,7 @@ export default function VideoLlamada() {
     user.role === "admin" ||
     user.role === "doc";
 
+  //TODO CAMBIAR SEGUN USUARIOS Y ROLES DE LA BASE
   let localName = "";
   let remoteName = "";
   if (user.role !== "admin" && user.role !== "doc") {
