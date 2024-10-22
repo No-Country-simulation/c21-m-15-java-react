@@ -17,7 +17,8 @@ const GestionOnline = () => {
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/medics");
+        const response = await axios.get('/cartilla.json');
+        // "http://localhost:8080/api/medics"
         const medicosData = response.data;
         setMedicos(medicosData);
 
@@ -113,6 +114,7 @@ const GestionOnline = () => {
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", md: "row" },
                 alignItems: "flex-start",
                 gap: 2,
                 height: "auto",
@@ -125,8 +127,8 @@ const GestionOnline = () => {
                 component="img"
                 image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
                 sx={{
-                  width: 150,
-                  height: 150,
+                  width: { xs: "100%", md: '150px' },
+                  height: 'auto',
                   borderRadius: "50%",
                   border: "4px solid rgba(128, 128, 128, 0.5)",
                 }}
