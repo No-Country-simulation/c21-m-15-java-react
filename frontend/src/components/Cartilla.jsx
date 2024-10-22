@@ -102,7 +102,7 @@ const Cartilla = () => {
             >
               <strong>Especialidad:</strong> {cartilla.speciality}
             </Typography>
-            <Typography
+            <Typography variant='body2'
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' } 
             }}
