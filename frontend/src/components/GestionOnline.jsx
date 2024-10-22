@@ -113,6 +113,7 @@ const GestionOnline = () => {
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", md: "row" },
                 alignItems: "flex-start",
                 gap: 2,
                 height: "auto",
@@ -125,7 +126,7 @@ const GestionOnline = () => {
                 component="img"
                 image={medicoSeleccionado.Picture || "/ruta/a/la/imagen.jpg"}
                 sx={{
-                  width: 150,
+                  width:  { xs: "100%", md: 150 },
                   height: 150,
                   borderRadius: "50%",
                   border: "4px solid rgba(128, 128, 128, 0.5)",
