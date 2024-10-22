@@ -6,6 +6,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import useTelemedicina from "../hooks/useTelemedicina";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { format } from "date-fns";
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
@@ -48,6 +49,14 @@ const GestionOnline = () => {
       setMedicoSeleccionado(medicosFiltrados[0]);
     }
   }, [categoria, medicos]);
+
+  const shouldDisableDate = (date) => {
+    const dayOfWeek = format(date, "EEEE", { locale: es }); // Obtener el día de la semana en español
+    if (medicoSeleccionado && medicoSeleccionado.daysOfAttention) {
+      return !medicoSeleccionado.daysOfAttention.includes(dayOfWeek);
+    }
+    return false;
+  };
 
   return (
     <Container
@@ -206,10 +215,11 @@ const GestionOnline = () => {
           Aquí puede seleccionar la fecha y hora de su consulta con el especialista. Utilice el calendario para elegir el día y la hora que mejor se ajuste a su disponibilidad para agendar su cita médica en línea.
         </Typography>
 
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} locale= {es}>
           <DateCalendar
             value={selectedDate}
             onChange={(newValue) => setSelectedDate(newValue)}
+            shouldDisableDate={shouldDisableDate}
             sx={{
               ".MuiPickersCalendarHeader-label": {
                 color: "#13315c",
