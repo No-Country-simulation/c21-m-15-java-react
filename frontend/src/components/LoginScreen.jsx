@@ -39,6 +39,7 @@ export default function LoginScreen() {
     if (response.ok) {
       let data = await response.json();
 
+      //TODO GUARDAR TOKEN EN CONTEXT
       let userResponse = await fetch("http://localhost:8080/api/user", {
         method: "GET",
         headers: {
