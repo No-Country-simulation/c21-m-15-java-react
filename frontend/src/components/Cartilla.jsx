@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Button, Card, CardMedia, Typography, TextField } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Cartilla = () => {
   const [cartillas, setCartillas] = useState([]);
@@ -94,8 +94,8 @@ const Cartilla = () => {
                }}
             >
               {cartilla.name}
-            </Typography>
-            <Typography
+            </Typography> 
+            <Typography variant= 'h6'
             sx={{
               fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' }, 
             }}

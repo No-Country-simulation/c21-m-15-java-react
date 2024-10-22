@@ -12,7 +12,7 @@
       "Jueves": "9:00 AM - 5:00 PM",
       "Viernes": "9:00 AM - 5:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+    "daysOfAttention": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
   },
   {
     "id": 2,
@@ -25,7 +25,7 @@
       "Miércoles": "10:00 AM - 4:00 PM",
       "Viernes": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Miércoles", "Viernes"]
+    "daysOfAttention": ["Lunes", "Miércoles", "Viernes"]
   },
   {
     "id": 3,
@@ -38,7 +38,7 @@
       "Miércoles": "10:00 AM - 4:00 PM",
       "Viernes": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Miércoles", "Viernes"]
+    "daysOfAttention": ["Lunes", "Miércoles", "Viernes"]
   },
   {
     "id": 4,
@@ -50,7 +50,7 @@
       "Martes": "10:00 AM - 4:00 PM",
       "Jueves": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Martes", "Jueves"]
+    "daysOfAttention": ["Martes", "Jueves"]
   },
   {
     "id": 5,
@@ -61,7 +61,7 @@
     "openingHours": {
       "Miércoles": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Miércoles"]
+    "daysOfAttention": ["Miércoles"]
   },
   {
     "id": 6,
@@ -75,7 +75,7 @@
       "Jueves": "9:00 AM - 5:00 PM",
       "Viernes": "9:00 AM - 5:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+    "daysOfAttention": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
   },
   {
     "id": 7,
@@ -87,7 +87,7 @@
       "Lunes": "10:00 AM - 4:00 PM",
       "Viernes": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Lunes",  "Viernes"]
+    "daysOfAttention": ["Lunes",  "Viernes"]
   },
   {
     "id": 8,
@@ -100,7 +100,7 @@
       "Miércoles": "10:00 AM - 4:00 PM",
       "Jueves": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Martes", "Miércoles", "Jueves"]
+    "daysOfAttention": ["Martes", "Miércoles", "Jueves"]
   },
   {
     "id": 9,
@@ -113,7 +113,7 @@
       "Miércoles": "10:00 AM - 4:00 PM",
       "Viernes": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Miércoles", "Viernes"]
+    "daysOfAttention": ["Lunes", "Miércoles", "Viernes"]
   },
   {
     "id": 10,
@@ -125,7 +125,7 @@
       "Martes": "10:00 AM - 4:00 PM",
       "Jueves": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Martes", "Jueves"]
+    "daysOfAttention": ["Martes", "Jueves"]
   },
   {
     "id": 11,
@@ -138,7 +138,7 @@
       "Miércoles": "10:00 AM - 4:00 PM",
       "Viernes": "10:00 AM - 4:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Miércoles", "Viernes"]
+    "daysOfAttention": ["Lunes", "Miércoles", "Viernes"]
 
   },
   {
@@ -154,6 +154,6 @@
       "Jueves": "9:00 AM - 5:00 PM",
       "Viernes": "9:00 AM - 5:00 PM"
     },
-    "DaysOfAttention": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
+    "daysOfAttention": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
   }
 ]
