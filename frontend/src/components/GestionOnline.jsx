@@ -142,8 +142,8 @@ const GestionOnline = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Typography variant="body1"{medicoSeleccionado.categoria || "Cargando..."}></Typography>
-                <Typography variant="body2"{medicoSeleccionado.descripcion || "Cargando..."}></Typography>
+                <Typography variant="body1">{medicoSeleccionado.categoria || "Cargando..."}</Typography>
+                <Typography variant="body2">{medicoSeleccionado.descripcion || "Cargando..."}</Typography>
               </Box>
             </Box>
 
