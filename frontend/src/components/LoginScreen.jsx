@@ -120,10 +120,28 @@ export default function LoginScreen() {
 
             if (response.ok) {
               let data = await response.json();
-              console.log(data);
+              console.log("data:", data);
               sessionStorage.setItem("isAuthenticated", "true");
               sessionStorage.setItem("user", username);
               sessionStorage.setItem("rol", data.role); //TODO: traer el rol de otro endpoint
+
+              let userResponse = await fetch("http://localhost:8080/api/user",
+                {
+                  method: "GET",
+                  headers: {
+                    Authorization: `Bearer ${data.token}`,
+                  },
+                }
+              );
+              if (!userResponse.ok) {
+                alert("Error al obtener el usuario");
+                return;
+              }
+              if (userResponse.ok) {
+                let userData = await userResponse.json();
+                console.log("userData:", userData);
+              }
+
               setUser(username);
               setUserRol(data.role);
               navigate(from, { replace: true });
