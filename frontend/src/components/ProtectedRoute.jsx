@@ -38,7 +38,7 @@ export default function ProtectedRoute({ children }) {
       }
     }
   }
-  let authRoom = user.username === userInRoomId || user.role === "admin";
+  let authRoom = user.username === userInRoomId || user.role === "MEDIC";
 
   if (isRoomPath && !authRoom) {
     return (

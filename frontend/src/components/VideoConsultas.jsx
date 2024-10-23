@@ -21,9 +21,7 @@ const VideoConsultas = () => {
     setRoomUrl(`${window.location.origin}/vl/${tempRoomId}`);
   }, [userId]);
 
-  //TODO: ADAPTAR A LA BASE DE DATOS
-
-  if (user.role === "admin" || user.role === "doc") {
+  if (user.role === "MEDIC") {
     return (
       <Navigate
         to="/rooms"

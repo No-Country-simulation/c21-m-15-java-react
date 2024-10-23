@@ -76,16 +76,15 @@ export default function VideoLlamada() {
   let isAuthorized =
     user.username === userFromRoomId ||
     user.role === "admin" ||
-    user.role === "doc";
+    user.role === "MEDIC";
 
   //TODO CAMBIAR SEGUN USUARIOS Y ROLES DE LA BASE
   let localName = "";
   let remoteName = "";
-  if (user.role !== "admin" && user.role !== "doc") {
+  if (user.role === "PATIENT") {
     localName = user.username;
     remoteName = "HealthPro";
-  }
-  if (user.role === "admin" || user.role === "doc") {
+  } else {
     localName = "HealthPro";
     remoteName = "Paciente: " + userFromRoomId;
   }
@@ -128,7 +127,7 @@ export default function VideoLlamada() {
       )}
       {socketVideoId && (
         <button className="video" id="leave-call" onClick={handleLeaveButton}>
-          Colgar
+          Terminar llamada
         </button>
       )}
       <h2>* * *</h2>

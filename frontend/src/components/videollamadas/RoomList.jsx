@@ -35,9 +35,9 @@ export default function RoomList() {
 
   return (
     <section id="room-list" className="column-list">
-      <h1>Pacientes esperando</h1>
+      <h1>Pacientes esperando atención.</h1>
       {Object.keys(socketRooms).length === 0 && (
-        <p>No hay pacientes esperando.</p>
+        <p>No hay pacientes esperando atención.</p>
       )}
       <ul className="lista-espera">
         {Object.keys(socketRooms).map((salaId) => (
@@ -48,6 +48,9 @@ export default function RoomList() {
                   {salaId} - {socketRooms[salaId].length} paciente esperando
                 </div>
                 <a href={`/vl/${salaId}`}>Atender</a>
+                <button onClick={() => navigate("/vl/" + salaId)}>
+                  Atender
+                </button>
               </>
             )}
 
