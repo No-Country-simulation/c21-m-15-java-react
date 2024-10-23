@@ -16,7 +16,14 @@ export default function Home({ children }) {
 
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <Box
+        sx={{
+          borderBottom: "1px solid rgba(0,0,0,0.1)",
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
