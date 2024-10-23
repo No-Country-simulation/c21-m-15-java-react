@@ -17,7 +17,7 @@ INSERT INTO _user (Id, Username, Password, Role) VALUES
 (201, 'alice_brown', '$2a$12$B.RjGpEFCfBoQlq9I09CVOudtmEYIzJAn5I9dauokJ7HCnOL6Ww5.', 'PATIENT'),
 (202, 'bob_davis', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT'),
 (203, 'charlie_miller', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT'),
-(204, 'fede', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT');
+(666, 'fede', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT');
 
 
 INSERT INTO medic (Id, User_Id, Name, Speciality, Picture, Description) VALUES
@@ -90,8 +90,8 @@ INSERT INTO Opening_Hour (Id, Medic_Id, Day_Of_Week, Start_Time, End_Time) VALUE
 INSERT INTO patient (Id, User_Id, First_Name, Last_Name, Email, Telephone) VALUES
 (201, 201, 'Alice', 'Brown', 'alice.brown@example.com', '456-789-0123'),
 (202, 202, 'Bob', 'Davis', 'bob.davis@example.com', '567-890-1234'),
-(203, 203, 'Charlie', 'Miller', 'charlie.miller@example.com', '678-901-2345');
-(204, 204, 'Fede', 'Fede', 'fede@example.com', '678-901-2345');
+(203, 203, 'Charlie', 'Miller', 'charlie.miller@example.com', '678-901-2345'),
+(666, 666, 'Fede', 'Fede', 'fede@example.com', '678-901-2345');
 
 
 INSERT INTO Medical_Record (patient_id, condition_Name, diagnosis_Date, treatment, notes) VALUES
@@ -101,5 +101,5 @@ INSERT INTO Medical_Record (patient_id, condition_Name, diagnosis_Date, treatmen
 (202, 'Migraña', '2023-02-05', 'Medicamento para el dolor', 'Llevar un diario de dolores de cabeza'),
 (203, 'Artritis', '2022-12-25', 'Fisioterapia', 'Hacer ejercicio regularmente'),
 (203, 'Dolor de espalda', '2023-01-12', 'Reposo y medicamentos para el dolor', 'Mantener una buena postura'),
-(204, 'Artritis', '2022-12-25', 'Fisioterapia', 'Hacer ejercicio regularmente'),
-(204, 'Dolor de espalda', '2023-01-12', 'Reposo y medicamentos para el dolor', 'Mantener una buena postura');
+(666, 'Artritis', '2022-12-25', 'Fisioterapia', 'Hacer ejercicio regularmente'),
+(666, 'Dolor de espalda', '2023-01-12', 'Reposo y medicamentos para el dolor', 'Mantener una buena postura');
