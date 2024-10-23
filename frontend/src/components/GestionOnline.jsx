@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  CardMedia,
-  Button,
-  Container,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  List,
-  ListItem,
-} from "@mui/material";
+import { Box, Typography, CardMedia, Button, Container, Select, MenuItem, FormControl, InputLabel, List, ListItem } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import useTelemedicina from "../hooks/useTelemedicina";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import es from "date-fns/locale/es";
+import { es } from "date-fns/locale";
+import { format } from 'date-fns';
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
@@ -62,29 +51,17 @@ const GestionOnline = () => {
     }
   }, [categoria, medicos]);
 
+  // Nueva función para habilitar solo los días de atención
   const shouldDisableDate = (date) => {
-    if (!medicoSeleccionado || !medicoSeleccionado.openingHours) {
-      return false;
+    const dayOfWeek = format(date, "EEEE", { locale: es });
+
+    // Verifica si el médico seleccionado tiene días de atención
+    if (medicoSeleccionado && medicoSeleccionado.daysOfAttention) {
+      return !medicoSeleccionado.daysOfAttention.includes(dayOfWeek);
     }
-  
-    const daysInSpanish = {
-      0: "Domingo",
-      1: "Lunes",
-      2: "Martes",
-      3: "Miércoles",
-      4: "Jueves",
-      5: "Viernes",
-      6: "Sábado"
-    };
-  
-    const dayOfWeek = date.getDay();
-    const dayName = daysInSpanish[dayOfWeek];
-  
-    const isAvailableDay = medicoSeleccionado.openingHours.some(
-      (horario) => horario.dayOfWeek === dayName
-    );
-  
-    return !isAvailableDay;
+
+    // Si no hay médico seleccionado, habilitar todos los días
+    return false;
   };
 
   return (
@@ -141,18 +118,31 @@ const GestionOnline = () => {
               </Box>
             </Box>
 
-            <Box sx={{ boxShadow: 3, padding: 2, borderRadius: 1, marginTop: "30px" }}>
+            <Box
+              sx={{
+                boxShadow: 3,
+                padding: 2,
+                borderRadius: 1,
+                marginTop: "30px",
+              }}
+            >
+              {/* <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
+                <strong>Días de atención:</strong>{" "}
+                {medicoSeleccionado.daysOfAttention ? medicoSeleccionado.daysOfAttention.join(", ") : "Cargando..."}
+              </Typography> */}
               <Box>
-                <Typography variant="body2"><strong>Horarios:</strong></Typography>
-                {medicoSeleccionado.openingHours && medicoSeleccionado.openingHours.length > 0 ? (
-                  medicoSeleccionado.openingHours.map((horario, index) => (
-                    <Typography key={index} variant="body2" sx={{ color: "#134074" }}>
-                      {horario.dayOfWeek}: {horario.startTime} - {horario.endTime}
-                    </Typography>
-                  ))
-                ) : (
-                  <Typography variant="body2">No hay horarios disponibles.</Typography>
-                )}
+                <Typography variant="body2">
+                  <strong>Días y horarios de atención:</strong>
+                  {medicoSeleccionado.openingHours && medicoSeleccionado.openingHours.length > 0 ? (
+                    medicoSeleccionado.openingHours.map(({ dayOfWeek, startTime, endTime }) => (
+                      <Typography key={dayOfWeek} variant="body2" component="div" sx={{ color: "#134074", padding: '2px' }}>
+                        {dayOfWeek}: {startTime} - {endTime}
+                      </Typography>
+                    ))
+                  ) : (
+                    <Typography variant="body2">No hay horarios disponibles.</Typography>
+                  )}
+                </Typography>
               </Box>
             </Box>
           </Box>
@@ -210,10 +200,3 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
-
-
-
-
-
-
-
