@@ -2,10 +2,39 @@ import { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { socketServerURL } from "../components/videollamadas/socket-provider.jsx";
 
-const servers = {
+/* const servers = {
   iceServers: [
     { urls: "stun:freestun.net:3478" },
     { urls: "turn:freestun.net:3478", username: "free", credential: "free" },
+  ],
+}; */
+
+
+const servers = {
+  iceServers: [
+    {
+      urls: "stun:stun.relay.metered.ca:80",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:80",
+      username: "785f5f8bbf7d2e3b0132bdbe",
+      credential: "Fb6ylRzdfZY0UoXy",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:80?transport=tcp",
+      username: "785f5f8bbf7d2e3b0132bdbe",
+      credential: "Fb6ylRzdfZY0UoXy",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:443",
+      username: "785f5f8bbf7d2e3b0132bdbe",
+      credential: "Fb6ylRzdfZY0UoXy",
+    },
+    {
+      urls: "turns:global.relay.metered.ca:443?transport=tcp",
+      username: "785f5f8bbf7d2e3b0132bdbe",
+      credential: "Fb6ylRzdfZY0UoXy",
+    },
   ],
 };
 
