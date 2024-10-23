@@ -90,7 +90,7 @@ INSERT INTO Opening_Hour (Id, Medic_Id, Day_Of_Week, Start_Time, End_Time) VALUE
 INSERT INTO patient (Id, User_Id, First_Name, Last_Name, Email, Telephone) VALUES
 (201, 201, 'Alice', 'Brown', 'alice.brown@example.com', '456-789-0123'),
 (202, 202, 'Bob', 'Davis', 'bob.davis@example.com', '567-890-1234'),
-(203, 203, 'Charlie', 'Miller', 'charlie.miller@example.com', '678-901-2345');
+(203, 203, 'Charlie', 'Miller', 'charlie.miller@example.com', '678-901-2345'),
 (204, 204, 'Fede', 'Fede', 'fede@example.com', '678-901-2345');
 
 
