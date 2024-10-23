@@ -1,3 +1,4 @@
+truncate table _user cascade;
 INSERT INTO _user (Id, Username, Password, Role) VALUES
 (101, 'fernandez_gustavo', '$2a$12$B.RjGpEFCfBoQlq9I09CVOudtmEYIzJAn5I9dauokJ7HCnOL6Ww5.', 'MEDIC'),
 (102, 'arias_francisco', '$2a$12$B.RjGpEFCfBoQlq9I09CVOudtmEYIzJAn5I9dauokJ7HCnOL6Ww5.', 'MEDIC'),
