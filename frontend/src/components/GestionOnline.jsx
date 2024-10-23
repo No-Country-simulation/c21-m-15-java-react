@@ -27,6 +27,7 @@ const GestionOnline = () => {
   const [medicoSeleccionado, setMedicoSeleccionado] = useState(null);
   const { id } = useParams();
 
+  // Cargar los médicos desde la API
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
@@ -53,14 +54,16 @@ const GestionOnline = () => {
   const medicosFiltrados = medicos.filter((doc) => doc.speciality === categoria);
   const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.speciality))];
 
+  // Solo cambiar el médico seleccionado si no hay ninguno actualmente seleccionado
   useEffect(() => {
-    if (medicosFiltrados.length > 0) {
+    if (medicoSeleccionado === null && medicosFiltrados.length > 0) {
       setMedicoSeleccionado(medicosFiltrados[0]);
-    } else {
+    } else if (medicosFiltrados.length === 0) {
       setMedicoSeleccionado(null);
     }
   }, [categoria, medicos]);
 
+  // Deshabilitar fechas en el calendario
   const shouldDisableDate = (date) => {
     if (!medicoSeleccionado || !medicoSeleccionado.openingHours) {
       return false;
@@ -98,7 +101,7 @@ const GestionOnline = () => {
             label="Filtrar por Categoría"
             onChange={(e) => {
               setCategoria(e.target.value);
-              setMedicoSeleccionado(null);
+              setMedicoSeleccionado(null); // Reiniciar la selección de médico al cambiar la categoría
             }}
           >
             <MenuItem value=""><em>Mostrar todos</em></MenuItem>
@@ -114,7 +117,7 @@ const GestionOnline = () => {
           {medicosFiltrados.map((doc) => (
             <ListItem
               key={doc.id}
-              onClick={() => setMedicoSeleccionado(doc)}
+              onClick={() => setMedicoSeleccionado(doc)} // Aquí seleccionas el médico manualmente
               sx={{ cursor: "pointer", backgroundColor: medicoSeleccionado?.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent" }}
             >
               <Typography variant="body1">{doc.name}</Typography>
@@ -203,11 +206,3 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
-
-
-
-
-
-
-
-
