@@ -6,10 +6,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import useTelemedicina from "../hooks/useTelemedicina";
-import { useEffect } from "react";
-import { useContext } from "react";
-import { userContext } from "../components/userProvider.jsx";
-
+ 
 export default function Home({ children }) {
   const { handleMenuOpen, handleMenuClose, handleMenuItemClick, anchorEl } =
     useTelemedicina();

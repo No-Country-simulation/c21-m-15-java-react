@@ -91,13 +91,27 @@ export default function VideoLlamada() {
 
   return (
     <section id="videollamada">
-      {!isAuthorized && <h1>Usuario no autenticado</h1>}
+      {/*    {!isAuthorized && <h1>Usuario no autenticado</h1>}
       {isAuthorized && (
         <h3>
           Usuario autenticado: {user.username} - Rol: {user.rol}
         </h3>
-      )}
-      <h3>Sala: {roomId} </h3>
+      )} */}
+      <h3>
+        {socket?.id
+          ? `Conectado a la sala ${roomId}`
+          : "Conectando a la sala, por favor aguarde."}
+      </h3>
+      <h4>
+        {socket?.id && usersInCall.length === 0 && user.role === "PATIENT"
+          ? "Haga click en unirse a la llamada y aguarde a ser atendido/a."
+          : ""}
+      </h4>
+      <h4>
+        {socket?.id && usersInCall.length === 1 && user.role === "PATIENT"
+          ? "Aguarde a ser atendido/a."
+          : ""}
+      </h4>
 
       <div className="videos">
         <div id="localstream">
