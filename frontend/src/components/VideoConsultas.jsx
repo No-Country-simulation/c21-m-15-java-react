@@ -16,7 +16,8 @@ const VideoConsultas = () => {
 
   useEffect(() => {
     const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
-    let tempRoomId = `${userId}-${user.id}.${randomNumber}`;
+    let tempRoomId = `${userId}-${user.id}_${randomNumber}`;
+    //let tempRoomId = `${userId}-${randomNumber}`;
     setRoomId(tempRoomId);
     setRoomUrl(`${window.location.origin}/vl/${tempRoomId}`);
   }, [userId, user.id]);

@@ -74,7 +74,7 @@ export default function VideoLlamada() {
   }
 
   let userFromRoomId = roomId.split("-")[0];
-  let roomUserId = roomId.split("-")[1].split(".")[0];
+  let roomUserId = roomId.split("-")[1].split("_")[0];
   console.log("roomUserId", roomUserId);
 
   let isAuthorized =
