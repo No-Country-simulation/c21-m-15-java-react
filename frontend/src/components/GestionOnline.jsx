@@ -1,27 +1,44 @@
+
+
 import React, { useEffect, useState } from "react";
-import { Box, Typography, CardMedia, Button, Container, Select, MenuItem, FormControl, InputLabel, List, ListItem, } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import {
+  Box,
+  Typography,
+  CardMedia,
+  Button,
+  Container,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  List,
+  ListItem,
+} from "@mui/material";
+import Calendar from "react-calendar";
 import useTelemedicina from "../hooks/useTelemedicina";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import "react-calendar/dist/Calendar.css";
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
   const [medicos, setMedicos] = useState([]);
   const [categoria, setCategoria] = useState("");
   const [medicoSeleccionado, setMedicoSeleccionado] = useState({});
+  const [horariosDisponibles, setHorariosDisponibles] = useState([]);
+  const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/medics');
+        const response = await axios.get("http://localhost:8080/api/medics");
         setMedicos(response.data);
 
         if (id) {
-          const medicoEncontrado = response.data.find((doc) => doc.id === parseInt(id));
+          const medicoEncontrado = response.data.find(
+            (doc) => doc.id === parseInt(id)
+          );
           if (medicoEncontrado) {
             setMedicoSeleccionado(medicoEncontrado);
             setCategoria(medicoEncontrado.speciality);
@@ -37,17 +54,48 @@ const GestionOnline = () => {
     fetchMedicoData();
   }, [id]);
 
-
-
-  const medicosFiltrados = medicos.filter((doc) => doc.speciality === categoria);
-
-  const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.speciality))];
+  const medicosFiltrados = medicos.filter(
+    (doc) => doc.speciality === categoria
+  );
+  const categoriasDisponibles = [
+    ...new Set(medicos.map((doc) => doc.speciality)),
+  ];
 
   useEffect(() => {
     if (medicosFiltrados.length > 0) {
-      setMedicoSeleccionado(medicosFiltrados[0]);
+      const selectedMedico = medicosFiltrados[0];
+      setMedicoSeleccionado(selectedMedico);
+      console.log("Médico seleccionado:", selectedMedico);
     }
   }, [categoria, medicos]);
+
+  useEffect(() => {
+    if (medicoSeleccionado.openingHours && selectedDate) {
+      const dayOfWeek = selectedDate.toLocaleString("en-US", { weekday: "long" }).toUpperCase();
+      const horarios = medicoSeleccionado.openingHours.filter(hour => hour.dayOfWeek === dayOfWeek);
+      
+      if (horarios.length > 0) {
+        const startHour = parseInt(horarios[0].startTime.split(':')[0]);
+        const endHour = parseInt(horarios[0].endTime.split(':')[0]);
+        
+        const availableHours = [];
+        for (let hour = startHour; hour < endHour; hour++) {
+          availableHours.push(`${hour.toString().padStart(2, '0')}:00`);
+        }
+
+        setHorariosDisponibles(availableHours);
+        console.log("Horarios disponibles:", availableHours);
+      } else {
+        setHorariosDisponibles([]);
+      }
+    } else {
+      setHorariosDisponibles([]);
+    }
+  }, [medicoSeleccionado, selectedDate]);
+
+  const handleHorarioSeleccionado = (horario) => {
+    setHorarioSeleccionado(horario);
+  };
 
   return (
     <Container
@@ -97,7 +145,10 @@ const GestionOnline = () => {
               onClick={() => setMedicoSeleccionado(doc)}
               sx={{
                 cursor: "pointer",
-                backgroundColor: medicoSeleccionado.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent",
+                backgroundColor:
+                  medicoSeleccionado.id === doc.id
+                    ? "rgba(0, 123, 255, 0.1)"
+                    : "transparent",
               }}
             >
               <Typography variant="body1">{doc.name}</Typography>
@@ -107,8 +158,10 @@ const GestionOnline = () => {
 
         {medicoSeleccionado && (
           <Box sx={{ marginTop: "20px" }}>
-
-            <Typography variant="body1" sx={{ color: "#134074", fontWeight: "bold" }}>
+            <Typography
+              variant="body1"
+              sx={{ color: "#134074", fontWeight: "bold" }}
+            >
               {medicoSeleccionado.name || "Cargando..."}
             </Typography>
 
@@ -142,8 +195,12 @@ const GestionOnline = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Typography variant="body1">{medicoSeleccionado.speciality || "Cargando..."}</Typography>
-                <Typography variant="body2">{medicoSeleccionado.description || "Cargando..."}</Typography>
+                <Typography variant="body1">
+                  {medicoSeleccionado.speciality || "Cargando..."}
+                </Typography>
+                <Typography variant="body2">
+                  {medicoSeleccionado.description || "Cargando..."}
+                </Typography>
               </Box>
             </Box>
 
@@ -156,39 +213,20 @@ const GestionOnline = () => {
               }}
             >
               <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
-                <strong>Dias de atención:</strong>{" "}
-                {medicoSeleccionado.daysOfAttention ? medicoSeleccionado.daysOfAttention.join(", ") : "Cargando..."}
+                <strong>Días de atención:</strong>{" "}
+                {medicoSeleccionado.openingHours &&
+                medicoSeleccionado.openingHours.length > 0
+                  ? medicoSeleccionado.openingHours
+                      .map(({ dayOfWeek }) => dayOfWeek)
+                      .join(", ")
+                  : "Cargando..."}
               </Typography>
-              <Box>
-              <Typography variant="body2">
-                <strong>Horarios:</strong>
-                {medicoSeleccionado.openingHours ? (
-                  Object.keys(medicoSeleccionado.openingHours).length > 0 ? (
-                    Object.entries(medicoSeleccionado.openingHours).map(([dayOfWeek, hours]) => (
-                      <Typography key={dayOfWeek} variant="body2" component="div" sx={{ color: "#134074" }}>
-                        {dayOfWeek}: {hours.startTime} - {hours.endTime}
-                      </Typography>
-                    ))
-                  ) : (
-                    <Typography variant="body2">No hay horarios disponibles.</Typography>
-                  )
-                ) : (
-                  <Typography variant="body2">Cargando horarios...</Typography>
-                )}
-              </Typography>
-              </Box>
             </Box>
           </Box>
         )}
       </Box>
 
-      <Box
-        sx={{
-          flex: 2,
-          padding: 2,
-          boxShadow: 3,
-        }}
-      >
+      <Box sx={{ flex: 2, padding: 2, boxShadow: 3 }}>
         <Typography
           variant="h5"
           sx={{
@@ -203,34 +241,42 @@ const GestionOnline = () => {
           Seleccione la hora y fecha
         </Typography>
         <Typography variant="body1" gutterBottom>
-          Aquí puede seleccionar la fecha y hora de su consulta con el especialista. Utilice el calendario para elegir el día y la hora que mejor se ajuste a su disponibilidad para agendar su cita médica en línea.
+          Aquí puede seleccionar la fecha y hora de su consulta con el
+          especialista. Utilice el calendario para elegir el día y la hora que
+          mejor se ajuste a su disponibilidad para agendar su cita médica en
+          línea.
         </Typography>
 
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateCalendar
-            value={selectedDate}
-            onChange={(newValue) => setSelectedDate(newValue)}
-            sx={{
-              ".MuiPickersCalendarHeader-label": {
-                color: "#13315c",
-                fontWeight: "bold",
-              },
-              ".MuiPickersArrowSwitcher-root button": {
-                color: "#007BFF",
-                "&:hover": {
-                  color: "orange",
-                },
-              },
-              ".Mui-selected": {
-                backgroundColor: "#13315c",
-                color: "white",
-              },
-              ".Mui-selected:hover": {
-                backgroundColor: "#13315c",
-              },
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+          <Calendar
+            onChange={(date) => {
+              setSelectedDate(date);
+              setHorarioSeleccionado(null); 
             }}
+            value={selectedDate}
+            sx={{ width: "100%", maxWidth: 400 }}
           />
-        </LocalizationProvider>
+        </Box>
+
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="h6">Horarios Disponibles:</Typography>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 1 }}>
+            {horariosDisponibles.length > 0 ? (
+              horariosDisponibles.map((horario, index) => (
+                <Button
+                  key={index}
+                  variant={horarioSeleccionado === horario ? "contained" : "outlined"}
+                  sx={{ marginBottom: 1, width: '100%' }}
+                  onClick={() => handleHorarioSeleccionado(horario)}
+                >
+                  {horario}
+                </Button>
+              ))
+            ) : (
+              <Typography variant="body2">No hay horarios disponibles para este día.</Typography>
+            )}
+          </Box>
+        </Box>
 
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
           <Button
@@ -238,7 +284,7 @@ const GestionOnline = () => {
             color="primary"
             onClick={handleSubmit}
             sx={{ backgroundColor: "#13315c" }}
-            disabled={!selectedDate}
+            disabled={!selectedDate || !horarioSeleccionado}
           >
             Agendar Cita
           </Button>
@@ -249,14 +295,3 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
-
-
-
-
-
-
-
-
-
-
-
