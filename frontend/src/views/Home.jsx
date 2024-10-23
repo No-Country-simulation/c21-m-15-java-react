@@ -163,14 +163,14 @@ export default function Home({ children }) {
               Cartilla
             </MenuItem>
             <MenuItem
-              onClick={() => handleMenuItemClick("Contacto")}
+              onClick={() => handleMenuItemClick("Citas")}
               sx={{
                 "&:hover": {
                   backgroundColor: "#0056b3",
                 },
               }}
             >
-              Contacto
+              Turnos
             </MenuItem>
             <MenuItem
               onClick={() => handleMenuItemClick("Telemedicina")}

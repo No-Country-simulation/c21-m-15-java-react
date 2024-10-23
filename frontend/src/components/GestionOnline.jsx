@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -13,6 +12,10 @@ import {
   InputLabel,
   List,
   ListItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -23,13 +26,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const GestionOnline = () => {
-  const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
+  const { setSelectedDate, selectedDate } = useTelemedicina();
   const [medicos, setMedicos] = useState([]);
   const [categoria, setCategoria] = useState("");
   const [medicoSeleccionado, setMedicoSeleccionado] = useState(null);
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
   const { id } = useParams();
+  const [openModal, setOpenModal] = useState(false); 
 
   // Cargar los médicos desde la API
   useEffect(() => {
@@ -64,7 +68,6 @@ const GestionOnline = () => {
     ...new Set(medicos.map((doc) => doc.speciality)),
   ];
 
-  // Solo cambiar el médico seleccionado si no hay ninguno actualmente seleccionado
   useEffect(() => {
     if (medicoSeleccionado === null && medicosFiltrados.length > 0) {
       setMedicoSeleccionado(medicosFiltrados[0]);
@@ -75,23 +78,26 @@ const GestionOnline = () => {
 
   useEffect(() => {
     if (medicoSeleccionado && medicoSeleccionado.openingHours && selectedDate) {
-      const dayOfWeek = selectedDate
-        .toLocaleString("es-ES", { weekday: "long" })
-        .charAt(0).toUpperCase() + selectedDate.toLocaleString("es-ES", { weekday: "long" }).slice(1);
-  
+      const dayOfWeek =
+        selectedDate
+          .toLocaleString("es-ES", { weekday: "long" })
+          .charAt(0)
+          .toUpperCase() +
+        selectedDate.toLocaleString("es-ES", { weekday: "long" }).slice(1);
+
       const horarios = medicoSeleccionado.openingHours.filter(
         (hour) => hour.dayOfWeek === dayOfWeek
       );
-  
+
       if (horarios.length > 0) {
         const startHour = parseInt(horarios[0].startTime.split(":")[0]);
         const endHour = parseInt(horarios[0].endTime.split(":")[0]);
-  
+
         const availableHours = [];
         for (let hour = startHour; hour < endHour; hour++) {
           availableHours.push(`${hour.toString().padStart(2, "0")}:00`);
         }
-  
+
         setHorariosDisponibles(availableHours);
       } else {
         setHorariosDisponibles([]);
@@ -132,12 +138,39 @@ const GestionOnline = () => {
 
   const tileClassName = ({ date }) => {
     const day = date.getDay();
-    return day === 0 || day === 6 ? 'red-tile' : null; // Red for Sunday and Saturday
+    return day === 0 || day === 6 ? "red-tile" : null;
+  };
+
+  const handleCita = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+
+    setSelectedDate(null);
+    setHorarioSeleccionado(null);
+    setMedicoSeleccionado(null);
   };
 
   return (
-    <Container sx={{ display: "flex", flexDirection: { xs: "column", sm: "row" }, width: "100%", minHeight: "100vh" }}>
-      <Box sx={{ flex: 2, padding: 2, display: "flex", flexDirection: "column", boxShadow: 3 }}>
+    <Container
+      sx={{
+        display: "flex",
+        flexDirection: { xs: "column", sm: "row" },
+        width: "100%",
+        minHeight: "100vh",
+      }}
+    >
+      <Box
+        sx={{
+          flex: 2,
+          padding: 2,
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: 3,
+        }}
+      >
         <FormControl fullWidth>
           <InputLabel id="categoria-label">Filtrar por Categoría</InputLabel>
           <Select
@@ -150,7 +183,9 @@ const GestionOnline = () => {
               setMedicoSeleccionado(null);
             }}
           >
-            <MenuItem value=""><em>Mostrar todos</em></MenuItem>
+            <MenuItem value="">
+              <em>Mostrar todos</em>
+            </MenuItem>
             {categoriasDisponibles.map((cat) => (
               <MenuItem key={cat} value={cat}>
                 {cat}
@@ -200,7 +235,12 @@ const GestionOnline = () => {
               <CardMedia
                 component="img"
                 image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
-                sx={{ width: { xs: "100%", md: 150 }, height: 150, borderRadius: "50%", border: "4px solid rgba(128, 128, 128, 0.5)" }}
+                sx={{
+                  width: { xs: "100%", md: 150 },
+                  height: 150,
+                  borderRadius: "50%",
+                  border: "4px solid rgba(128, 128, 128, 0.5)",
+                }}
               />
               <Box
                 sx={{
@@ -274,18 +314,19 @@ const GestionOnline = () => {
           especialista.
         </Typography>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Calendar
             locale="es"
             value={selectedDate}
             onChange={(date) => {
               setSelectedDate(date);
               setHorarioSeleccionado(null);
-              console.log(date);
             }}
             tileDisabled={({ date }) => shouldDisableDate(date)}
-            tileClassName={tileClassName} // Aplica el estilo para días especiales
+            tileClassName={tileClassName}
             formatDay={(locale, date) => format(date, "d", { locale: es })}
+            minDate={new Date()} 
           />
         </Box>
 
@@ -324,19 +365,42 @@ const GestionOnline = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={handleSubmit}
+            onClick={handleCita}
             sx={{ backgroundColor: "#13315c" }}
             disabled={!selectedDate || !horarioSeleccionado}
           >
             Agendar Cita
           </Button>
         </Box>
+
+        {/* Modal for success message */}
+        <Dialog
+          open={openModal}
+          onClose={handleCloseModal}
+          maxWidth="md" 
+          fullWidth={false} 
+        >
+          <DialogTitle>Reserva Exitosa</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1">
+              {selectedDate && horarioSeleccionado
+                ? `Su cita ha sido reservada exitosamente para el ${format(
+                    selectedDate,
+                    "PPP",
+                    { locale: es }
+                  )} a las ${horarioSeleccionado} hs.`
+                : "Ocurrió un error al procesar su reserva."}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseModal} color="primary">
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </Container>
   );
 };
 
 export default GestionOnline;
-
-
-
