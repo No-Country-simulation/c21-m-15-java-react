@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, CardMedia, Button, Container, Select, MenuItem, FormControl, InputLabel, List, ListItem } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
+import {
+  Box,
+  Typography,
+  CardMedia,
+  Button,
+  Container,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  List,
+  ListItem,
+} from "@mui/material";
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css'; // Importa el CSS de react-calendar
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import useTelemedicina from "../hooks/useTelemedicina";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { es } from "date-fns/locale";
-import { format } from 'date-fns';
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
@@ -16,11 +27,11 @@ const GestionOnline = () => {
   const [medicoSeleccionado, setMedicoSeleccionado] = useState(null);
   const { id } = useParams();
 
+  // Cargar los médicos desde la API
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/medics');
-        console.log(response.data);
         setMedicos(response.data);
 
         if (id) {
@@ -43,25 +54,39 @@ const GestionOnline = () => {
   const medicosFiltrados = medicos.filter((doc) => doc.speciality === categoria);
   const categoriasDisponibles = [...new Set(medicos.map((doc) => doc.speciality))];
 
+  // Solo cambiar el médico seleccionado si no hay ninguno actualmente seleccionado
   useEffect(() => {
-    if (medicosFiltrados.length > 0) {
+    if (medicoSeleccionado === null && medicosFiltrados.length > 0) {
       setMedicoSeleccionado(medicosFiltrados[0]);
-    } else {
+    } else if (medicosFiltrados.length === 0) {
       setMedicoSeleccionado(null);
     }
   }, [categoria, medicos]);
 
-  // Nueva función para habilitar solo los días de atención
+  // Deshabilitar fechas en el calendario
   const shouldDisableDate = (date) => {
-    const dayOfWeek = format(date, "EEEE", { locale: es });
-
-    // Verifica si el médico seleccionado tiene días de atención
-    if (medicoSeleccionado && medicoSeleccionado.daysOfAttention) {
-      return !medicoSeleccionado.daysOfAttention.includes(dayOfWeek);
+    if (!medicoSeleccionado || !medicoSeleccionado.openingHours) {
+      return false;
     }
 
-    // Si no hay médico seleccionado, habilitar todos los días
-    return false;
+    const daysInSpanish = {
+      0: "Domingo",
+      1: "Lunes",
+      2: "Martes",
+      3: "Miércoles",
+      4: "Jueves",
+      5: "Viernes",
+      6: "Sábado"
+    };
+
+    const dayOfWeek = date.getDay();
+    const dayName = daysInSpanish[dayOfWeek];
+
+    const isAvailableDay = medicoSeleccionado.openingHours.some(
+      (horario) => horario.dayOfWeek === dayName
+    );
+
+    return !isAvailableDay;
   };
 
   return (
@@ -76,7 +101,7 @@ const GestionOnline = () => {
             label="Filtrar por Categoría"
             onChange={(e) => {
               setCategoria(e.target.value);
-              setMedicoSeleccionado(null);
+              setMedicoSeleccionado(null); // Reiniciar la selección de médico al cambiar la categoría
             }}
           >
             <MenuItem value=""><em>Mostrar todos</em></MenuItem>
@@ -92,7 +117,7 @@ const GestionOnline = () => {
           {medicosFiltrados.map((doc) => (
             <ListItem
               key={doc.id}
-              onClick={() => setMedicoSeleccionado(doc)}
+              onClick={() => setMedicoSeleccionado(doc)} // Aquí seleccionas el médico manualmente
               sx={{ cursor: "pointer", backgroundColor: medicoSeleccionado?.id === doc.id ? "rgba(0, 123, 255, 0.1)" : "transparent" }}
             >
               <Typography variant="body1">{doc.name}</Typography>
@@ -118,31 +143,18 @@ const GestionOnline = () => {
               </Box>
             </Box>
 
-            <Box
-              sx={{
-                boxShadow: 3,
-                padding: 2,
-                borderRadius: 1,
-                marginTop: "30px",
-              }}
-            >
-              {/* <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
-                <strong>Días de atención:</strong>{" "}
-                {medicoSeleccionado.daysOfAttention ? medicoSeleccionado.daysOfAttention.join(", ") : "Cargando..."}
-              </Typography> */}
+            <Box sx={{ boxShadow: 3, padding: 2, borderRadius: 1, marginTop: "30px" }}>
               <Box>
-                <Typography variant="body2">
-                  <strong>Días y horarios de atención:</strong>
-                  {medicoSeleccionado.openingHours && medicoSeleccionado.openingHours.length > 0 ? (
-                    medicoSeleccionado.openingHours.map(({ dayOfWeek, startTime, endTime }) => (
-                      <Typography key={dayOfWeek} variant="body2" component="div" sx={{ color: "#134074", padding: '2px' }}>
-                        {dayOfWeek}: {startTime} - {endTime}
-                      </Typography>
-                    ))
-                  ) : (
-                    <Typography variant="body2">No hay horarios disponibles.</Typography>
-                  )}
-                </Typography>
+                <Typography variant="body2"><strong>Horarios:</strong></Typography>
+                {medicoSeleccionado.openingHours && medicoSeleccionado.openingHours.length > 0 ? (
+                  medicoSeleccionado.openingHours.map((horario, index) => (
+                    <Typography key={index} variant="body2" sx={{ color: "#134074" }}>
+                      {horario.dayOfWeek}: {horario.startTime} - {horario.endTime}
+                    </Typography>
+                  ))
+                ) : (
+                  <Typography variant="body2">No hay horarios disponibles.</Typography>
+                )}
               </Box>
             </Box>
           </Box>
@@ -169,19 +181,13 @@ const GestionOnline = () => {
           Aquí puede seleccionar la fecha y hora de su consulta con el especialista.
         </Typography>
 
-        <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
-          <DateCalendar
-            value={selectedDate}
-            onChange={(newValue) => setSelectedDate(newValue)}
-            shouldDisableDate={shouldDisableDate}
-            sx={{
-              ".MuiPickersCalendarHeader-label": { color: "#13315c", fontWeight: "bold" },
-              ".MuiPickersArrowSwitcher-root button": { color: "#007BFF", "&:hover": { color: "orange" } },
-              ".Mui-selected": { backgroundColor: "#13315c", color: "white" },
-              ".Mui-selected:hover": { backgroundColor: "#13315c" },
-            }}
-          />
-        </LocalizationProvider>
+        <Calendar
+          locale="es" // Se define el idioma como español
+          value={selectedDate}
+          onChange={setSelectedDate}
+          tileDisabled={({ date }) => shouldDisableDate(date)}
+          formatDay={(locale, date) => format(date, "d", { locale: es })} // Formato de día
+        />
 
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
           <Button
