@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { userContext } from "./userProvider";
+import { Button } from "@mui/material";
 
 const VideoConsultas = () => {
-  const { user, setUser } = useContext(userContext);
+  const { user } = useContext(userContext);
   const navigate = useNavigate();
   console.log("user: ", user.username);
   console.log("rol: ", user.role);
@@ -41,9 +42,13 @@ const VideoConsultas = () => {
         <div className="content">
           <p>Para realizar una video consulta haga click aquí:</p>
 
-          <button onClick={() => navigate(`/vl/${roomId}`)}>
+          <Button
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={() => navigate(`/vl/${roomId}`)}
+          >
             Ingresar a la llamada
-          </button>
+          </Button>
 
           <p>
             Si necesita ingresar desde otro dispositivo puede hacerlo mediante
