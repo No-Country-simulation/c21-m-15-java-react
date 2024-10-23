@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "./socket-provider.jsx";
+import { Button } from "@mui/material";
 
 export default function RoomList() {
-  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
   const { socket, isConnected } = useContext(SocketContext);
   const [socketRooms, setSocketRooms] = useState({});
@@ -29,15 +29,11 @@ export default function RoomList() {
     };
   }, [socket, isConnected]);
 
-  // no usar navigate, usar <a href> para que se recargue la página y
-  // funcionen los socket
-  /* <button onClick={() => navigate("/vl/" + salaId)}>Atender</button> */
-
   return (
     <section id="room-list" className="column-list">
-      <h1>Pacientes esperando</h1>
+      <h1>Pacientes esperando atención.</h1>
       {Object.keys(socketRooms).length === 0 && (
-        <p>No hay pacientes esperando.</p>
+        <p>No hay pacientes esperando atención.</p>
       )}
       <ul className="lista-espera">
         {Object.keys(socketRooms).map((salaId) => (
@@ -47,7 +43,15 @@ export default function RoomList() {
                 <div>
                   {salaId} - {socketRooms[salaId].length} paciente esperando
                 </div>
-                <a href={`/vl/${salaId}`}>Atender</a>
+                {/*                 <a href={`/vl/${salaId}`}>Atender</a>
+                 */}{" "}
+                <Button
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  onClick={() => navigate("/vl/" + salaId)}
+                >
+                  Atender
+                </Button>
               </>
             )}
 

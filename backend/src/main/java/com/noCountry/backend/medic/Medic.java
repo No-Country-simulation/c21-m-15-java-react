@@ -4,6 +4,7 @@ import com.noCountry.backend.openingHour.OpeningHour;
 import com.noCountry.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 public class Medic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

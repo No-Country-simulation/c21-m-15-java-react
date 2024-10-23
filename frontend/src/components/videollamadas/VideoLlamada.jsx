@@ -2,9 +2,12 @@ import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { SocketContext } from "./socket-provider.jsx";
 import { useVideoCall } from "../../hooks/useVideoCall.jsx"; // Import the new hook
+import { userContext } from "../userProvider.jsx";
 import "./videollamada.css";
 
 export default function VideoLlamada() {
+  const { user, setUser, token } = useContext(userContext);
+  const [patientRecords, setPatientRecords] = useState([]);
   const { roomId } = useParams();
   const { socket, isConnected } = useContext(SocketContext);
   const {
@@ -70,32 +73,74 @@ export default function VideoLlamada() {
     leaveCall();
   }
 
-  let user = sessionStorage.getItem("user");
-  let rol = sessionStorage.getItem("rol");
   let userFromRoomId = roomId.split("-")[0];
-  let isAuthorized =
-    user === userFromRoomId || rol === "admin" || rol === "doc";
+  let roomUserId = roomId.split("-")[1].split("_")[0];
+  console.log("roomUserId", roomUserId);
 
+  let isAuthorized =
+    user.username === userFromRoomId ||
+    user.role === "admin" ||
+    user.role === "MEDIC";
+
+  //TODO CAMBIAR SEGUN USUARIOS Y ROLES DE LA BASE
   let localName = "";
   let remoteName = "";
-  if (rol !== "admin" && rol !== "doc") {
-    localName = user;
+  if (user.role === "PATIENT") {
+    localName = user.username;
     remoteName = "HealthPro";
-  }
-  if (rol === "admin" || rol === "doc") {
+  } else {
     localName = "HealthPro";
     remoteName = "Paciente: " + userFromRoomId;
   }
 
+  useEffect(() => {
+    async function fetchUserData() {
+      let response = await fetch(
+        `http://localhost:8080/api/patients/${roomUserId}/medical-records`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error("Error al obtener datos del paciente");
+        return;
+      }
+      if (response.ok) {
+        let patientRecords = await response.json();
+        console.log("patientRecords", patientRecords);
+        setPatientRecords(patientRecords);
+      }
+    }
+    fetchUserData();
+  }, [token, roomUserId]);
+
   return (
     <section id="videollamada">
-      {!isAuthorized && <h1>Usuario no autenticado</h1>}
+      {/*    {!isAuthorized && <h1>Usuario no autenticado</h1>}
       {isAuthorized && (
         <h3>
-          Usuario autenticado: {user} - Rol: {rol}
+          Usuario autenticado: {user.username} - Rol: {user.rol}
         </h3>
-      )}
-      <h3>Sala: {roomId} </h3>
+      )} */}
+      <h3>
+        {socket?.id
+          ? `Conectado a la sala ${roomId}`
+          : "Conectando a la sala, por favor aguarde."}
+      </h3>
+      <h4>
+        {socket?.id && usersInCall.length === 0 && user.role === "PATIENT"
+          ? "Haga click en unirse a la llamada y aguarde a ser atendido/a."
+          : ""}
+      </h4>
+      <h4>
+        {socket?.id && usersInCall.length === 1 && user.role === "PATIENT"
+          ? "Aguarde a ser atendido/a."
+          : ""}
+      </h4>
 
       <div className="videos">
         <div id="localstream">
@@ -125,11 +170,26 @@ export default function VideoLlamada() {
       )}
       {socketVideoId && (
         <button className="video" id="leave-call" onClick={handleLeaveButton}>
-          Colgar
+          Terminar llamada
         </button>
       )}
-      <h2>* * *</h2>
-
+      <div id="divider">* * *</div>
+      <section id="records">
+        <h3>Historial del paciente:</h3>
+        {patientRecords.length === 0 && <p>No hay registros médicos</p>}
+        {patientRecords.length > 0 && (
+          <ul>
+            {patientRecords.map((record) => (
+              <li key={record.id}>
+                <h4>{record.diagnosisDate}</h4>
+                <p>Diagnostico: {record.conditionName}</p>
+                <p>Tratamiento: {record.treatment}</p>
+                <p>Notas: {record.notes} </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
       <div>
         <h3>Usuarios en la sala:</h3>
         {usersInRoom.length === 0 && <li>No hay usuarios en la sala</li>}

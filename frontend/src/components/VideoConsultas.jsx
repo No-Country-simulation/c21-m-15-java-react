@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "./userProvider";
+import { Button } from "@mui/material";
 
 const VideoConsultas = () => {
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated") === "true";
-  let user = sessionStorage.getItem("user");
-  let rol = sessionStorage.getItem("rol");
+  const { user } = useContext(userContext);
+  const navigate = useNavigate();
+  console.log("user: ", user.username);
+  console.log("rol: ", user.role);
 
-  console.log("user: ", user);
-  console.log("rol: ", rol);
-
-  const [userId, setUserId] = useState(user);
+  const [userId, setUserId] = useState(user.username);
   const [roomUrl, setRoomUrl] = useState("");
   const [roomId, setRoomId] = useState("");
 
   useEffect(() => {
     const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
-    let tempRoomId = `${userId}-${randomNumber}`;
+    let tempRoomId = `${userId}-${user.id}_${randomNumber}`;
+    //let tempRoomId = `${userId}-${randomNumber}`;
     setRoomId(tempRoomId);
     setRoomUrl(`${window.location.origin}/vl/${tempRoomId}`);
-  }, [userId]);
+  }, [userId, user.id]);
 
-  if (rol === "admin" || rol === "doc") {
+  if (user.role === "MEDIC") {
     return (
       <Navigate
         to="/rooms"
@@ -37,11 +39,20 @@ const VideoConsultas = () => {
     <section id="video-consultas">
       {roomUrl && (
         <div className="content">
-          <p>
-            Para realizar una video consulta ingrese al siguiente enlace y
-            aguarde a ser atendido/a:
-          </p>
+          <p>Para realizar una video consulta haga click aquí:</p>
 
+          <Button
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            onClick={() => navigate(`/vl/${roomId}`)}
+          >
+            Ingresar a la llamada
+          </Button>
+
+          <p>
+            Si necesita ingresar desde otro dispositivo puede hacerlo mediante
+            el siguiente enlace:{" "}
+          </p>
           <a href={`/vl/${roomId}`}>{userId !== "" ? roomUrl : ""}</a>
         </div>
       )}

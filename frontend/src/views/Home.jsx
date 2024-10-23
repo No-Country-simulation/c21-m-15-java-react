@@ -6,14 +6,21 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import useTelemedicina from "../hooks/useTelemedicina";
-
+ 
 export default function Home({ children }) {
   const { handleMenuOpen, handleMenuClose, handleMenuItemClick, anchorEl } =
     useTelemedicina();
 
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+      <Box
+        sx={{
+          borderBottom: "1px solid rgba(0,0,0,0.1)",
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
         <Box
           sx={{
             display: "flex",

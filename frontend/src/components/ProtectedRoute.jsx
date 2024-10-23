@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { userContext } from "./userProvider";
 
 export default function ProtectedRoute({ children }) {
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated") === "true";
-  let user = sessionStorage.getItem("user");
-  let rol = sessionStorage.getItem("rol");
+  const { user, setUser } = useContext(userContext);
+
+  const isAuthenticated = user ? true : false;
 
   // redireccionamiento a la página de inicio de sesión si el usuario no está autenticado
   if (!isAuthenticated) {
@@ -13,8 +15,8 @@ export default function ProtectedRoute({ children }) {
         to="/login"
         state={{
           from: location.pathname,
-          user: user,
-          rol: rol,
+          /*           user: user.username,
+          rol: user.role, */
         }}
         replace
       />
@@ -36,7 +38,7 @@ export default function ProtectedRoute({ children }) {
       }
     }
   }
-  let authRoom = user === userInRoomId || rol === "admin";
+  let authRoom = user.username === userInRoomId || user.role === "MEDIC";
 
   if (isRoomPath && !authRoom) {
     return (

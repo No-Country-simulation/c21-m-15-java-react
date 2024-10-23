@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { userContext } from "./userProvider";
 
 export default function LoginScreen() {
-  const { user, setUser, userRol, setUserRol } = useContext(userContext);
+  const { setUser, setToken } = useContext(userContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -23,24 +23,45 @@ export default function LoginScreen() {
   // Obtener la ruta anterior del estado de la ubicación, o usar una ruta por defecto
   const from = location.state?.from || "/";
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!username || !password) {
-      alert("Por favor, complete los campos de usuario y contraseña.");
-      return;
+  async function handleSubmitBackend(e) {
+    e.preventDefault();
+    let response = await fetch("http://localhost:8080/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    });
+
+    if (response.ok) {
+      let data = await response.json();
+
+      setToken(data.token);
+
+      let userResponse = await fetch("http://localhost:8080/api/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${data.token}`,
+        },
+      });
+      if (!userResponse.ok) {
+        alert("Error al obtener el usuario");
+        return;
+      }
+      if (userResponse.ok) {
+        let userData = await userResponse.json();
+
+        setUser(userData); //id role username
+      }
+
+      navigate(from, { replace: true });
+    } else {
+      alert("Usuario o contraseña incorrectos.");
     }
-    setUser(username);
-    // Aquí iría la lógica de autenticación
-    console.log("Usuario:", username);
-    console.log("Contraseña:", password);
-
-    // Simulamos una autenticación exitosa
-    sessionStorage.setItem("isAuthenticated", "true");
-    sessionStorage.setItem("user", username);
-    sessionStorage.setItem("rol", username); //TODO: cambiar por el rol real
-
-    navigate(from, { replace: true });
-  };
+  }
 
   return (
     <Container
@@ -63,7 +84,12 @@ export default function LoginScreen() {
         <Typography component="h1" variant="h5">
           Iniciar sesión
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmitBackend}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin="normal"
             required
@@ -96,14 +122,6 @@ export default function LoginScreen() {
           >
             Iniciar sesión
           </Button>
-          {/*  <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Link href="#" variant="body2">
-              ¿Olvidaste tu contraseña?
-            </Link>
-            <Link href="#" variant="body2">
-              {"¿No tienes una cuenta? Regístrate"}
-            </Link>
-          </Box> */}
         </Box>
       </Box>
     </Container>
