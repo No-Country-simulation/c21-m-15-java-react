@@ -13,7 +13,7 @@ import { useContext } from "react";
 import { userContext } from "./userProvider";
 
 export default function LoginScreen() {
-  const { user, setUser } = useContext(userContext);
+  const { setUser, setToken } = useContext(userContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -39,7 +39,8 @@ export default function LoginScreen() {
     if (response.ok) {
       let data = await response.json();
 
-      //TODO GUARDAR TOKEN EN CONTEXT
+      setToken(data.token);
+
       let userResponse = await fetch("http://localhost:8080/api/user", {
         method: "GET",
         headers: {
