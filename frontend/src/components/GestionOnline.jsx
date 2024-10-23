@@ -15,20 +15,23 @@ import {
   ListItem,
 } from "@mui/material";
 import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import useTelemedicina from "../hooks/useTelemedicina";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "react-calendar/dist/Calendar.css";
 
 const GestionOnline = () => {
   const { handleSubmit, setSelectedDate, selectedDate } = useTelemedicina();
   const [medicos, setMedicos] = useState([]);
   const [categoria, setCategoria] = useState("");
-  const [medicoSeleccionado, setMedicoSeleccionado] = useState({});
+  const [medicoSeleccionado, setMedicoSeleccionado] = useState(null);
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
   const { id } = useParams();
 
+  // Cargar los médicos desde la API
   useEffect(() => {
     const fetchMedicoData = async () => {
       try {
@@ -62,29 +65,33 @@ const GestionOnline = () => {
   ];
 
   useEffect(() => {
-    if (medicosFiltrados.length > 0) {
-      const selectedMedico = medicosFiltrados[0];
-      setMedicoSeleccionado(selectedMedico);
-      console.log("Médico seleccionado:", selectedMedico);
+    if (medicoSeleccionado === null && medicosFiltrados.length > 0) {
+      setMedicoSeleccionado(medicosFiltrados[0]);
+    } else if (medicosFiltrados.length === 0) {
+      setMedicoSeleccionado(null);
     }
   }, [categoria, medicos]);
 
   useEffect(() => {
-    if (medicoSeleccionado.openingHours && selectedDate) {
-      const dayOfWeek = selectedDate.toLocaleString("en-US", { weekday: "long" }).toUpperCase();
-      const horarios = medicoSeleccionado.openingHours.filter(hour => hour.dayOfWeek === dayOfWeek);
-      
+    if (medicoSeleccionado && medicoSeleccionado.openingHours && selectedDate) {
+      const dayOfWeek = selectedDate
+        .toLocaleString("es-ES", { weekday: "long" })
+        .charAt(0).toUpperCase() + selectedDate.toLocaleString("es-ES", { weekday: "long" }).slice(1);
+  
+      const horarios = medicoSeleccionado.openingHours.filter(
+        (hour) => hour.dayOfWeek === dayOfWeek
+      );
+  
       if (horarios.length > 0) {
-        const startHour = parseInt(horarios[0].startTime.split(':')[0]);
-        const endHour = parseInt(horarios[0].endTime.split(':')[0]);
-        
+        const startHour = parseInt(horarios[0].startTime.split(":")[0]);
+        const endHour = parseInt(horarios[0].endTime.split(":")[0]);
+  
         const availableHours = [];
         for (let hour = startHour; hour < endHour; hour++) {
-          availableHours.push(`${hour.toString().padStart(2, '0')}:00`);
+          availableHours.push(`${hour.toString().padStart(2, "0")}:00`);
         }
-
+  
         setHorariosDisponibles(availableHours);
-        console.log("Horarios disponibles:", availableHours);
       } else {
         setHorariosDisponibles([]);
       }
@@ -93,8 +100,38 @@ const GestionOnline = () => {
     }
   }, [medicoSeleccionado, selectedDate]);
 
+  const shouldDisableDate = (date) => {
+    if (!medicoSeleccionado || !medicoSeleccionado.openingHours) {
+      return false;
+    }
+
+    const daysInSpanish = {
+      0: "Domingo",
+      1: "Lunes",
+      2: "Martes",
+      3: "Miércoles",
+      4: "Jueves",
+      5: "Viernes",
+      6: "Sábado",
+    };
+
+    const dayOfWeek = date.getDay();
+    const dayName = daysInSpanish[dayOfWeek];
+
+    const isAvailableDay = medicoSeleccionado.openingHours.some(
+      (horario) => horario.dayOfWeek === dayName
+    );
+
+    return !isAvailableDay;
+  };
+
   const handleHorarioSeleccionado = (horario) => {
     setHorarioSeleccionado(horario);
+  };
+
+  const tileClassName = ({ date }) => {
+    const day = date.getDay();
+    return day === 0 || day === 6 ? 'red-tile' : null; // Red for Sunday and Saturday
   };
 
   return (
@@ -124,7 +161,7 @@ const GestionOnline = () => {
             label="Filtrar por Categoría"
             onChange={(e) => {
               setCategoria(e.target.value);
-              setMedicoSeleccionado({});
+              setMedicoSeleccionado(null);
             }}
           >
             <MenuItem value="">
@@ -146,7 +183,7 @@ const GestionOnline = () => {
               sx={{
                 cursor: "pointer",
                 backgroundColor:
-                  medicoSeleccionado.id === doc.id
+                  medicoSeleccionado?.id === doc.id
                     ? "rgba(0, 123, 255, 0.1)"
                     : "transparent",
               }}
@@ -156,15 +193,14 @@ const GestionOnline = () => {
           ))}
         </List>
 
-        {medicoSeleccionado && (
+        {medicoSeleccionado ? (
           <Box sx={{ marginTop: "20px" }}>
             <Typography
               variant="body1"
               sx={{ color: "#134074", fontWeight: "bold" }}
             >
-              {medicoSeleccionado.name || "Cargando..."}
+              {medicoSeleccionado.name}
             </Typography>
-
             <Box
               sx={{
                 display: "flex",
@@ -196,10 +232,10 @@ const GestionOnline = () => {
                 }}
               >
                 <Typography variant="body1">
-                  {medicoSeleccionado.speciality || "Cargando..."}
+                  {medicoSeleccionado.speciality}
                 </Typography>
                 <Typography variant="body2">
-                  {medicoSeleccionado.description || "Cargando..."}
+                  {medicoSeleccionado.description}
                 </Typography>
               </Box>
             </Box>
@@ -212,17 +248,31 @@ const GestionOnline = () => {
                 marginTop: "30px",
               }}
             >
-              <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
-                <strong>Días de atención:</strong>{" "}
-                {medicoSeleccionado.openingHours &&
-                medicoSeleccionado.openingHours.length > 0
-                  ? medicoSeleccionado.openingHours
-                      .map(({ dayOfWeek }) => dayOfWeek)
-                      .join(", ")
-                  : "Cargando..."}
+              <Typography variant="body2">
+                <strong>Horarios:</strong>
               </Typography>
+              {medicoSeleccionado.openingHours &&
+              medicoSeleccionado.openingHours.length > 0 ? (
+                medicoSeleccionado.openingHours.map((horario, index) => (
+                  <Typography
+                    key={index}
+                    variant="body2"
+                    sx={{ color: "#134074" }}
+                  >
+                    {horario.dayOfWeek}: {horario.startTime} - {horario.endTime}
+                  </Typography>
+                ))
+              ) : (
+                <Typography variant="body2">
+                  No hay horarios disponibles.
+                </Typography>
+              )}
             </Box>
           </Box>
+        ) : (
+          <Typography variant="body1">
+            Seleccione un médico para ver los detalles.
+          </Typography>
         )}
       </Box>
 
@@ -242,38 +292,51 @@ const GestionOnline = () => {
         </Typography>
         <Typography variant="body1" gutterBottom>
           Aquí puede seleccionar la fecha y hora de su consulta con el
-          especialista. Utilice el calendario para elegir el día y la hora que
-          mejor se ajuste a su disponibilidad para agendar su cita médica en
-          línea.
+          especialista.
         </Typography>
 
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <Calendar
+            locale="es"
+            value={selectedDate}
             onChange={(date) => {
               setSelectedDate(date);
-              setHorarioSeleccionado(null); 
+              setHorarioSeleccionado(null);
+              console.log(date);
             }}
-            value={selectedDate}
-            sx={{ width: "100%", maxWidth: 400 }}
+            tileDisabled={({ date }) => shouldDisableDate(date)}
+            tileClassName={tileClassName} // Aplica el estilo para días especiales
+            formatDay={(locale, date) => format(date, "d", { locale: es })}
           />
         </Box>
 
         <Box sx={{ mt: 2 }}>
           <Typography variant="h6">Horarios Disponibles:</Typography>
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mt: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              mt: 1,
+            }}
+          >
             {horariosDisponibles.length > 0 ? (
               horariosDisponibles.map((horario, index) => (
                 <Button
                   key={index}
-                  variant={horarioSeleccionado === horario ? "contained" : "outlined"}
-                  sx={{ marginBottom: 1, width: '100%' }}
+                  variant={
+                    horarioSeleccionado === horario ? "contained" : "outlined"
+                  }
+                  sx={{ marginBottom: 1, width: "100%" }}
                   onClick={() => handleHorarioSeleccionado(horario)}
                 >
                   {horario}
                 </Button>
               ))
             ) : (
-              <Typography variant="body2">No hay horarios disponibles para este día.</Typography>
+              <Typography variant="body2">
+                No hay horarios disponibles para este día.
+              </Typography>
             )}
           </Box>
         </Box>
@@ -295,3 +358,6 @@ const GestionOnline = () => {
 };
 
 export default GestionOnline;
+
+
+
