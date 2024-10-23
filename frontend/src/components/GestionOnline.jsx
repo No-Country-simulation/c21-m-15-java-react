@@ -78,20 +78,20 @@ const GestionOnline = () => {
       const dayOfWeek = selectedDate
         .toLocaleString("es-ES", { weekday: "long" })
         .charAt(0).toUpperCase() + selectedDate.toLocaleString("es-ES", { weekday: "long" }).slice(1);
-  
+
       const horarios = medicoSeleccionado.openingHours.filter(
         (hour) => hour.dayOfWeek === dayOfWeek
       );
-  
+
       if (horarios.length > 0) {
         const startHour = parseInt(horarios[0].startTime.split(":")[0]);
         const endHour = parseInt(horarios[0].endTime.split(":")[0]);
-  
+
         const availableHours = [];
         for (let hour = startHour; hour < endHour; hour++) {
           availableHours.push(`${hour.toString().padStart(2, "0")}:00`);
         }
-  
+
         setHorariosDisponibles(availableHours);
       } else {
         setHorariosDisponibles([]);
@@ -189,7 +189,8 @@ const GestionOnline = () => {
               sx={{
                 display: "flex",
                 flexDirection: { xs: "column", md: "row" },
-                alignItems: "flex-start",
+                alignItems: { xs: "center", md: "flex-start" },
+                justifyContent: "center",
                 gap: 2,
                 height: "auto",
                 boxShadow: 3,
@@ -197,11 +198,26 @@ const GestionOnline = () => {
                 borderRadius: 2,
               }}
             >
-              <CardMedia
-                component="img"
-                image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
-                sx={{ width: { xs: "100%", md: 150 }, height: 150, borderRadius: "50%", border: "4px solid rgba(128, 128, 128, 0.5)" }}
-              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%" 
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
+                  sx={{
+                    width: { xs: "100%", md: 150 },
+                    height: "auto",
+                    maxWidth: 150,
+                    borderRadius: "50%",
+                    border: "4px solid rgba(128, 128, 128, 0.5)",
+                    objectFit: "cover"
+                  }}
+                />
+              </Box>
               <Box
                 sx={{
                   padding: 1,
@@ -231,7 +247,7 @@ const GestionOnline = () => {
                 <strong>Horarios:</strong>
               </Typography>
               {medicoSeleccionado.openingHours &&
-              medicoSeleccionado.openingHours.length > 0 ? (
+                medicoSeleccionado.openingHours.length > 0 ? (
                 medicoSeleccionado.openingHours.map((horario, index) => (
                   <Typography
                     key={index}
