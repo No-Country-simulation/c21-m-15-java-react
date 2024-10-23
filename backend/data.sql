@@ -16,7 +16,7 @@ INSERT INTO _user (Id, Username, Password, Role) VALUES
 
 (201, 'alice_brown', '$2a$12$B.RjGpEFCfBoQlq9I09CVOudtmEYIzJAn5I9dauokJ7HCnOL6Ww5.', 'PATIENT'),
 (202, 'bob_davis', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT'),
-(203, 'charlie_miller', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT');
+(203, 'charlie_miller', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT'),
 (204, 'fede', '$2a$12$1Qafo/LDMGVxOVq2lxnraedVyY9epFAOnDq.FeABg4LDHwbXCBb0W', 'PATIENT');
 
 
@@ -100,6 +100,6 @@ INSERT INTO Medical_Record (patient_id, condition_Name, diagnosis_Date, treatmen
 (202, 'Asma', '2023-03-10', 'Inhalador', 'Evitar alérgenos como el polen y el polvo'),
 (202, 'Migraña', '2023-02-05', 'Medicamento para el dolor', 'Llevar un diario de dolores de cabeza'),
 (203, 'Artritis', '2022-12-25', 'Fisioterapia', 'Hacer ejercicio regularmente'),
-(203, 'Dolor de espalda', '2023-01-12', 'Reposo y medicamentos para el dolor', 'Mantener una buena postura');
+(203, 'Dolor de espalda', '2023-01-12', 'Reposo y medicamentos para el dolor', 'Mantener una buena postura'),
 (204, 'Artritis', '2022-12-25', 'Fisioterapia', 'Hacer ejercicio regularmente'),
 (204, 'Dolor de espalda', '2023-01-12', 'Reposo y medicamentos para el dolor', 'Mantener una buena postura');
