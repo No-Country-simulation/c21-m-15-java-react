@@ -48,12 +48,16 @@ const GestionOnline = () => {
     }
   }, [categoria, medicos]);
 
+  // Nueva función para habilitar solo los días de atención
   const shouldDisableDate = (date) => {
     const dayOfWeek = format(date, "EEEE", { locale: es });
-    if (medicoSeleccionado && medicoSeleccionado.openingHours) {
-      const diasDeAtencion = medicoSeleccionado.openingHours.map(h => h.dayOfWeek);
-      return !diasDeAtencion.includes(dayOfWeek);
+
+    // Verifica si el médico seleccionado tiene días de atención
+    if (medicoSeleccionado && medicoSeleccionado.daysOfAttention) {
+      return !medicoSeleccionado.daysOfAttention.includes(dayOfWeek);
     }
+
+    // Si no hay médico seleccionado, habilitar todos los días
     return false;
   };
 
@@ -162,16 +166,16 @@ const GestionOnline = () => {
                 marginTop: "30px",
               }}
             >
-              <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
+              {/* <Typography variant="body2" sx={{ padding: 1, borderRadius: 1 }}>
                 <strong>Días de atención:</strong>{" "}
-                {medicoSeleccionado.openingHours ? medicoSeleccionado.openingHours.map(h => h.dayOfWeek).join(", ") : "Cargando..."}
-              </Typography>
+                {medicoSeleccionado.daysOfAttention ? medicoSeleccionado.daysOfAttention.join(", ") : "Cargando..."}
+              </Typography> */}
               <Box>
                 <Typography variant="body2">
-                  <strong>Horarios:</strong>
+                  <strong>Días y horarios de atención:</strong>
                   {medicoSeleccionado.openingHours && medicoSeleccionado.openingHours.length > 0 ? (
                     medicoSeleccionado.openingHours.map(({ dayOfWeek, startTime, endTime }) => (
-                      <Typography key={dayOfWeek} variant="body2" component="div" sx={{ color: "#134074" }}>
+                      <Typography key={dayOfWeek} variant="body2" component="div" sx={{ color: "#134074", padding: '2px' }}>
                         {dayOfWeek}: {startTime} - {endTime}
                       </Typography>
                     ))
