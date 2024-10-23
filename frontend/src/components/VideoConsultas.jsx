@@ -16,10 +16,10 @@ const VideoConsultas = () => {
 
   useEffect(() => {
     const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
-    let tempRoomId = `${userId}-${randomNumber}`;
+    let tempRoomId = `${userId}-${user.id}.${randomNumber}`;
     setRoomId(tempRoomId);
     setRoomUrl(`${window.location.origin}/vl/${tempRoomId}`);
-  }, [userId]);
+  }, [userId, user.id]);
 
   if (user.role === "MEDIC") {
     return (

@@ -6,7 +6,8 @@ import { userContext } from "../userProvider.jsx";
 import "./videollamada.css";
 
 export default function VideoLlamada() {
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser, token } = useContext(userContext);
+  const [patientRecords, setPatientRecords] = useState([]);
   const { roomId } = useParams();
   const { socket, isConnected } = useContext(SocketContext);
   const {
@@ -73,6 +74,9 @@ export default function VideoLlamada() {
   }
 
   let userFromRoomId = roomId.split("-")[0];
+  let roomUserId = roomId.split("-")[1].split(".")[0];
+  console.log("roomUserId", roomUserId);
+
   let isAuthorized =
     user.username === userFromRoomId ||
     user.role === "admin" ||
@@ -88,6 +92,31 @@ export default function VideoLlamada() {
     localName = "HealthPro";
     remoteName = "Paciente: " + userFromRoomId;
   }
+
+  useEffect(() => {
+    async function fetchUserData() {
+      let response = await fetch(
+        `http://localhost:8080/api/patients/${roomUserId}/medical-records`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error("Error al obtener datos del paciente");
+        return;
+      }
+      if (response.ok) {
+        let patientRecords = await response.json();
+        console.log("patientRecords", patientRecords);
+        setPatientRecords(patientRecords);
+      }
+    }
+    fetchUserData();
+  }, [token, roomUserId]);
 
   return (
     <section id="videollamada">
@@ -144,8 +173,23 @@ export default function VideoLlamada() {
           Terminar llamada
         </button>
       )}
-      <h2>* * *</h2>
-
+      <div id="divider">* * *</div>
+      <section id="records">
+        <h3>Historial del paciente:</h3>
+        {patientRecords.length === 0 && <p>No hay registros médicos</p>}
+        {patientRecords.length > 0 && (
+          <ul>
+            {patientRecords.map((record) => (
+              <li key={record.id}>
+                <h4>{record.diagnosisDate}</h4>
+                <p>Diagnostico: {record.conditionName}</p>
+                <p>Tratamiento: {record.treatment}</p>
+                <p>Notas: {record.notes} </p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
       <div>
         <h3>Usuarios en la sala:</h3>
         {usersInRoom.length === 0 && <li>No hay usuarios en la sala</li>}
