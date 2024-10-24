@@ -231,14 +231,16 @@ export function useVideoCall(roomId) {
       socketRefVideo.current.on("disconnected peer", handleScDisconnectedPeer);
       socketRefVideo.current.on("signal", handleScSignal);
       socketRefVideo.current.on("disconnect", () => {
-        console.log(
-          "***** Socket (/nspVideo) | desconectado",
-          socketRefVideo.current.id
-        );
+        console.log("***** Socket (/nspVideo) | desconectado");
+
         setSocketVideoId(null);
       });
     }
     return () => {
+      console.log(
+        "***** Socket (/nspVideo)| Unmount",
+        socketRefVideo.current.id
+      );
       socketRefVideo.current.close();
     };
   }, [roomId]);
