@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 export default function useTelemedicina() {
   const [openLogin, setOpenLogin] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const navigate = useNavigate();
 
   const menu = {
