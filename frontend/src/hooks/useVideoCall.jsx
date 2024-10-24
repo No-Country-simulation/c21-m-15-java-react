@@ -242,6 +242,16 @@ export function useVideoCall(roomId) {
         socketRefVideo.current.id
       );
       socketRefVideo.current.close();
+
+      if ($self.current.media) {
+        $self.current.media.getTracks().forEach((track) => track.stop());
+      }
+      $self.current.media = null;
+
+      socketRefVideo.current.close();
+      if ($peer.current && $peer.current.connection) {
+        $peer.current.connection.close();
+      }
     };
   }, [roomId]);
 
