@@ -75,6 +75,7 @@ export default function RoomList() {
     let userId = salaId.split("-")[1].split("_")[0];
     return usersData[userId];
   }
+
   return (
     <section id="room-list" className="column-list">
       <h1>Pacientes esperando atención.</h1>
@@ -93,7 +94,12 @@ export default function RoomList() {
                     {getUserIdFromSalaId(salaId)?.lastname}
                   </strong>
                 </div>
-                <div>Esperando en la sala {salaId}</div>
+                <div>
+                  Esperando en la sala {salaId} (
+                  {salaId.split("-")[1].split("_")[1][0] === "g" && "Guardia"}
+                  {salaId.split("-")[1].split("_")[1][0] === "t" && "con Turno"}
+                  )
+                </div>
                 {/*                 <a href={`/vl/${salaId}`}>Atender</a>
                  */}{" "}
                 <Button

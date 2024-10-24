@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -24,8 +23,12 @@ import { es } from "date-fns/locale";
 import useTelemedicina from "../hooks/useTelemedicina";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import { userContext } from "./userProvider";
 
 const GestionOnline = () => {
+  const { user } = useContext(userContext);
+
   const { setSelectedDate, selectedDate } = useTelemedicina();
   const [medicos, setMedicos] = useState([]);
   const [categoria, setCategoria] = useState("");
@@ -33,7 +36,8 @@ const GestionOnline = () => {
   const [horariosDisponibles, setHorariosDisponibles] = useState([]);
   const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
   const { id } = useParams();
-  const [openModal, setOpenModal] = useState(false); 
+  const [openModal, setOpenModal] = useState(false);
+  const [linkTurno, setLinkTurno] = useState("");
 
   // Cargar los médicos desde la API
   useEffect(() => {
@@ -142,6 +146,11 @@ const GestionOnline = () => {
   };
 
   const handleCita = () => {
+    const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
+    const tempRoomId = `${user.username}-${user.id}_t${randomNumber}`;
+    const link = `${window.location.origin}/vl/${tempRoomId}`;
+    setLinkTurno(link);
+
     setOpenModal(true);
   };
 
@@ -237,7 +246,7 @@ const GestionOnline = () => {
                 sx={{
                   display: "flex",
                   justifyContent: "center",
-                  width: "100%" 
+                  width: "100%",
                 }}
               >
                 <CardMedia
@@ -249,7 +258,7 @@ const GestionOnline = () => {
                     maxWidth: 150,
                     borderRadius: "50%",
                     border: "4px solid rgba(128, 128, 128, 0.5)",
-                    objectFit: "cover"
+                    objectFit: "cover",
                   }}
                 />
               </Box>
@@ -282,7 +291,7 @@ const GestionOnline = () => {
                 <strong>Horarios:</strong>
               </Typography>
               {medicoSeleccionado.openingHours &&
-                medicoSeleccionado.openingHours.length > 0 ? (
+              medicoSeleccionado.openingHours.length > 0 ? (
                 medicoSeleccionado.openingHours.map((horario, index) => (
                   <Typography
                     key={index}
@@ -325,7 +334,6 @@ const GestionOnline = () => {
           especialista.
         </Typography>
 
-        
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Calendar
             locale="es"
@@ -337,7 +345,7 @@ const GestionOnline = () => {
             tileDisabled={({ date }) => shouldDisableDate(date)}
             tileClassName={tileClassName}
             formatDay={(locale, date) => format(date, "d", { locale: es })}
-            minDate={new Date()} 
+            minDate={new Date()}
           />
         </Box>
 
@@ -388,8 +396,8 @@ const GestionOnline = () => {
         <Dialog
           open={openModal}
           onClose={handleCloseModal}
-          maxWidth="md" 
-          fullWidth={false} 
+          maxWidth="md"
+          fullWidth={false}
         >
           <DialogTitle>Reserva Exitosa</DialogTitle>
           <DialogContent>
@@ -399,7 +407,7 @@ const GestionOnline = () => {
                     selectedDate,
                     "PPP",
                     { locale: es }
-                  )} a las ${horarioSeleccionado} hs.`
+                  )} a las ${horarioSeleccionado} hs. En el día y horario del turno podrá ingresar a la sala de espera mediante el siguiente enlace: ${linkTurno}`
                 : "Ocurrió un error al procesar su reserva."}
             </Typography>
           </DialogContent>
