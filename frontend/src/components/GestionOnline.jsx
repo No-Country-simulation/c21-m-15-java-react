@@ -407,7 +407,7 @@ const GestionOnline = () => {
                     selectedDate,
                     "PPP",
                     { locale: es }
-                  )} a las ${horarioSeleccionado} hs. En el día y horario del turno podrá ingresar a la sala de espera mediante el siguiente enlace: ${linkTurno}`
+                  )} a las ${horarioSeleccionado} hs. En el día y horario del turno podrá ingresar a la sala de espera mediante el siguiente enlace (se lo enviaremos también por correo electrónico): ${linkTurno}`
                 : "Ocurrió un error al procesar su reserva."}
             </Typography>
           </DialogContent>
