@@ -7,8 +7,6 @@ import { Button } from "@mui/material";
 const VideoConsultas = () => {
   const { user } = useContext(userContext);
   const navigate = useNavigate();
-  console.log("user: ", user.username);
-  console.log("rol: ", user.role);
 
   const [userId, setUserId] = useState(user.username);
   const [roomUrl, setRoomUrl] = useState("");

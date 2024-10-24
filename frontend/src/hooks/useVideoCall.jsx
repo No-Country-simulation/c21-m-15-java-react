@@ -9,7 +9,6 @@ import { socketServerURL } from "../components/videollamadas/socket-provider.jsx
   ],
 }; */
 
-
 const servers = {
   iceServers: [
     {
@@ -101,7 +100,7 @@ export function useVideoCall(roomId) {
     }
     function handleScConnect() {
       console.log(
-        "***** SocketContext (/nspVideo) | conectado",
+        "***** Socket (/nspVideo) | conectado",
         socketRefVideo.current.id
       );
       setSocketVideoId(socketRefVideo.current.id);
@@ -210,12 +209,12 @@ export function useVideoCall(roomId) {
             //console.warn("No se pudo acceder al micrófono:", e);
             $self.current.media = new MediaStream();
             const silentAudioTrack = await createSilentAudioTrack();
-            const silentVideoTrack = await createSilentVideoTrack();  
+            const silentVideoTrack = await createSilentVideoTrack();
             $self.current.media.addTrack(silentAudioTrack);
-            $self.current.media.addTrack(silentVideoTrack);  
+            $self.current.media.addTrack(silentVideoTrack);
             setHasVideo(false);
             setHasAudio(false);
-           }
+          }
         }
       }
 
@@ -232,14 +231,17 @@ export function useVideoCall(roomId) {
       socketRefVideo.current.on("disconnected peer", handleScDisconnectedPeer);
       socketRefVideo.current.on("signal", handleScSignal);
       socketRefVideo.current.on("disconnect", () => {
-        console.log("Desconectado");
+        console.log(
+          "***** Socket (/nspVideo) | desconectado",
+          socketRefVideo.current.id
+        );
         setSocketVideoId(null);
       });
     }
     return () => {
       socketRefVideo.current.close();
     };
-  }, [roomId, servers]);
+  }, [roomId]);
 
   async function createSilentVideoTrack() {
     const canvas = document.createElement("canvas");
