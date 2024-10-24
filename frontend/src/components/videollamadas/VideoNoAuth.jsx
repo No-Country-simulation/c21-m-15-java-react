@@ -9,7 +9,7 @@ export default function VideoNoAuth() {
   setUser(null);
 
   return (
-    <div>
+    <div style={{ flexGrow: "1", display: "flex", flexDirection: "column", justifyContent: "center" }}>
       <h1>No tiene permisos para ingresar a la sala solcitada.</h1>
     </div>
   );
