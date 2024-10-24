@@ -244,9 +244,9 @@ const GestionOnline = () => {
                   component="img"
                   image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
                   sx={{
-                    width: { xs: "100%", md: 150 },
+                    width: { xs: "100%", md: 200 },
                     height: "auto",
-                    maxWidth: 150,
+                    maxWidth: 200,
                     borderRadius: "50%",
                     border: "4px solid rgba(128, 128, 128, 0.5)",
                     objectFit: "cover"
