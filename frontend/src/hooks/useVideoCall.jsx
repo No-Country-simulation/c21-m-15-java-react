@@ -52,8 +52,6 @@ export function useVideoCall(roomId) {
   useEffect(() => {
     if (!roomId || !servers) return;
 
-    console.log("servers: ", servers);
-
     socketRefVideo.current = io(`${socketServerURL}/${roomId}`, {
       autoConnect: false,
     });
@@ -148,12 +146,9 @@ export function useVideoCall(roomId) {
           });
         }
       } else if (candidate) {
-        // Handle ICE candidates
         try {
           await $peer.current.connection.addIceCandidate(candidate);
         } catch (e) {
-          // Log error unless $self is ignoring offers
-          // and candidate is not an empty string
           if (
             !$self.current.isIgnoringOffer &&
             candidate.candidate.length > 1
@@ -215,13 +210,12 @@ export function useVideoCall(roomId) {
             //console.warn("No se pudo acceder al micrófono:", e);
             $self.current.media = new MediaStream();
             const silentAudioTrack = await createSilentAudioTrack();
-            const silentVideoTrack = await createSilentVideoTrack(); // Agregar video silenciado
+            const silentVideoTrack = await createSilentVideoTrack();  
             $self.current.media.addTrack(silentAudioTrack);
-            $self.current.media.addTrack(silentVideoTrack); // Agregar el track de video
+            $self.current.media.addTrack(silentVideoTrack);  
             setHasVideo(false);
             setHasAudio(false);
-            //console.log("Using silent audio and video tracks");
-          }
+           }
         }
       }
 

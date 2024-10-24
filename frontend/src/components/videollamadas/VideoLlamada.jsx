@@ -33,21 +33,21 @@ export default function VideoLlamada() {
   useEffect(() => {
     if (isConnected && socket) {
       socket.emit("joinRoom", roomId);
-      console.log("Joining room", roomId);
+      //console.log("Joining room", roomId);
 
       socket.emit("getUsersInCall", roomId);
 
       socket.on("usersInRoom", (users) => {
-        console.log("Users in room:", users);
+        //console.log("Users in room:", users);
         setUsersInRoom(users);
       });
       socket.on("usersInCall", (users) => {
-        console.log("Users in call:", users);
+        //console.log("Users in call:", users);
         setUsersInCall(users);
       });
 
       socket.on("roomFull", () => {
-        alert("La sala está llena, no puede ingresar.");
+        //alert("La sala está llena, no puede ingresar.");
         window.location.href = "/";
       });
     }
@@ -56,7 +56,7 @@ export default function VideoLlamada() {
       if (isConnected && socket) {
         socket.emit("leaveCall", roomId);
         socket.emit("leaveRoom", roomId);
-        console.log("Leaving room", roomId);
+        //console.log("Leaving room", roomId);
       }
     };
   }, [roomId, socket, isConnected]);
@@ -75,14 +75,12 @@ export default function VideoLlamada() {
 
   let userFromRoomId = roomId.split("-")[0];
   let roomUserId = roomId.split("-")[1].split("_")[0];
-  console.log("roomUserId", roomUserId);
 
   let isAuthorized =
     user.username === userFromRoomId ||
     user.role === "admin" ||
     user.role === "MEDIC";
 
-  //TODO CAMBIAR SEGUN USUARIOS Y ROLES DE LA BASE
   let localName = "";
   let remoteName = "";
   if (user.role === "PATIENT") {
@@ -111,7 +109,6 @@ export default function VideoLlamada() {
       }
       if (response.ok) {
         let patientRecords = await response.json();
-        console.log("patientRecords", patientRecords);
         setPatientRecords(patientRecords);
       }
     }
