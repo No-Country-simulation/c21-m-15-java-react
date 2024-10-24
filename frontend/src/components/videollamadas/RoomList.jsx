@@ -2,33 +2,79 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from "./socket-provider.jsx";
 import { Button } from "@mui/material";
-
+import { userContext } from "../userProvider.jsx";
 export default function RoomList() {
+  const { token } = useContext(userContext);
   const navigate = useNavigate();
   const { socket, isConnected } = useContext(SocketContext);
   const [socketRooms, setSocketRooms] = useState({});
+  const [usersData, setUsersData] = useState({});
 
   useEffect(() => {
+    async function getUsersData(rooms) {
+      let usersIds = [];
+      Object.keys(rooms).forEach((clave) => {
+        usersIds.push(clave.split("-")[1].split("_")[0]);
+      });
+
+      async function fetchUser(userId) {
+        const response = await fetch(
+          `http://localhost:8080/api/patients/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Error al obtener el usuario con id: ${userId}`);
+        }
+        return response.json();
+      }
+
+      async function fetchAllUsers(userIds) {
+        try {
+          const userPromises = userIds.map((userId) => fetchUser(userId));
+
+          const users = await Promise.all(userPromises);
+
+          return users;
+        } catch (error) {
+          console.error("Error al obtener los usuarios:", error);
+        }
+      }
+
+      let data = await fetchAllUsers(usersIds);
+      let usersData = {};
+      data.forEach((user) => {
+        usersData[user.id] = user;
+      });
+      setUsersData(usersData);
+    }
+
     if (socket && !isConnected) {
       socket.connect();
     }
     if (socket) {
       socket.emit("getRooms");
-      console.log("pido rooms");
       socket.on("updateRooms", (rooms) => {
-        console.log("Salas actualizadas:", rooms);
         setSocketRooms(rooms);
+        getUsersData(rooms);
       });
     }
 
-    // Limpiar el socket cuando el componente se desmonte
     return () => {
       if (socket) {
         socket.off("updateRooms");
       }
     };
-  }, [socket, isConnected]);
+  }, [socket, isConnected, token]);
 
+  function getUserIdFromSalaId(salaId) {
+    let userId = salaId.split("-")[1].split("_")[0];
+    return usersData[userId];
+  }
   return (
     <section id="room-list" className="column-list">
       <h1>Pacientes esperando atención.</h1>
@@ -41,8 +87,13 @@ export default function RoomList() {
             {socketRooms[salaId].length < 2 && (
               <>
                 <div>
-                  {salaId} - {socketRooms[salaId].length} paciente esperando
+                  Paciente{" "}
+                  <strong>
+                    {getUserIdFromSalaId(salaId)?.firstname}{" "}
+                    {getUserIdFromSalaId(salaId)?.lastname}
+                  </strong>
                 </div>
+                <div>Esperando en la sala {salaId}</div>
                 {/*                 <a href={`/vl/${salaId}`}>Atender</a>
                  */}{" "}
                 <Button
