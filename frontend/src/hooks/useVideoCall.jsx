@@ -296,10 +296,6 @@ export function useVideoCall(roomId) {
       peer.connection.close();
       peer.connection = new RTCPeerConnection($self.rtcConfig);
     }
-
-    if ($self.current.media) {
-      $self.current.media.getTracks().forEach((track) => track.stop());
-    }
     socketRefVideo.current.close();
     resetPeer($peer.current);
   }
