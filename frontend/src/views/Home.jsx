@@ -34,7 +34,6 @@ export default function Home({ children }) {
             <MenuIcon
               sx={{ color: "black", display: { xs: "block", md: "none" } }}
               onClick={handleMenuOpen}
-              autoFocus
             />
 
             <Box
@@ -48,7 +47,10 @@ export default function Home({ children }) {
                 component={Link}
                 to="/"
                 sx={{
-                  color: "#343A40",
+                  color: "#134074",
+                  fontFamily:"roboto serif",
+                  fontSize: "20px",
+                  textDecoration: "none",
                   "&:hover": {
                     color: "#007BFF",
                     cursor: "pointer",
@@ -62,7 +64,10 @@ export default function Home({ children }) {
                 component={Link}
                 to="/cartilla"
                 sx={{
-                  color: "#343A40",
+                  color: "#134074",
+                  fontFamily:"roboto serif",
+                  fontSize: "20px",
+                  textDecoration: "none",
                   "&:hover": {
                     color: "#007BFF",
                     cursor: "pointer",
@@ -72,25 +77,15 @@ export default function Home({ children }) {
               >
                 Cartilla
               </Typography>
-              <Typography
-                component={Link}
-                to="/contacto"
-                sx={{
-                  color: "#343A40",
-                  "&:hover": {
-                    color: "#007BFF",
-                    cursor: "pointer",
-                  },
-                }}
-                onClick={() => handleMenuItemClick("Contacto")}
-              >
-                Contacto
-              </Typography>
+              
               <Typography
                 component={Link}
                 to="/gestion-online"
                 sx={{
-                  color: "#343A40",
+                  color: "#134074",
+                  fontFamily:"roboto serif",
+                  fontSize: "20px",
+                  textDecoration: "none",
                   "&:hover": {
                     color: "#007BFF",
                     cursor: "pointer",
@@ -104,7 +99,10 @@ export default function Home({ children }) {
                 component={Link}
                 to="/video-consultas"
                 sx={{
-                  color: "#343A40",
+                  color: "#134074",
+                  fontFamily:"roboto serif",
+                  fontSize: "20px",
+                  textDecoration: "none",
                   "&:hover": {
                     color: "#007BFF",
                     cursor: "pointer",
@@ -163,14 +161,14 @@ export default function Home({ children }) {
               Cartilla
             </MenuItem>
             <MenuItem
-              onClick={() => handleMenuItemClick("Contacto")}
+              onClick={() => handleMenuItemClick("Citas")}
               sx={{
                 "&:hover": {
                   backgroundColor: "#0056b3",
                 },
               }}
             >
-              Contacto
+              Turnos
             </MenuItem>
             <MenuItem
               onClick={() => handleMenuItemClick("Telemedicina")}
