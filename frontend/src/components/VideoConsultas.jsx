@@ -8,17 +8,17 @@ const VideoConsultas = () => {
   const { user } = useContext(userContext);
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState(user.username);
+  const [userName, setUserName] = useState(user.username);
   const [roomUrl, setRoomUrl] = useState("");
   const [roomId, setRoomId] = useState("");
 
   useEffect(() => {
     const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
-    let tempRoomId = `${userId}-${user.id}_${randomNumber}`;
+    let tempRoomId = `${userName}-${user.id}_g${randomNumber}`;
     //let tempRoomId = `${userId}-${randomNumber}`;
     setRoomId(tempRoomId);
     setRoomUrl(`${window.location.origin}/vl/${tempRoomId}`);
-  }, [userId, user.id]);
+  }, [userName, user.id]);
 
   if (user.role === "MEDIC") {
     return (
@@ -51,7 +51,7 @@ const VideoConsultas = () => {
             Si necesita ingresar desde otro dispositivo puede hacerlo mediante
             el siguiente enlace:{" "}
           </p>
-          <a href={`/vl/${roomId}`}>{userId !== "" ? roomUrl : ""}</a>
+          <a href={`/vl/${roomId}`}>{userName !== "" ? roomUrl : ""}</a>
         </div>
       )}
     </section>
