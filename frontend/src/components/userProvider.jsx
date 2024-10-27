@@ -30,6 +30,9 @@ export const UserProvider = ({ children }) => {
           setUser(userData);
         })
         .catch((error) => {
+          setToken(null);
+          sessionStorage.removeItem("token");
+          setUser(null);
           console.error(error);
         });
     }
