@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";

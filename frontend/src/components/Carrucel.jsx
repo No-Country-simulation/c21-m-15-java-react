@@ -1,6 +1,3 @@
-
-
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,11 +7,11 @@ import historial from "../assets/historial.jpg";
 import telemedicina from "../assets/telemedicina.jpg";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import useTelemedicina from "../hooks/useTelemedicina"; 
+import useTelemedicina from "../hooks/useTelemedicina";
 
 export default function Carrucel() {
   const images = [atencionTelefonica, historial, telemedicina];
-  const { handleMenuItemClick } = useTelemedicina(); 
+  const { handleMenuItemClick } = useTelemedicina();
 
   const settings = {
     dots: false,
@@ -109,22 +106,27 @@ export default function Carrucel() {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                backgroundColor: "rgba(0, 0, 0, 0.5)", 
+                backgroundColor: "rgba(0, 0, 0, 0.5)",
               }}
             />
-
             <Box
               sx={{
                 position: "absolute",
-                top: { xs: "50%", sm: "15%" }, 
-                left: { xs: "50%", sm: "10%" },
-                transform: { xs: "translate(-50%, -50%)", sm: "none" },
-                textAlign: { xs: "center", sm: "left" },
+                top: { xs: "50%", md: "50%" },
+                left:{ lg:"20%", xs: "50%", md:"50"}, 
+                transform: {
+                  xs: "translate(-50%, -50%)",
+                  md: "translate(-50%, -50%)",
+                }, 
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center", 
+                textAlign: "center", 
                 color: "white",
                 width: {
                   xs: "90%",
-                  sm: "60%",
-                  md: "40%",
+                  sm: "80%",
+                  md: "50%",
                   lg: "25%",
                 },
                 zIndex: 2,
@@ -142,7 +144,7 @@ export default function Carrucel() {
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: "10px", backgroundColor: "#134074" }}
-                    onClick={() => handleMenuItemClick("Telemedicina")} 
+                    onClick={() => handleMenuItemClick("Telemedicina")}
                   >
                     Conéctate ahora
                   </Button>
@@ -160,7 +162,7 @@ export default function Carrucel() {
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: "10px", backgroundColor: "#134074" }}
-                    onClick={() => handleMenuItemClick("Citas")} 
+                    onClick={() => handleMenuItemClick("Citas")}
                   >
                     Reserva tu cita
                   </Button>

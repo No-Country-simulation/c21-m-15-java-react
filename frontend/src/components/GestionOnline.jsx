@@ -157,17 +157,7 @@ const GestionOnline = () => {
   };
   
   
-
-  // const handleHorarioSeleccionado = (horario) => {
-  //   setHorarioSeleccionado(horario);
-  // };
-
-  const tileClassName = ({ date }) => {
-    const day = date.getDay();
-    return day === 0 || day === 6 ? "red-tile" : null;
-  };
-
-  const handleCita = () => {
+ const handleCita = () => {
     const randomNumber = Math.floor(1000000 + Math.random() * 9000000);
     const tempRoomId = `${user.username}-${user.id}_t${randomNumber}`;
     const link = `${window.location.origin}/vl/${tempRoomId}`;
@@ -373,8 +363,7 @@ const GestionOnline = () => {
               setHorarioSeleccionado(null);
             }}
             tileDisabled={({ date }) => shouldDisableDate(date)}
-            tileClassName={tileClassName}
-            formatDay={(locale, date) => format(date, "d", { locale: es })}
+           formatDay={(locale, date) => format(date, "d", { locale: es })}
             minDate={new Date()}
           />
         </Box>
