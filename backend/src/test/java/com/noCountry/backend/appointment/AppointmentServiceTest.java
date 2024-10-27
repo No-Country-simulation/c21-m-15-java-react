@@ -160,4 +160,19 @@ public class AppointmentServiceTest {
         verify(openingHourRepository, times(1)).findAll();
         verify(appointmentRepository, atLeastOnce()).save(any(Appointment.class));
     }
+
+    @Test
+    public void testDeleteUnbookedPastAppointments() {
+        LocalDateTime now = LocalDateTime.now();
+
+        Appointment appointment = new Appointment();
+        appointment.setStartDateTime(now.minusDays(1));
+        appointment.setBooked(false);
+
+        when(appointmentRepository.findPastAppointmentsByIsBooked(now, false)).thenReturn(List.of(appointment));
+
+        service.deleteUnbookedPastAppointments();
+
+        verify(appointmentRepository).delete(appointment);
+    }
 }

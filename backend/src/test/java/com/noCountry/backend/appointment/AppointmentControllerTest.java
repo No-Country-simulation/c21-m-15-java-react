@@ -15,8 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,5 +83,13 @@ public class AppointmentControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Citas generadas exitosamente"));
+    }
+
+    @Test
+    @WithMockUser(roles = "MEDIC")
+    public void testDeleteUnbookedPastAppointments() throws Exception {
+        mockMvc.perform(delete("/api/appointments/past-unbooked"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Citas pasadas y no reservadas borradas exitosamente"));
     }
 }

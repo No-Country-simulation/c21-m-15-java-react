@@ -119,4 +119,12 @@ public class AppointmentService {
             }
         }
     }
+
+    // Borrar automáticamente citas pasadas y no reservadas de todos los médicos
+    @Scheduled(cron = "0 1 1 * * *")
+    public void deleteUnbookedPastAppointments() {
+        List<Appointment> appointments = appointmentRepository.findPastAppointmentsByIsBooked(LocalDateTime.now(), false);
+
+        appointments.forEach(appointmentRepository::delete);
+    }
 }
