@@ -94,10 +94,8 @@ export default function Footer() {
         <Typography
           sx={{
             color: "white",
-            cursor: "pointer",
-            "&:hover": {
-              color: "#0b2545",
-            },
+          
+          
           }}
         >
           Términos y Condiciones
@@ -105,10 +103,8 @@ export default function Footer() {
         <Typography
           sx={{
             color: "white",
-            cursor: "pointer",
-            "&:hover": {
-              color: "#0b2545",
-            },
+          
+           
           }}
         >
           Política de Privacidad

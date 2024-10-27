@@ -32,7 +32,7 @@ export default function Home({ children }) {
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <MenuIcon
-              sx={{ color: "black", display: { xs: "block", md: "none" } }}
+              sx={{ color: "#134074", display: { xs: "block", md: "none" } }} 
               onClick={handleMenuOpen}
             />
 
