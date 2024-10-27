@@ -1,5 +1,6 @@
 package com.noCountry.backend.medic;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,9 @@ public class MedicService {
     }
 
     // Consultar medico por ID
-    public Medic getMedicById(Long id) {
-        return medicRepository.findById(id).orElseThrow(() -> new RuntimeException("Medico no encontrado"));
+    public MedicResponse getMedicById(Long id) {
+        Medic medic = medicRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Medico no encontrado"));;
+        return mapper.toMedicResponse(medic);
     }
 }

@@ -33,11 +33,19 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.updateAppointment(appointment));
     }
 
-    // Generar citas manualmente
+    // Generar citas de todos los médicos manualmente
     @GetMapping("/appointments/generate")
     @PreAuthorize("hasRole('MEDIC')")
-    public ResponseEntity<?> generateAppointment() {
+    public ResponseEntity<?> generateAppointments() {
         appointmentService.generateAppointments();
         return ResponseEntity.ok("Citas generadas exitosamente");
+    }
+
+    // Borrar citas pasadas y no reservadas de todos los médicos manualmente
+    @DeleteMapping("/appointments/past-unbooked")
+    @PreAuthorize("hasRole('MEDIC')")
+    public ResponseEntity<?> deleteUnbookedPastAppointments() {
+        appointmentService.deleteUnbookedPastAppointments();
+        return ResponseEntity.ok("Citas pasadas y no reservadas borradas exitosamente");
     }
 }

@@ -15,6 +15,7 @@ public class PatientController {
 
     private final PatientService patientService;
 
+    // Obtener paciente por id
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('MEDIC') or #id == authentication.principal.id")
     public ResponseEntity<?> getPatientById (@PathVariable long id) {
