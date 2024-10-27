@@ -21,16 +21,16 @@ import { useNavigate } from "react-router-dom";
 
 export default function PrimarySearchAppBar() {
   const { openLogin, handleOpenLogin, handleCloseLogin } = useTelemedicina();
-  const { user, setUser,   } = useContext(userContext);
+  const { user, setUser, setToken } = useContext(userContext);
   const navigate = useNavigate();
 
   function handleCloseSession() {
- 
- 
-   setUser(null);
- 
-  navigate("/"); 
- }; 
+    setToken(null);
+    setUser(null);
+    sessionStorage.removeItem("token");
+
+    navigate("/");
+  }
 
   return (
     <Box>
@@ -60,8 +60,7 @@ export default function PrimarySearchAppBar() {
 
           <Box sx={{ flexGrow: 1 }} />
           <Typography sx={{ fontSize: "1rem", color: "white" }}>
-            {user ? "Usuario: " + user.username
-             : ""}
+            {user ? "Usuario: " + user.username : ""}
           </Typography>
           <Typography
             sx={{ fontSize: "0.7rem", color: "white", margin: "0 0.5rem" }}
@@ -69,11 +68,11 @@ export default function PrimarySearchAppBar() {
 
           {user && (
             <Button
-             sx={{
+              sx={{
                 fontSize: "0.7rem",
                 padding: "0.2rem 0.2rem",
                 backgroundColor: "white",
-              }}  
+              }}
               onClick={handleCloseSession}
             >
               Cerrar Sesión
