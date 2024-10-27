@@ -1,4 +1,6 @@
 
+
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -8,9 +10,11 @@ import historial from "../assets/historial.jpg";
 import telemedicina from "../assets/telemedicina.jpg";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import useTelemedicina from "../hooks/useTelemedicina"; 
 
 export default function Carrucel() {
   const images = [atencionTelefonica, historial, telemedicina];
+  const { handleMenuItemClick } = useTelemedicina(); 
 
   const settings = {
     dots: false,
@@ -109,7 +113,6 @@ export default function Carrucel() {
               }}
             />
 
-           
             <Box
               sx={{
                 position: "absolute",
@@ -124,7 +127,7 @@ export default function Carrucel() {
                   md: "40%",
                   lg: "25%",
                 },
-                zIndex: 2, 
+                zIndex: 2,
               }}
             >
               {src === telemedicina && (
@@ -139,6 +142,7 @@ export default function Carrucel() {
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: "10px", backgroundColor: "#134074" }}
+                    onClick={() => handleMenuItemClick("Telemedicina")} 
                   >
                     Conéctate ahora
                   </Button>
@@ -156,6 +160,7 @@ export default function Carrucel() {
                     variant="contained"
                     color="primary"
                     sx={{ marginTop: "10px", backgroundColor: "#134074" }}
+                    onClick={() => handleMenuItemClick("Citas")} 
                   >
                     Reserva tu cita
                   </Button>
@@ -168,4 +173,3 @@ export default function Carrucel() {
     </Box>
   );
 }
-
