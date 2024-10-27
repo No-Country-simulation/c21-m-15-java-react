@@ -23,6 +23,7 @@ public class AuthController {
 //        return ResponseEntity.ok(authService.register(request));
 //    }
 
+    // Iniciar sesión
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {

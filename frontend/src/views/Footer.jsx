@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import useTelemedicina from "../hooks/useTelemedicina";
 
 export default function Footer() {
@@ -49,6 +49,21 @@ export default function Footer() {
           </Typography>
         </Link>
         <Link
+          to="/gestion-online"
+          onClick={() => handleMenuItemClick('Citas')}
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          <Typography
+            sx={{
+              "&:hover": {
+                color: "#0b2545",
+              },
+            }}
+          >
+            Turnos
+          </Typography>
+        </Link>
+        <Link
           to="/video-consultas"
           onClick={() => handleMenuItemClick('Telemedicina')}
           style={{ textDecoration: "none", color: "white" }}
@@ -63,21 +78,7 @@ export default function Footer() {
             Telemedicina
           </Typography>
         </Link>
-        <Link
-          to="/Contacto"
-          onClick={() => handleMenuItemClick('Contacto')}
-          style={{ textDecoration: "none", color: "white" }}
-        >
-          <Typography
-            sx={{
-              "&:hover": {
-                color: "#0b2545",
-              },
-            }}
-          >
-            Contacto
-          </Typography>
-        </Link>
+
       </Box>
 
       <Box
