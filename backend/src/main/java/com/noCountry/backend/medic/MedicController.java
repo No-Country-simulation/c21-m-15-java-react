@@ -20,11 +20,7 @@ public class MedicController {
     // Obtener todos los medicos por especialidad o no
     @GetMapping
     public ResponseEntity<?> getMedics(@RequestParam(required = false) String speciality) {
-        try {
-            List<MedicResponse> medics = medicService.getMedics(speciality);
-            return ResponseEntity.ok(medics);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al obtener los medicos");
-        }
+        List<MedicResponse> medics = medicService.getMedics(speciality);
+        return ResponseEntity.ok(medics);
     }
 }

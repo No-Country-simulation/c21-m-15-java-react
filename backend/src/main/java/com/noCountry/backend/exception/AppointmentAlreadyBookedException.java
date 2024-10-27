@@ -6,5 +6,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AppointmentAlreadyBookedException extends RuntimeException{
-    private final String msg;
+
+    public AppointmentAlreadyBookedException(String message) {
+        super(message);
+    }
 }

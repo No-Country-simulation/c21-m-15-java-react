@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
 
+    // Obtener usuario autenticado
     @GetMapping("/user")
     public UserResponse getUser(@AuthenticationPrincipal User user) {
         return new UserResponse(
