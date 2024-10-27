@@ -33,7 +33,7 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.updateAppointment(appointment));
     }
 
-    // Generar citas manualmente
+    // Generar citas de todos los médicos manualmente
     @GetMapping("/appointments/generate")
     @PreAuthorize("hasRole('MEDIC')")
     public ResponseEntity<?> generateAppointment() {

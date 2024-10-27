@@ -41,6 +41,7 @@ public class AuthService {
 //                .build();
 //    }
 
+    // Obtener token si las credenciales son correctas
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
