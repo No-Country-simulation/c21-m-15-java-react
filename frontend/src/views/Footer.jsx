@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -20,7 +19,10 @@ export default function Footer() {
       <Box sx={{ display: "flex", justifyContent: "center", gap: "20px" }}>
         <Link
           to="/"
-          onClick={() => handleMenuItemClick('Inicio')}
+          onClick={() => {
+            handleMenuItemClick("Inicio");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
           style={{ textDecoration: "none", color: "white" }}
         >
           <Typography
@@ -33,9 +35,10 @@ export default function Footer() {
             Inicio
           </Typography>
         </Link>
+
         <Link
           to="/Cartilla"
-          onClick={() => handleMenuItemClick('Cartilla')}
+          onClick={() => handleMenuItemClick("Cartilla")}
           style={{ textDecoration: "none", color: "white" }}
         >
           <Typography
@@ -50,7 +53,7 @@ export default function Footer() {
         </Link>
         <Link
           to="/gestion-online"
-          onClick={() => handleMenuItemClick('Citas')}
+          onClick={() => handleMenuItemClick("Citas")}
           style={{ textDecoration: "none", color: "white" }}
         >
           <Typography
@@ -65,7 +68,7 @@ export default function Footer() {
         </Link>
         <Link
           to="/video-consultas"
-          onClick={() => handleMenuItemClick('Telemedicina')}
+          onClick={() => handleMenuItemClick("Telemedicina")}
           style={{ textDecoration: "none", color: "white" }}
         >
           <Typography
@@ -78,7 +81,6 @@ export default function Footer() {
             Telemedicina
           </Typography>
         </Link>
-
       </Box>
 
       <Box
@@ -114,8 +116,10 @@ export default function Footer() {
       </Box>
 
       <Typography variant="body2" sx={{ marginTop: "10px" }}>
-        © {new Date().getFullYear()} Tu Plataforma de Telemedicina. Todos los derechos reservados.
+        © {new Date().getFullYear()} Tu Plataforma de Telemedicina. Todos los
+        derechos reservados.
       </Typography>
     </Box>
   );
 }
+
