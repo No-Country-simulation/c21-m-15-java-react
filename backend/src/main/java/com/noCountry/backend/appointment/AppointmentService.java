@@ -41,6 +41,7 @@ public class AppointmentService {
 //                .toList();
 //    }
 
+    // Obtener citas por id de médico y si esta reservado
     public List<AppointmentResponse> getAppointmentsByMedicAndIsBooked(long medicId, boolean isBooked) {
         Medic medic = medicRepository.findById(medicId)
                 .orElseThrow(() -> new EntityNotFoundException("Médico no encontrado"));
@@ -54,6 +55,7 @@ public class AppointmentService {
                 .toList();
     }
 
+    // Obtener citas reservadas por id de paciente
     public List<AppointmentResponse> getBookedAppointmentsByPatient(long patientId){
         Patient patient = patientRepository.findById(patientId)
                 .orElseThrow(() -> new EntityNotFoundException("Paciente no encontrado"));
@@ -64,6 +66,7 @@ public class AppointmentService {
                 .toList();
     }
 
+    // Actualizar cita
     public AppointmentResponse updateAppointment(AppointmentRequest request) {
         Appointment appointment = appointmentRepository.findById(request.id())
                 .orElseThrow(() -> new EntityNotFoundException("Cita no encontrada"));
@@ -83,6 +86,7 @@ public class AppointmentService {
         return mapper.toAppointmentResponse(appointment);
     }
 
+    // Generar automáticamente todos los días las citas de todos los médicos
     @Scheduled(cron = "0 0 1 * * *")
     public void generateAppointments() {
         LocalDate starDate = LocalDate.now();
@@ -114,5 +118,13 @@ public class AppointmentService {
                     currentDate = currentDate.plusDays(1);
             }
         }
+    }
+
+    // Borrar automáticamente citas pasadas y no reservadas de todos los médicos
+    @Scheduled(cron = "0 1 1 * * *")
+    public void deleteUnbookedPastAppointments() {
+        List<Appointment> appointments = appointmentRepository.findPastAppointmentsByIsBooked(LocalDateTime.now(), false);
+
+        appointments.forEach(appointmentRepository::delete);
     }
 }

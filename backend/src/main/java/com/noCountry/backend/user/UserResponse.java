@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 public record UserResponse (
-        int id,
+        long id,
         String username,
         Role role
 ) {
