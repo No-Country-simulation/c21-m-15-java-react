@@ -27,19 +27,19 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthResponse register(RegisterRequest request) {
-        User user = User.builder()
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
-                .build();
-
-        userRepository.save(user);
-
-        return AuthResponse.builder()
-                .token(jwtService.generateToken(user))
-                .build();
-    }
+//    public AuthResponse register(RegisterRequest request) {
+//        User user = User.builder()
+//                .username(request.getUsername())
+//                .password(passwordEncoder.encode(request.getPassword()))
+//                .role(request.getRole())
+//                .build();
+//
+//        userRepository.save(user);
+//
+//        return AuthResponse.builder()
+//                .token(jwtService.generateToken(user))
+//                .build();
+//    }
 
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(

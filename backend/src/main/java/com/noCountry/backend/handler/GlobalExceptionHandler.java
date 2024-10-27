@@ -18,6 +18,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AppointmentAlreadyBookedException.class)
     public ResponseEntity<?> handleAppointmentAlreadyBookedException(AppointmentAlreadyBookedException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMsg());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
