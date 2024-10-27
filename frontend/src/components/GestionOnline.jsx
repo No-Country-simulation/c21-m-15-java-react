@@ -38,6 +38,9 @@ const GestionOnline = () => {
   const { id } = useParams();
   const [openModal, setOpenModal] = useState(false);
   const [linkTurno, setLinkTurno] = useState("");
+  const [openErrorModal, setOpenErrorModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   // Cargar los médicos desde la API
   useEffect(() => {
@@ -135,10 +138,29 @@ const GestionOnline = () => {
 
     return !isAvailableDay;
   };
-
   const handleHorarioSeleccionado = (horario) => {
-    setHorarioSeleccionado(horario);
+    const currentTime = new Date();
+    const selectedHour = new Date(selectedDate);
+    const [hour, minute] = horario.split(":").map(Number);
+  
+    // Establecer la hora seleccionada en la fecha seleccionada
+    selectedHour.setHours(hour);
+    selectedHour.setMinutes(minute);
+  
+    // Verificar si la hora seleccionada es en el pasado
+    if (selectedHour > currentTime) {
+      setHorarioSeleccionado(horario);
+    } else {
+      setErrorMessage("No puede seleccionar un horario que ya ha pasado.");
+      setOpenErrorModal(true);
+    }
   };
+  
+  
+
+  // const handleHorarioSeleccionado = (horario) => {
+  //   setHorarioSeleccionado(horario);
+  // };
 
   const tileClassName = ({ date }) => {
     const day = date.getDay();
@@ -225,7 +247,11 @@ const GestionOnline = () => {
           <Box sx={{ marginTop: "20px" }}>
             <Typography
               variant="body1"
-              sx={{ color: "#134074", fontWeight: "bold" }}
+              sx={{ 
+                color: "#134074", 
+                fontWeight: "bold",
+                textDecoration: "underline" 
+              }}
             >
               {medicoSeleccionado.name}
             </Typography>
@@ -253,10 +279,10 @@ const GestionOnline = () => {
                   component="img"
                   image={medicoSeleccionado.picture || "/ruta/a/la/imagen.jpg"}
                   sx={{
-                    width: { xs: "100%", md: 200 },
+                    width: { xs: "100%", md: 250 },
                     height: "auto",
-                    maxWidth: 200,
-                    borderRadius: "50%",
+                    maxWidth: 250,
+                    borderRadius: "5%",
                     border: "4px solid rgba(128, 128, 128, 0.5)",
                     objectFit: "cover",
                   }}
@@ -270,7 +296,11 @@ const GestionOnline = () => {
                   justifyContent: "flex-start",
                 }}
               >
-                <Typography variant="body1">
+                <Typography variant="body1"
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
                   {medicoSeleccionado.speciality}
                 </Typography>
                 <Typography variant="body2">
@@ -298,7 +328,7 @@ const GestionOnline = () => {
                     variant="body2"
                     sx={{ color: "#134074" }}
                   >
-                    {horario.dayOfWeek}: {horario.startTime} - {horario.endTime}
+                    {horario.dayOfWeek}: {horario.startTime.slice(0, 5)} - {horario.endTime.slice(0, 5)}
                   </Typography>
                 ))
               ) : (
@@ -392,7 +422,7 @@ const GestionOnline = () => {
           </Button>
         </Box>
 
-        {/* Modal for success message */}
+        
         <Dialog
           open={openModal}
           onClose={handleCloseModal}
@@ -400,23 +430,35 @@ const GestionOnline = () => {
           fullWidth={false}
         >
           <DialogTitle>Reserva Exitosa</DialogTitle>
-          <DialogContent>
-            <Typography variant="body1">
-              {selectedDate && horarioSeleccionado
-                ? `Su cita ha sido reservada exitosamente para el ${format(
-                    selectedDate,
-                    "PPP",
-                    { locale: es }
-                  )} a las ${horarioSeleccionado} hs. En el día y horario del turno podrá ingresar a la sala de espera mediante el siguiente enlace (se lo enviaremos también por correo electrónico): ${linkTurno}`
-                : "Ocurrió un error al procesar su reserva."}
-            </Typography>
-          </DialogContent>
-          <DialogActions>
+        <DialogContent>
+          <Typography variant="body1">
+            {selectedDate && horarioSeleccionado
+              ? `Su cita ha sido reservada exitosamente para el ${format(
+                  selectedDate,
+                  "PPP",
+                  { locale: es }
+                )} a las ${horarioSeleccionado} hs. En el día y horario del turno podrá ingresar a la sala de espera mediante el siguiente enlace (se lo enviaremos también por correo electrónico): ${linkTurno}`
+              : "Ocurrió un error al procesar su reserva."}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
             <Button onClick={handleCloseModal} color="primary">
               Cerrar
             </Button>
           </DialogActions>
         </Dialog>
+        <Dialog
+        open={openErrorModal}
+        onClose={() => setOpenErrorModal(false)}
+      >
+        <DialogTitle>No se pudo agendar la cita</DialogTitle>
+        <DialogContent>
+          <Typography>{errorMessage}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenErrorModal(false)}>Cerrar</Button>
+        </DialogActions>
+      </Dialog>
       </Box>
     </Container>
   );
