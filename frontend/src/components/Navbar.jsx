@@ -62,42 +62,40 @@ export default function PrimarySearchAppBar() {
           <Typography sx={{ fontSize: "1rem", color: "white" }}>
             {user ? "Usuario: " + user.username : ""}
           </Typography>
-          <Typography
-            sx={{ fontSize: "0.7rem", color: "white", margin: "0 0.5rem" }}
-          ></Typography>
 
-          {user && (
+          {user ? (
             <Button
               sx={{
                 fontSize: "0.7rem",
                 padding: "0.2rem 0.2rem",
                 backgroundColor: "white",
+                marginLeft: "1rem",
               }}
               onClick={handleCloseSession}
             >
               Cerrar Sesión
             </Button>
-          )}
-
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <IconButton
-              sx={{ fontSize: "2rem" }}
-              edge="end"
-              aria-label="account of current user"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={() => navigate("/login")}
-              autoFocus
+          ) : (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              <AccountCircle sx={{ fontSize: "inherit" }} />
-            </IconButton>
-          </Box>
+              <IconButton
+                sx={{ fontSize: "2rem" }}
+                edge="end"
+                aria-label="account of current user"
+                aria-haspopup="true"
+                color="inherit"
+                onClick={() => navigate("/login")}
+                autoFocus
+              >
+                <AccountCircle sx={{ fontSize: "inherit" }} />
+              </IconButton>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
 
