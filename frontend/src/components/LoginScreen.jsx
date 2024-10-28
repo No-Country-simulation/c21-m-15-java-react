@@ -40,6 +40,7 @@ export default function LoginScreen() {
       let data = await response.json();
 
       setToken(data.token);
+      sessionStorage.setItem("token", data.token);
 
       let userResponse = await fetch("http://localhost:8080/api/user", {
         method: "GET",
