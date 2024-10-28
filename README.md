@@ -1,5 +1,14 @@
-# c21-m-15-java-react
-Repositorio del grupo c21-m-15-java-react
+# Repositorio del grupo c21-m-15-java-react
+
+## Acerca de HealthPRO
+
+HealthPRO es una aplicación de telemedicina que permite a los pacientes agendar citas con médicos y especialistas, así como también recibir atención médica a través de video llamadas.
+
+**completar intro**
+
+## Integrantes del equipo de trabajo
+
+
 
 ---
 
