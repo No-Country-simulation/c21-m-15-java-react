@@ -1,15 +1,51 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { userContext } from "./userProvider";
 
 export default function ProtectedRoute({ children }) {
-  const { user, setUser } = useContext(userContext);
+  const { user, setUser, setToken } = useContext(userContext);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isAuthenticated = user ? true : false;
+  useEffect(() => {
+    const tokenFromStorage = sessionStorage.getItem("token");
+    if (tokenFromStorage) {
+      setToken(tokenFromStorage);
+
+      fetch("http://localhost:8080/api/user", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${tokenFromStorage}`,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Error al obtener el usuario");
+          }
+          return response.json();
+        })
+        .then((userData) => {
+          setUser(userData);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setToken(null);
+          sessionStorage.removeItem("token");
+          setUser(null);
+          console.error(error);
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, [setToken, setUser]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   // redireccionamiento a la página de inicio de sesión si el usuario no está autenticado
-  if (!isAuthenticated) {
+  if (!user) {
     return (
       <Navigate
         to="/login"
