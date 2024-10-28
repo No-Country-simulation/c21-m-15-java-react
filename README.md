@@ -44,8 +44,6 @@ Pasos:
 2. Dirigirse a la raíz de la carpeta backend.
 3. Escribir el comando `docker-compose up --build` para iniciar la aplicación backend.
 
----
-
 #### Correr **SOLAMENTE** la Base de Datos
 
 Pasos para inicializar la base de datos:
@@ -55,8 +53,6 @@ Pasos para inicializar la base de datos:
 3. Escribir el comando `docker-compose up postgres` para iniciar la Base de Datos.
 
 Con la base de datos inicializada, podrás conectarte a la API al correrla desde un IDE u otra terminal.
-
----
 
 #### Añadir Datos a la Base de Datos por Primera Vez
 
@@ -74,3 +70,14 @@ Mientras la aplicación está corriendo, los pasos para añadir los datos son:
    ```sh
    docker exec -i postgres_container psql -U postgres -d backend -f /data.sql
    ```
+
+### Correr Aplicación Frontend
+
+Pasos:
+1. Abrir una terminal.
+2. Dirigirse a la raíz de la carpeta frontend.
+3. Escribir el comando `npm install` para instalar las dependencias.
+4. Escribir el comando `npm run dev` para iniciar la aplicación frontend.
+
+### Correr el servidor de WebSockets
+
