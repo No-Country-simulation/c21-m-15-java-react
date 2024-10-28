@@ -6,12 +6,12 @@ HealthPRO es una aplicación de telemedicina que permite a los pacientes agendar
 
 ## Integrantes del equipo de trabajo
 
-- Tamara Zarate
-- Romina Rodriguez
-- Jessica Mier
-- Pablo Menchaca
-- Chenhao Hu
-- Federico Holc
+- Tamara Zarate (frontend)
+- Romina Rodriguez (frontend)
+- Jessica Mier (frontend)
+- Pablo Menchaca (testing/qa)
+- Chenhao Hu (backend)
+- Federico Holc (frontend)
 
 ## Tecnologías utilizadas
 
