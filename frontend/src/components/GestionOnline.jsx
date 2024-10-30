@@ -190,6 +190,7 @@ const GestionOnline = () => {
           display: "flex",
           flexDirection: "column",
           boxShadow: 3,
+          fontFamily: "roboto"
         }}
       >
         <FormControl fullWidth>
@@ -238,7 +239,8 @@ const GestionOnline = () => {
             <Typography
               variant="body1"
               sx={{ 
-                color: "#134074", 
+                color: "#134074",
+                fontFamily: "roboto",
                 fontWeight: "bold",
                 textDecoration: "underline" 
               }}
@@ -289,11 +291,15 @@ const GestionOnline = () => {
                 <Typography variant="body1"
                   sx={{
                     fontWeight: "bold",
+                    fontFamily: "roboto"
                   }}
                 >
                   {medicoSeleccionado.speciality}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2"
+                sx={{fontFamily: "roboto"}}
+                >
+                  
                   {medicoSeleccionado.description}
                 </Typography>
               </Box>
@@ -305,6 +311,7 @@ const GestionOnline = () => {
                 padding: 2,
                 borderRadius: 1,
                 marginTop: "30px",
+                fontFamily: "roboto"
               }}
             >
               <Typography variant="body2">
