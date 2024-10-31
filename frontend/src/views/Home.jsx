@@ -47,7 +47,7 @@ export default function Home({ children }) {
                 to="/"
                 sx={{
                   color: "#134074",
-                  fontFamily:"roboto serif",
+                  fontFamily:"roboto",
                   fontSize: "20px",
                   textDecoration: "none",
                   "&:hover": {
@@ -64,7 +64,7 @@ export default function Home({ children }) {
                 to="/cartilla"
                 sx={{
                   color: "#134074",
-                  fontFamily:"roboto serif",
+                  fontFamily:"roboto",
                   fontSize: "20px",
                   textDecoration: "none",
                   "&:hover": {
@@ -82,7 +82,7 @@ export default function Home({ children }) {
                 to="/gestion-online"
                 sx={{
                   color: "#134074",
-                  fontFamily:"roboto serif",
+                  fontFamily:"roboto",
                   fontSize: "20px",
                   textDecoration: "none",
                   "&:hover": {
@@ -99,7 +99,7 @@ export default function Home({ children }) {
                 to="/video-consultas"
                 sx={{
                   color: "#134074",
-                  fontFamily:"roboto serif",
+                  fontFamily:"roboto",
                   fontSize: "20px",
                   textDecoration: "none",
                   "&:hover": {

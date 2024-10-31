@@ -41,6 +41,7 @@ const CardSection = () => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-around',
+              fontFamily: "roboto",
               borderRadius: '10px',
               border: '1px solid grey',
               width: { xs: '90%', sm: '300px' },
@@ -56,7 +57,7 @@ const CardSection = () => {
               sx={{
                 backgroundColor: '#134074',
                 padding: '8px',
-                fontFamily: 'roboto serif',
+                fontFamily: 'roboto',
                 color: 'white',
                 textAlign: 'center'
               }}>

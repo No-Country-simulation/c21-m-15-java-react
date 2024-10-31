@@ -42,7 +42,7 @@ const NuestrasEspecialidades = () => {
           textAlign: 'center',
           marginTop: '50px',
           marginBottom: '50px',
-          fontFamily: 'roboto serif',
+          fontFamily: 'roboto',
           textShadow: '1px 1px 2px #134074',
         }}
       >
@@ -64,7 +64,8 @@ const NuestrasEspecialidades = () => {
               boxSizing: 'border-box',
               boxShadow: '1px 1px 5px #134074',
               borderRadius: '10px',
-              backgroundColor:'#8DA9C4'
+              backgroundColor:'#8DA9C4',
+              fontFamily: "roboto"
             }}
           >
             <Card sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center',justifyContent: "space-around", padding: '10px' }}>

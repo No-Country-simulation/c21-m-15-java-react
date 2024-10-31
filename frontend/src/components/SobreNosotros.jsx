@@ -28,7 +28,7 @@ const SobreNosotros = () => {
         <Typography variant="h4" component="h2" gutterBottom 
         sx={
           {textAlign: 'center',
-           fontFamily: 'roboto serif',
+           fontFamily: 'roboto',
            backgroundColor: '#134074',
            color: 'white'
         }}
@@ -39,7 +39,8 @@ const SobreNosotros = () => {
          sx={{
           fontSize: { xs: '16px', sm: '18px', md: '20px', lg: '22px' },
           textAlign: 'center',
-          marginTop: '1rem'
+          marginTop: '1rem',
+          fontFamily: "roboto"
         }}
         >
           Nuestra app de telemedicina está diseñada para revolucionar la forma en que accedes a la atención médica. Ofrecemos una plataforma segura y fácil de usar que conecta a pacientes con profesionales de la salud desde la comodidad de sus hogares.

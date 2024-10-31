@@ -55,11 +55,11 @@ const Cartilla = () => {
   );
 
   return (
-    <Box>
+    <Box sx={{ fontFamily: 'Roboto' }}>
       <Typography
         variant='h3'
         sx={{
-          fontFamily: 'roboto serif',
+          fontFamily: 'roboto',
           marginTop: '2rem',
           marginBottom: '2rem',
           textAlign: 'center',
@@ -102,7 +102,7 @@ const Cartilla = () => {
               <Typography
                 variant='h6'
                 sx={{ 
-                  fontFamily: 'roboto serif', 
+                  fontFamily: 'roboto', 
                   color: '#13315c', 
                   fontWeight: 'bold',
                   fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.8rem', lg: '2rem', xl: '2.2rem' },
@@ -113,6 +113,7 @@ const Cartilla = () => {
               <Typography
                 variant='h6'
                 sx={{
+                  fontFamily: 'Roboto',
                   fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' }, 
                 }}
               >
@@ -121,6 +122,7 @@ const Cartilla = () => {
               <Typography
                 variant='body2'
                 sx={{
+                  fontFamily: 'Roboto',
                   fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem', lg: '1.2rem', xl: '1.3rem' } 
                 }}
               >
@@ -130,7 +132,7 @@ const Cartilla = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  sx={{ marginTop: "10px", backgroundColor: "#134074" }}
+                  sx={{ marginTop: "10px", backgroundColor: "#134074", fontFamily: 'Roboto' }}
                 >
                   Solicitar Turno
                 </Button>
