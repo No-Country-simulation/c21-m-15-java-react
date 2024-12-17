@@ -40,8 +40,8 @@ Pasos:
 
 1. Abrir una terminal.
 2. Dirigirse a la raíz de la carpeta backend.
-3. Escribir el comando `docker-compose up --build` para iniciar la aplicación backend.
-
+3. Escribir el comando `` para iniciar la aplicación backend.
+docker-compose up --build
 #### Correr **SOLAMENTE** la Base de Datos
 
 Pasos para inicializar la base de datos:
